@@ -1,102 +1,130 @@
 body {
-    margin: 0;
-    padding: 0;
-    font-family: 'Droid Sans', sans-serif;
-    color: #333;
+  margin: 0;
+  padding: 0;
+  font-family: 'Droid Sans', sans-serif;
+  color: #333;
 }
+
 body * {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
+
 .flex {
-    display: flex;
+  display: flex;
 }
+
 .flex-vert {
-    flex-direction: column;
+  flex-direction: column;
 }
+
 .flex-hor {
-    flex-direction: row;
+  flex-direction: row;
 }
+
 .btn {
-    -webkit-appearance: none;
-    display: block;
-    padding: 12px;
-    background: #0fc0fc;
-    color: #fff;
-    border: none;
-    box-shadow: 0 1px 3px 0 #999;
-    font-size: 24px;
+  -webkit-appearance: none;
+  display: block;
+  padding: 12px;
+  background: #0fc0fc;
+  color: #fff;
+  border: none;
+  box-shadow: 0 1px 3px 0 #999;
+  font-size: 24px;
 }
+
 .ii {
-    float: right;
+  float: right;
 }
+
 .bb {
-    display: inline-block;
+  display: inline-block;
 }
+
 .logo {
-    width: 84px;
+  width: 84px;
 }
+
 .top-wrap {
-    justify-content: space-between;
-    padding: 12px;
-    box-shadow: 0 0 5px 0 #999;
+  justify-content: space-between;
+  padding: 12px;
+  box-shadow: 0 0 5px 0 #999;
 }
+
 .site-name {
-    align-self: flex-end;
+  align-self: flex-end;
 }
+
 .user-tools-quick {
-    justify-content: flex-end;
+  justify-content: flex-end;
 }
+
 .user-tools-quick > div {
-    margin-left: 12px;
+  margin-left: 12px;
 }
+
 .common-actions {
-    justify-content: center;
+  justify-content: center;
 }
+
 .common-actions .btn {
-    margin: 0 12px 0 0;
+  margin: 0 12px 0 0;
 }
+
 .common-actions .btn:last-child {
-    margin-right: 0;
+  margin-right: 0;
 }
+
 .main {
-    padding: 12px;
-    box-shadow: inset 5px 0 5px -5px #999;
+  padding: 12px;
+  box-shadow: inset 5px 0 5px -5px #999;
 }
+
 .main-container-wrap {
-    margin-top: 12px;
+  margin-top: 12px;
 }
+
 .font-size-x-large {
-    font-size: 40px;
+  font-size: 40px;
 }
+
 .font-size-large {
-    font-size: 32px;
+  font-size: 32px;
 }
+
 .font-size-medium {
-    font-size: 24px;
+  font-size: 24px;
 }
+
 .font-size-small {
-    font-size: 16px;
+  font-size: 16px;
 }
+
 .uppercase {
-    text-transform: uppercase;
+  text-transform: uppercase;
 }
+
 .left-rail {
-    z-index: -1;
-    width: 224px;
-    padding: 12px;
-    background: #f5f5f5;
-    min-height: 100vh;
+  z-index: -1;
+  width: 224px;
+  padding: 12px;
+  background: #f5f5f5;
+  min-height: 100vh;
 }
+
 .left-rail-divider {
-    margin: 12px 0;
-    background: #ccc;
-    height: 1px;
-    width: 100%;
+  margin: 12px 0;
+  background: #ccc;
+  height: 1px;
+  width: 100%;
 }
+
 .option-wrap {
-    margin-bottom: 12px;
+  margin-bottom: 12px;
 }
+
 .option-wrap .fa {
-    float: right;
-/*    color: #999;*/
+  float: right;
+  /*    color: #999;*/
 }
+
+/*# sourceMappingURL=core.css.map */
