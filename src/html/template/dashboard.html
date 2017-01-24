@@ -17,45 +17,68 @@
     <div class="big-wrap flex flex-vert">
         <div class="top-wrap flex flex-hor">
             <div class="logo btn font-size-medium" aria-title="Bob Blog 2" title="Bob Blog 2">
-                <div class="bb">Bob<br>Blog</div><span class="ii"><sup>2</sup></span>
+                <div class="bb"><span class="color-a">Bob</span><br><span class="color-b">Blog</span></div><span class="ii color-c"><sup>2</sup></span>
             </div>
-            <div class="site-name font-size-x-large"><?= SITE_NAME ; ?></div>
-            <div class="user-tools-quick flex flex-hor">
-                <div>Account (<?= $bb->getUserProfile()->getName();?>)</div>
-                <div>|</div>
-                <div>Log out</div>
+            <div class="nav-tools-wrap flex flex-hor">
+                <div class="site-name font-size-x-large"><?= SITE_NAME ; ?></div>
+                <div class="user-tools-quick flex flex-hor">
+                    <div>Account (<?= $bb->getUserProfile()->getName();?>)</div>
+                    <div>|</div>
+                    <div>Log out</div>
+                </div>
             </div>
         </div>
         <div class="bottom-wrap flex flex-hor">
-            <div class="left-rail flex flex-vert">
-                <div class="welcome font-size-medium">
-                    Hi, <?= $bb->getUserProfile()->getName(); ?>
-                </div>
-                <div class="left-rail-divider"></div>
-                <div class="option-wrap font-size-small" data-status="posts">
-                    Posts <i class="fa fa-angle-right" aria-hidden="true"></i>
-                </div>
-                <div class="option-wrap font-size-small" data-status="media">
-                    Media <i class="fa fa-angle-right" aria-hidden="true"></i>
-                </div>
-                <div class="option-wrap font-size-small" data-status="pages">
-                    Pages <i class="fa fa-angle-right" aria-hidden="true"></i>
-                </div>
-                <div class="option-wrap font-size-small" data-status="users">
-                    Users <i class="fa fa-angle-right" aria-hidden="true"></i>
-                </div>
-                <div class="option-wrap font-size-small" data-status="logout">
-                    Log out <i class="fa fa-angle-right" aria-hidden="true"></i>
+            <div class="left-rail-wrap">
+                <div class="left-rail flex flex-vert">
+<!--
+                    <div class="welcome font-size-medium">
+                        Hi, <?= $bb->getUserProfile()->getName(); ?>
+                    </div>
+-->
+                    <div class="btn new-post">
+                        <i class="fa fa-file-text" aria-hidden="true"></i>
+                    </div>
+                    <div class="btn">
+                        <i class="fa fa-picture-o" aria-hidden="true"></i>
+                    </div>
+                    <div class="btn">
+                        <i class="fa fa-file-o" aria-hidden="true"></i>
+                    </div>
+                    <div class="btn">
+                        <i class="fa fa-user" aria-hidden="true"></i>
+                    </div>
+                    <div class="btn">
+                        <i class="fa fa-sign-out" aria-hidden="true"></i>
+                    </div>
+                    
+                    <div class="option-wrap font-size-small" data-status="posts">
+                        Posts <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </div>
+                    <div class="option-wrap font-size-small" data-status="media">
+                        Media <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </div>
+                    <div class="option-wrap font-size-small" data-status="pages">
+                        Pages <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </div>
+                    <div class="option-wrap font-size-small" data-status="users">
+                        Users <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </div>
+                    <div class="option-wrap font-size-small" data-status="logout">
+                        Log out <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </div>
                 </div>
             </div>
             <div class="main">
+<!--
                 <div class="common-actions flex flex-hor">
                     <button class="btn new-post">New Post</button>
                     <button class="btn manage-media">Media</button>
                     <button class="btn new-post">Also New Post</button>
                     <button class="btn new-post">Also New Post</button>
                 </div>
-                
+-->
+
                 <div class="main-container-wrap">
                     <div id="main-container"></div>
                 </div>

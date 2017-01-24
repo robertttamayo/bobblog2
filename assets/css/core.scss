@@ -1,31 +1,13 @@
+@import "sass/reset";
+@import "sass/settings";
+@import "sass/helpers";
+@import "sass/editor";
+
 body {
-    margin: 0;
-    padding: 0;
-    font-family: 'Droid Sans', sans-serif;
-    color: #333;
+    font-family: $sans;
+    color: $dark-gray;
 }
-body * {
-    box-sizing: border-box;
-}
-.flex {
-    display: flex;
-}
-.flex-vert {
-    flex-direction: column;
-}
-.flex-hor {
-    flex-direction: row;
-}
-.btn {
-    -webkit-appearance: none;
-    display: block;
-    padding: 12px;
-    background: #0fc0fc;
-    color: #fff;
-    border: none;
-    box-shadow: 0 1px 3px 0 #999;
-    font-size: 24px;
-}
+
 .ii {
     float: right;
 }
@@ -38,10 +20,20 @@ body * {
 .top-wrap {
     justify-content: space-between;
     padding: 12px;
-    box-shadow: 0 0 5px 0 #999;
+    border-top: 4px solid $dark-gray;
 }
 .site-name {
-    align-self: flex-end;
+    align-self: flex-start;
+    padding: 0;
+}
+.bottom-wrap {
+    margin: 12px 12px;
+}
+.nav-tools-wrap {
+   
+    padding: 6px 0 0 0;
+    width: 60vw;
+    justify-content: space-between;
 }
 .user-tools-quick {
     justify-content: flex-end;
@@ -59,33 +51,25 @@ body * {
     margin-right: 0;
 }
 .main {
-    padding: 12px;
-    box-shadow: inset 5px 0 5px -5px #999;
+    padding: 0 12px 12px 12px;
+    width: 100%;
 }
 .main-container-wrap {
     margin-top: 12px;
 }
-.font-size-x-large {
-    font-size: 40px;
-}
-.font-size-large {
-    font-size: 32px;
-}
-.font-size-medium {
-    font-size: 24px;
-}
-.font-size-small {
-    font-size: 16px;
-}
-.uppercase {
-    text-transform: uppercase;
-}
+
 .left-rail {
-    z-index: -1;
-    width: 224px;
-    padding: 12px;
-    background: #f5f5f5;
-    min-height: 100vh;
+    .btn {
+        margin-bottom: 12px;
+        width: 52px;
+        height: 52px;
+        text-align: center;
+    }
+//    width: 224px;
+//    padding: 12px;
+//    margin-left: 12px;
+//    background: $light-gray;
+//    box-shadow: $box-shadow-bold-dark-gray;
 }
 .left-rail-divider {
     margin: 12px 0;
@@ -99,4 +83,46 @@ body * {
 .option-wrap .fa {
     float: right;
 /*    color: #999;*/
+}
+.edit-container {
+    justify-content: center;
+}
+#frame {
+    padding: 12px;
+    border: 2px solid #333;
+    width: 80%;
+}
+.post-submit-options {
+    button {
+        font-size: $font-size-small;
+    }
+}
+.post-title {
+   
+    width: 80%;
+    height: 40px;
+    border: 2px solid $dark-gray;
+    line-height: 36px;
+    vertical-align: middle;
+    box-shadow: 4px 4px 0px 0px $gray;
+    margin: auto;
+    margin-bottom: 12px;
+    
+    .label {
+        width: 40%;
+        height: 100%;
+        background: $dark-gray;
+        color: $white;
+        text-align: center;
+        display: inline-block;
+    }
+    input {
+        -webkit-appearance: none;
+        border:none;
+        height: calc(100% );
+        width: 60%;
+        color: $dark-gray;
+        text-indent: 12px;
+        
+    }
 }

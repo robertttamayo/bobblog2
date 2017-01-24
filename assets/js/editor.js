@@ -1,3 +1,7 @@
+var undoStates = [];
+var currentState;
+var redoStates = [];
+
 function modifyWith(property) {
     //alert("calling modifyWith");
     addUndoState();
@@ -194,8 +198,7 @@ function myUndo(){
     }
     var iframe = document.getElementById("frame");
     var iWindow = iframe.contentWindow;
-    var iDocument = iWindow.document;
-    var focus = iDocument.getElementById("content");
+    var focus = document.getElementById("content");
     redoStates.push(currentState);
     focus.innerHTML = undoStates.pop();
     //focus.innerHTML = undoStates[undoStates.length - 1];
@@ -211,8 +214,7 @@ function myRedo(){
     }
     var iframe = document.getElementById("frame");
     var iWindow = iframe.contentWindow;
-    var iDocument = iWindow.document;
-    var focus = iDocument.getElementById("content");
+    var focus = document.getElementById("content");
     
     //alert(redoStates[redoStates.length - 1]);
     focus.innerHTML = redoStates[redoStates.length - 1];
@@ -370,8 +372,8 @@ function initCurrentState(){
     //alert("calling initCurrentState");
     var iframe = document.getElementById("frame");
     var iWindow = iframe.contentWindow;
-    var iDocument = iWindow.document;
-    var focus = iDocument.getElementById("content");
+    
+    var focus = document.getElementById("content");
     currentState = focus.innerHTML;
     //alert(currentState);
 }
@@ -379,8 +381,8 @@ function addUndoState(){
     //alert("calling addUndoState");
     var iframe = document.getElementById("frame");
     var iWindow = iframe.contentWindow;
-    var iDocument = iWindow.document;
-    var focus = iDocument.getElementById("content");
+    
+    var focus = document.getElementById("content");
     undoStates.push(currentState);
     currentState = focus.innerHTML;
     //undoStates.push(focus.innerHTML);

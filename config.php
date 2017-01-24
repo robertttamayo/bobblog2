@@ -2,10 +2,12 @@
 
 session_start();
 
-define("ROOT", "http://localhost/bobblog2/");
+define("DOMAIN_NAME", "http://localhost/");
+define("ROOT_DIR", "bobblog2/");
+define("ROOT", DOMAIN_NAME . ROOT_DIR);
 define("LOGIN_URL", "http://localhost/bobblog2/login.php");
 
-if (!isset($_SESSION["userID"]) && $_SERVER["REQUEST_URI"] != ROOT . "login.php") {
+if (!isset($_SESSION["userID"]) && $_SERVER["REQUEST_URI"] != "/" . ROOT_DIR . "login.php") {
     header("Location: " . LOGIN_URL);
     die;
 }
@@ -24,3 +26,10 @@ define("ADMIN", "bob");
 define("ADMIN_PASSWORD", "bob");
 
 define("SITE_NAME", "TheNoticed.com");
+
+define("ACTION_SAVE_POST", "save_new_post");
+
+if (isset($_POST["action"])) {
+    include(SRC_DIR . "actionHandler.php");
+    handle($_POST["action"]);
+}

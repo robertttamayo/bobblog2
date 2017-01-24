@@ -51,7 +51,7 @@ module.exports = function(grunt) {
             },
             dist: {
                 files: {
-                    'assets/js/core.min.js': ['temp/concat.js']
+                    'assets/js/min/core.min.js': ['temp/concat.js']
                 }
             }
         },

@@ -17,6 +17,7 @@ $bb->addHeadScript(array("src" => ASSETS_DIR . "js/editor.js"));
 $bb->addHeadScript(array("src" => ASSETS_DIR . "js/imgedit.js"));
 
 $bb->addHeadScript(array("script" => 
+                         "var actionSavePost = \"" . ACTION_SAVE_POST . "\";" .
                          "var homeUrl = \"" . ROOT . "\";" .
                          "var dashboardTemplateDir = \"" . ROOT . SRC_DIR . "html/dashboard/\";" . 
                          "var mode = WELCOME;"));

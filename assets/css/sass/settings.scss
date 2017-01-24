@@ -1,0 +1,120 @@
+// COLORS
+
+$dark-gray: #333;
+$gray: #aeaeae;
+$light-gray: #dedede;
+$blue: #0fc0fc;
+$white: #fff;
+//$dark-gray: #0fc0fc;
+//$gray: #fc0fc0;
+//$light-gray: #c0fc0f;
+//$blue: #0fc0fc;
+//$white: #fff;
+//$color-a: #0fc0fc;
+//$color-b: #5bd4fd;//#5bfdd5;
+//$color-c: #028dbc;//#5b83fd;
+$color-a: #0fd4fc;
+$color-b: #5be2fd;
+$color-c: #029dbc;
+
+//$blue: #0fc0fc;
+//$white: #fff;
+
+$border-bold: 4px solid $dark-gray;
+$box-shadow-bold-dark-gray: 4px 4px 0px 0px $dark-gray;
+// FONTS
+
+$sans: 'Droid Sans', sans-serif;
+$font-size-medium: 24px;
+$font-size-small: 16px;
+$font-size-large: 32px;
+$font-size-x-large: 40px;
+
+.font-size-x-large {
+    font-size: $font-size-x-large;
+}
+.font-size-large {
+    font-size: $font-size-large;
+}
+.font-size-medium {
+    font-size: $font-size-medium;
+}
+.font-size-small {
+    font-size: $font-size-small;
+}
+.uppercase {
+    text-transform: uppercase;
+}
+
+.color-a {
+    color: $color-a;
+}
+.color-b {
+    color: $color-b;
+}
+.color-c {
+    color: $color-c;
+}
+
+// MARGIN, PADDING
+
+$padding-medium: 12px;
+$padding-small: 4px;
+$padding-large: 20px;
+$padding-x-large: 40px;
+
+$margin-medium: 12px;
+$margin-small: 4px;
+$margin-large: 20px;
+$margin-x-large: 40px;
+
+// BUTTONS
+
+button:not(.btn-ii), .btn {
+    -webkit-appearance: none;
+    display: block;
+    padding: $padding-medium;
+    background: $dark-gray;
+    color: $white;
+    border: none;
+    box-shadow: 4px 4px 0px 0px $gray;
+    font-size: $font-size-medium;
+    transition: all .2s;
+    &:hover {
+        background: $light-gray;
+        color: $dark-gray;
+        transform: scale(1.1);
+        box-shadow: 4px 4px 0px -2px $dark-gray;
+    }
+    &:nth-of-type(odd) {
+//        color: $color-a;
+    }
+    &:nth-of-type(even) {
+//        color: $color-b;
+    }
+    &:nth-of-type(3n) {
+//        color: $color-c;
+    }
+    
+}
+button.btn-ii, .btn-ii {
+    display: block;
+    padding: $padding-small;
+    background: transparent;
+    color: $dark-gray;
+    border: none;
+    font-size: $font-size-small;
+    box-shadow: none;
+}
+
+// FLEX
+
+.flex {
+    display: flex;
+}
+.flex-vert {
+    flex-direction: column;
+}
+.flex-hor {
+    flex-direction: row;
+}
