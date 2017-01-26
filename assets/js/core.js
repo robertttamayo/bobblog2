@@ -7,11 +7,16 @@ $(document).ready(function(){
     });
     
     $(".new-post").on("click", function(){
-        $("#main-container").html("").load(dashboardTemplateDir + "editor.html", function(){
+        $("#main-container").html("").load(dashboardTemplateDir + "editor.php", function(){
             editContainerCallbacks();
         });
     });
-    
+    $(".load-edit-post").on("click", function(){
+        var postid = $(this).data("postid");
+        $("#main-container").html("").load(dashboardTemplateDir + "editor.php?postid=" + postid, function(){
+            editContainerCallbacks();
+        });
+    });
     
 });
 function mainContainerCallbacks(){
@@ -25,8 +30,12 @@ function editContainerCallbacks(){
 function savePost(){
     var raw = $("#content").html();
     var title = $("#post-title").val();
-    var draft = "draft";
-    var postid = document.getElementById("postid-hidden").textContent;
+    var draft = false;
+    var postid = $("postid-hidden").text();
+    console.log(postid);
+    if (postid == "") {
+        draft = true;
+    }
     $.post("#", {    
         action: actionSavePost,
         name: title,
@@ -35,6 +44,6 @@ function savePost(){
         postid: postid
     },
     function(data){ //callback for debugging
-        alert(data);
+        console.log(data);
     });
 }

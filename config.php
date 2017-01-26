@@ -29,6 +29,12 @@ define("SITE_NAME", "TheNoticed.com");
 
 define("ACTION_SAVE_POST", "save_new_post");
 
+// database definitions
+$blogbase = "blogbase";
+$userbase = "userbase";
+$content = "content";
+$postid = "id";
+
 if (isset($_POST["action"])) {
     include(SRC_DIR . "actionHandler.php");
     handle($_POST["action"]);

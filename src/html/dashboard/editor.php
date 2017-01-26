@@ -1,5 +1,13 @@
 <?php
-echo "hey, this is working"; die;
+
+$postid = "";
+$postcontent = "";
+
+if (isset($_GET["postid"])) {
+    $postid = $_GET["postid"];
+    $post = $bb->getPost($postid);
+    $postcontent = $post->postcontent;
+}
 
 ?>
 
@@ -62,7 +70,7 @@ echo "hey, this is working"; die;
 <button class="btn-ii" type="button" id="conduit-init" onclick="initCurrentState()" style="position: absolute; top: -105em;"></button>
 
 </div>
-<span id="postid-hidden" style="position: absolute; top: -110em; display: none;"><?= $bb->getPostId() ?></span>
+<span id="postid-hidden" style="position: absolute; top: -110em; display: none;"><?= $postid ?></span>
 <dialog id="img-dialog">
     <div class="dialog-container">
         <p style="text-align: center;">Please choose an image to upload</p>
@@ -87,7 +95,11 @@ echo "hey, this is working"; die;
 <div id="frame">
     <div contenteditable="true" id="content" onmouseup="adjustEditButtons()" onkeypress="checkEnter(event)" onkeyup="resetUndoTimer()">
         <div>
-            Text Editor
+            <?php if ($postcontent == "") { ?>
+            Write your post here.
+            <?php } else { ?>
+            <?= $postcontent ?>
+            <?php } ?>
         </div>
     </div>
 </div>
