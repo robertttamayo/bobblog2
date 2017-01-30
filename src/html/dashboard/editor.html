@@ -1,8 +1,3 @@
-<?php
-echo "hey, this is working"; die;
-
-?>
-
 <div class="post-title flex flex-hor">
     <div class="label">What's the name of your post?</div>
     <input name="post-title" type="text" id="post-title" placeholder="Post Title">
@@ -11,7 +6,8 @@ echo "hey, this is working"; die;
     <div class="label">You can choose a category or create a new one</div>
     <div class="categories"></div>
     <div class="label">What tags are related to this post?</div>
-    <div class="tags"></div>
+    <div class="tags"><ul id="active-tags"><li id="add-new-tag">Add tag</li></ul></div>
+    <div id="tags" class="tags"><?= $bb->getTags($postid) ?></div>
 </div>
 <div class="post-submit-options flex flex-hor">
     <button class="save-post">Save &amp; Publish</button>
@@ -62,7 +58,7 @@ echo "hey, this is working"; die;
 <button class="btn-ii" type="button" id="conduit-init" onclick="initCurrentState()" style="position: absolute; top: -105em;"></button>
 
 </div>
-<span id="postid-hidden" style="position: absolute; top: -110em; display: none;"><?= $bb->getPostId() ?></span>
+<span id="postid-hidden" style="position: absolute; top: -110em; display: none;"><?= $postid ?></span>
 <dialog id="img-dialog">
     <div class="dialog-container">
         <p style="text-align: center;">Please choose an image to upload</p>
@@ -87,7 +83,11 @@ echo "hey, this is working"; die;
 <div id="frame">
     <div contenteditable="true" id="content" onmouseup="adjustEditButtons()" onkeypress="checkEnter(event)" onkeyup="resetUndoTimer()">
         <div>
-            Text Editor
+            <?php if ($postcontent == "") { ?>
+            <span class="erase-on-focus">Start here</span>
+            <?php } else { ?>
+            <?= $postcontent ?>
+            <?php } ?>
         </div>
     </div>
 </div>

@@ -7,6 +7,8 @@ function handle(){
             $post_draft = $_POST["draft"];
             $post_id = $_POST["postid"];
             
+            $post_file = htmlentities($post_file, ENT_QUOTES);
+            
 //            $post_draft = $post_draft ? 1 : 0;
             
             $conn = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
@@ -19,14 +21,19 @@ function handle(){
                 $sql = "INSERT INTO blogbase (content, posttitle, draft)
                     VALUES (\"$post_file\", \"$post_name\", $post_draft)";
             } else {
-                $sql = "INSERT INTO blogbase (id, content, posttitle, draft)
-                    VALUES ($post_id, $post_file, $post_name, $post_draft)";
+                $sql = "UPDATE blogbase SET content='$post_file'
+                , posttitle='$post_name'
+                , draft='$post_draft' WHERE id=$post_id";
+//                $sql = "INSERT INTO blogbase (id, content, posttitle, draft)
+//                    VALUES ($post_id, $post_file, $post_name, $post_draft)";
             }
             
             $result = $conn->query($sql);
 
             if ($result === TRUE) {
-                echo "New record created successfully";
+                $data = [];
+                $data["postid"] = $post_id == "" ? $conn->insert_id : $post_id;
+                echo json_encode($data);
             } else {
                 echo "Error: " . $sql . "<br>" . $conn->error;
             }
@@ -34,9 +41,10 @@ function handle(){
             $conn->close();
             
 
-                exit;
-                break;
-            default:;
-
+            exit;
+            break;
+        default:
+            // nothing for now
+            ;
         }
 }
