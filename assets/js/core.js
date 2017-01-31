@@ -2,13 +2,13 @@ var WELCOME = 1;
 var EDITOR = 2;
 
 $(document).ready(function(){
-    $("#main-container").html("").load(dashboardTemplateDir + "welcome.html", function(){
+    $("#main-container").html("").load("src/welcome.php", function(){
         mainContainerCallbacks();
     });
     
     $(".new-post").on("click", function(){
         load("start");
-        $("#main-container").html("").load(homeUrl + "editor.php", function(){
+        $("#main-container").html("").load(homeUrl + "src/editor.php", function(){
             load("stop");
             editContainerCallbacks();
         });
@@ -16,7 +16,7 @@ $(document).ready(function(){
     $(".load-edit-post").on("click", function(){
         var postid = $(this).data("postid");
         load("start");
-        $("#main-container").html("").load(homeUrl + "editor.php?postid=" + postid, function(){
+        $("#main-container").html("").load(homeUrl + "src/editor.php?postid=" + postid, function(){
             editContainerCallbacks();
             load("stop");
         });
@@ -84,7 +84,7 @@ function validatePost(){
     }
     return true;
 }
-// Listen for the event.
+// Event listeners
 document.addEventListener('post_saved', function (e){ 
     createMessage("Your post is safe!");
 }, false);

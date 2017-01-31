@@ -426,6 +426,17 @@ button.btn-ii, .btn-ii {
   text-align: right;
 }
 
+.your-posts .post-info-wrapper {
+  padding: 12px 0;
+}
+.your-posts .post-info-wrapper .title {
+  color: #0fd4fc;
+  font-size: 24px;
+}
+.your-posts .post-info-wrapper .id {
+  display: none;
+}
+
 body {
   font-family: "Droid Sans", sans-serif;
   color: #333;

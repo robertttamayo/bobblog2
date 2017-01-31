@@ -1,4 +1,24 @@
-THIS IS A WELCOME MESSAGE.
-This will be a list of all the blog posts.
-Maybe show 10 or so. Then have a show more button or a 
-button to show the next 11-20 for example.
+<div class="your-posts-wrapper">
+    <div class="your-posts flex flex-vert">
+        
+        <?php
+        $posts = $bb->getPosts();
+        ?>
+        <?php for ($i = 0; $i < sizeof($posts); $i++) { ?>            
+            <div class="post-info-wrapper">
+        
+                <div class="title"><?= $posts[$i]->title ?></div>
+                <div class="id"><?= $posts[$i]->id ?></div>
+                <div class="content"><?= $posts[$i]->content ;?></div>
+                <div class="category"><?= $posts[$i]->category ;?></div>
+                <div class="draft"><?= $posts[$i]->draft;?></div>
+                <div class="lastedited"><?= $posts[$i]->lastedited ;?></div>
+                <div class="author"><?= $posts[$i]->author;?></div>
+                <div class="publishdate"><?= $posts[$i]->publishdate;?></div>
+                
+            </div>
+        
+        <?php } ?>
+        
+    </div>
+</div>

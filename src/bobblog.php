@@ -1,6 +1,7 @@
 <?php
 
 require_once(SRC_DIR . 'helpers/userProfile.php');
+require_once(SRC_DIR . 'helpers/post.php');
 
 class BobBlog {
     
@@ -11,6 +12,7 @@ class BobBlog {
     private $userProfile;
     private $post = array();
     private $tags = array();
+    private $posts = array();
 
     public function __construct(){
         //$this->db_con = new PDO("mysql:host={DB_SERVER};dbname={DB_NAME}", BD_USERNAME, DB_PASSWORD);
@@ -84,6 +86,9 @@ class BobBlog {
         $conn->close();
         return $this->post;
     }
+    public function getPosts(){
+        return $this->posts;
+    }
     public function getTags($postid){
         if ($postid == null) {
             
@@ -120,6 +125,40 @@ class BobBlog {
 //        }
         
         $conn->close();
+    }
+    public function initPosts(){
+        $conn = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
+        
+        if ($conn->connect_error) {
+            die("Connection failed: " . $conn->connect_error);
+        }
+        
+        $sql = "SELECT * FROM blogbase";
+        $result = $conn->query($sql);
+        
+        if ($result->num_rows > 0) {
+            // output data of each row
+            while($row = $result->fetch_assoc()) {
+                $post = new Post();
+                
+                $post->title = $row["posttitle"];
+                $post->id = $row["id"];
+                $post->content = $row["content"];
+                $post->category = $row["category"];
+                $post->draft = $row["draft"];
+                $post->lastedited = $row["lastedited"];
+                $post->author = $row["author"];
+                $post->publishdate = $row["publishdate"];
+                
+                $this->posts[] = $post;
+            }
+        } else {
+            echo "0 results";
+        }
+        $conn->close();
+    }
+    public function initMorePosts(){
+        
     }
 }
 
