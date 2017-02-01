@@ -58,6 +58,9 @@ button:not(.btn-ii), .btn {
   font-size: 24px;
   transition: all .2s;
 }
+button:not(.btn-ii).inline, .btn.inline {
+  display: inline-block;
+}
 button:not(.btn-ii):hover, .btn:hover {
   background: #dedede;
   color: #333;

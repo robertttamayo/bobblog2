@@ -63,6 +63,9 @@ class BobBlog {
     public function getUserProfile(){
         return $this->userProfile;
     }
+    public function getPostId() {
+        return null;
+    }
     public function getPost($postid){
         $conn = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
         
@@ -89,6 +92,9 @@ class BobBlog {
     public function getPosts(){
         return $this->posts;
     }
+    public function getAllTags(){
+        
+    }
     public function getTags($postid){
         if ($postid == null) {
             
@@ -105,7 +111,7 @@ class BobBlog {
         if ($result->num_rows > 0) {
             // output data of each row
             while($row = $result->fetch_assoc()) {
-                $this->tags[] = ["name" => $row["tagname"], "id" => $row["id"]];
+                $this->tags[] = ["name" => $row["tagname"], "id" => $row["tagid"]];
             }
         } else {
             echo "0 results";
@@ -158,6 +164,9 @@ class BobBlog {
         $conn->close();
     }
     public function initMorePosts(){
+        
+    }
+    public function initTags(){
         
     }
 }

@@ -23,6 +23,11 @@ $(document).ready(function(){
     });
     
 });
+function tagPopCallbacks(){
+    $(".create-tag").on("click", function(){
+        saveTag();
+    });
+}
 function mainContainerCallbacks(){
     $(".dim").on("click", function(){
         $(".dim").hide();
@@ -46,6 +51,26 @@ function editContainerCallbacks(){
         $(this).html("")
             .find("div")
                 .focus();
+    });
+    $(".manage-tags").on("click", function(){
+        var tagPop = document.createElement("div");
+        tagPop = $(tagPop);
+        $(tagPop).load(homeUrl + "src/tags.php", function(){
+            tagPopCallbacks();
+        });
+        $("body").append($(tagPop));
+    });
+}
+function saveTag(){
+    var tagName = $("#tag-create-input").val();
+    console.log(tagName);
+    $.post("#", {
+        action: actionSaveTag,
+        name: tagName
+    }, function(_data){
+        console.log(_data);
+        _data = JSON.parse(_data);
+        var event = new CustomEvent("tag_saved", {tag_name: _data.tag_name});
     });
 }
 function savePost(){
@@ -85,8 +110,11 @@ function validatePost(){
     return true;
 }
 // Event listeners
-document.addEventListener('post_saved', function (e){ 
+document.addEventListener("post_saved", function (e){ 
     createMessage("Your post is safe!");
+}, false);
+document.addEventListener("tag_saved", function(event){
+    createMessage("New tag \"" + event.tag_name + "\" created!");
 }, false);
 
 function load(mode){

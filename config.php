@@ -28,6 +28,8 @@ define("ADMIN_PASSWORD", "bob");
 define("SITE_NAME", "TheNoticed.com");
 
 define("ACTION_SAVE_POST", "save_new_post");
+define("ACTION_SAVE_TAG", "save_tag");
+define("ACTION_SAVE_CAT", "save_cat");
 
 // database definitions
 $blogbase = "blogbase";
