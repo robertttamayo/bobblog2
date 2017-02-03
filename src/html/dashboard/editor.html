@@ -3,10 +3,18 @@
     <input name="post-title" type="text" id="post-title" placeholder="Post Title">
 </div>
 <div class="post-meta">
-    <div class="label">You can choose a category or create a new one</div>
-    <div class="categories"></div>
-    <div class="label">What tags are related to this post?</div>
+    <div class="post-meta-wrapper flex flex-hor">
+        <div class="btn inline manage-categories">
+            Categories
+        </div>
+        <div class="btn inline manage-tags">
+            Tags
+        </div>
+    </div>
+<!--
+    <div class="categories"><ul><li></li><li id="add-new-category" class="btn inline manage-categories">Categories</li></ul></div>
     <div class="tags"><ul id="active-tags"><li id="add-new-tag" class="btn inline manage-tags">Add tag</li></ul></div>
+-->
     <div id="tags" class="tags"><?= $bb->getTags($postid) ?></div>
 </div>
 <div class="post-submit-options flex flex-hor">

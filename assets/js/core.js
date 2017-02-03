@@ -70,7 +70,9 @@ function saveTag(){
     }, function(_data){
         console.log(_data);
         _data = JSON.parse(_data);
-        var event = new CustomEvent("tag_saved", {tag_name: _data.tag_name});
+        console.log(_data);
+        var event = new CustomEvent("tag_saved", {"detail": _data });
+        document.dispatchEvent(event);
     });
 }
 function savePost(){
@@ -110,11 +112,23 @@ function validatePost(){
     return true;
 }
 // Event listeners
-document.addEventListener("post_saved", function (e){ 
+document.addEventListener("post_saved", function (event){ 
     createMessage("Your post is safe!");
 }, false);
 document.addEventListener("tag_saved", function(event){
-    createMessage("New tag \"" + event.tag_name + "\" created!");
+    console.log(event.detail);
+    var data = event.detail;
+    createMessage("New tag \"" + data.tag_name + "\" created!");
+    // create div and append it to end of tag list with the tag id and tag name
+    var tagName = document.createElement("div");
+    var tagId = document.createElement("div");
+    
+    tagName = $(tagName);
+    tagId = $(tagId);
+    
+    tagName.addClass("tag-name").text(data.tag_name).appendTo("#tag-name-wrapper");
+    tagId.addClass("tag-id").text(data.tag_id).appendTo(tagName);
+    
 }, false);
 
 function load(mode){

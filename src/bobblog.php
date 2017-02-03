@@ -12,6 +12,7 @@ class BobBlog {
     private $userProfile;
     private $post = array();
     private $tags = array();
+    private $all_tags = array();
     private $posts = array();
 
     public function __construct(){
@@ -93,7 +94,28 @@ class BobBlog {
         return $this->posts;
     }
     public function getAllTags(){
+        $this->all_tags = null;
+        $this->all_tags = array();
         
+        $conn = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
+        
+        if ($conn->connect_error) {
+            die("Connection failed: " . $conn->connect_error);
+        }
+        
+        $sql = "SELECT * FROM tagbase";
+        $result = $conn->query($sql);
+        
+        if ($result->num_rows > 0) {
+            // output data of each row
+            while($row = $result->fetch_assoc()) {
+                $this->all_tags[] = ["name" => $row["tagname"], "id" => $row["tagid"]];
+            }
+        } else {
+            echo "0 results";
+        }
+        $conn->close();
+        return $this->all_tags;
     }
     public function getTags($postid){
         if ($postid == null) {

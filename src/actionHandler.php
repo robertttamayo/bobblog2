@@ -64,6 +64,7 @@ function handle(){
             if ($result === TRUE) {
                 $data = [];
                 $data["tag_name"] = $tag_name;
+                $data["tag_id"] = $conn->insert_id;
                 echo json_encode($data);
             } else {
                 echo "Error: " . $sql . "<br>" . $conn->error;

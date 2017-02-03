@@ -94,8 +94,14 @@ body {
     width: 80%;
 }
 .post-submit-options {
+    justify-content: space-between;
+    width: 80%;
+    margin: auto;
+    flex-wrap: wrap;
     button {
         font-size: $font-size-small;
+        width: 30%;
+        margin-bottom: 12px;
     }
 }
 .erase-on-focus {
@@ -180,4 +186,33 @@ body {
     color: $blue;
     z-index: 100;
     @include centerize(absolute);
+}
+.post-meta-wrapper {
+    width: 80%;
+    margin: auto auto 12px auto;
+    justify-content: space-between;
+    .btn {
+        width: 48%;
+        font-size: $font-size-small;
+        text-align: center;
+        
+        &.hide {
+            width: 0%;
+        }
+        &.max {
+            display: fixed;
+            width: 500px;
+            padding: 40px;
+            @include centerize(fixed);
+        }
+    }
+}
+.tag-name-wrapper {
+    display: block;
+    width: 50%;
+    .tag-name {
+        .tag-id {
+            display: none;
+        }   
+    }
 }

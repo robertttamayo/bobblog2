@@ -540,8 +540,16 @@ body {
   width: 80%;
 }
 
+.post-submit-options {
+  justify-content: space-between;
+  width: 80%;
+  margin: auto;
+  flex-wrap: wrap;
+}
 .post-submit-options button {
   font-size: 16px;
+  width: 30%;
+  margin-bottom: 12px;
 }
 
 .erase-on-focus {
@@ -625,6 +633,37 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+
+.post-meta-wrapper {
+  width: 80%;
+  margin: auto auto 12px auto;
+  justify-content: space-between;
+}
+.post-meta-wrapper .btn {
+  width: 48%;
+  font-size: 16px;
+  text-align: center;
+}
+.post-meta-wrapper .btn.hide {
+  width: 0%;
+}
+.post-meta-wrapper .btn.max {
+  display: fixed;
+  width: 500px;
+  padding: 40px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.tag-name-wrapper {
+  display: block;
+  width: 50%;
+}
+.tag-name-wrapper .tag-name .tag-id {
+  display: none;
 }
 
 /*# sourceMappingURL=core.css.map */
