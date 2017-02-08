@@ -30,6 +30,7 @@ define("SITE_NAME", "TheNoticed.com");
 define("ACTION_SAVE_POST", "save_new_post");
 define("ACTION_SAVE_TAG", "save_tag");
 define("ACTION_SAVE_CAT", "save_cat");
+define("ACTION_TAGS_BY_POSTID", "tags_by_postid");
 
 // database definitions
 $blogbase = "blogbase";
