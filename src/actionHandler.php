@@ -74,6 +74,52 @@ function handle(){
             $conn->close();
             exit;
             break;
+        case ACTION_ADD_TAG_TO_POST:
+            $tagid = $_POST["tagid"];
+            $postid = $_POST["postid"];
+                        
+            $conn = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
+        
+            if ($conn->connect_error) {
+                die("Connection failed: " . $conn->connect_error);
+            }
+            // to do: add binding here
+            $sql = "INSERT INTO tagblogmap (tagid, postid)
+                VALUES (\"$tagid\", \"$postid\")";
+            
+            $result = $conn->query($sql);
+            
+            if ($result === TRUE) {
+                echo ("Success");
+            } else {
+                echo "Error: " . $sql . "<br>" . $conn->error;
+            }
+            
+            exit;
+            break;
+        case ACTION_REMOVE_TAG_FROM_POST:
+            $tagid = $_POST["tagid"];
+            $postid = $_POST["postid"];
+                        
+            $conn = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
+        
+            if ($conn->connect_error) {
+                die("Connection failed: " . $conn->connect_error);
+            }
+            // to do: add binding here
+            $sql = "DELETE FROM tagblogmap
+                WHERE tagid = $tagid AND postid = $postid";
+            
+            $result = $conn->query($sql);
+            
+            if ($result === TRUE) {
+                echo ("Success");
+            } else {
+                echo "Error: " . $sql . "<br>" . $conn->error;
+            }
+            
+            exit;
+            break;
         case ACTION_SAVE_CAT:
             $cat_name = $_POST["name"];
             
@@ -119,7 +165,7 @@ function handle(){
             }
             $post_id = $_POST["postid"];
             
-            $sql = "SELECT tagname FROM tagblogview WHERE postid = 3";
+            $sql = "SELECT tagname FROM tagblogview WHERE postid = $post_id";
             
             $result = $conn->query($sql);
             
@@ -154,9 +200,10 @@ function saveNewDraft() {
     }
     
     $date = date("F j, Y");
+    $title = "Draft Created on " . $date;
     $isDraft = true;
     $sql = "INSERT INTO blogbase (content, posttitle, draft)
-            VALUES (\"\", \"$date\", $isDraft)";
+            VALUES (\"\", \"$title\", $isDraft)";
     
     $result = $conn->query($sql);
 
@@ -176,10 +223,7 @@ function loadTagsByPostId($postid) {
         die("Connection failed: " . $conn->connect_error);
     }
 
-    $sql = "SELECT tagbase.tagname FROM tagbase, blogbase, tagblogmap
-            WHERE tagbase.tagid = tagblogmap.tagid
-            AND tagblogmap.postid = 3";
-
+    $sql = "SELECT tagname FROM tagblogview WHERE postid = $postid";
 
     $result = $conn->query($sql);
 

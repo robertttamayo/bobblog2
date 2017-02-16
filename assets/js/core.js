@@ -1,6 +1,8 @@
 var WELCOME = 1;
 var EDITOR = 2;
 
+var postid;
+
 $(document).ready(function(){
     $("#main-container").html("").load("src/welcome.php", function(){
         mainContainerCallbacks();
@@ -27,14 +29,22 @@ function tagPopCallbacks(){
     $(".create-tag").on("click", function(){
         saveTag();
     });
+    $(".tag-name").on("click", function(){
+        if ($(this).hasClass("active-tag")) {
+            removeTagFromPost($(this), $("#postid-hidden").text());
+        } else {
+            addTagToPost($(this), $("#postid-hidden").text());
+        }
+    });
+    $(".dim, #close-tag-pop").on("click", function(){
+        $(".tags-pop-wrap").fadeOut("medium", function(){
+            $(this).remove();
+        });
+    });
 }
 function mainContainerCallbacks(){
-    $(".dim").on("click", function(){
-        $(".dim").hide();
-        $("#message").fadeOut();
-    });
-    $("#message-close").on("click", function(){
-        $(".dim").hide();
+    $(".dim, #message-close").on("click", function(){
+        $(".dim:not([data*=tags])").hide();
         $("#message").fadeOut();
     });
     
@@ -59,6 +69,31 @@ function editContainerCallbacks(){
             tagPopCallbacks();
         });
         $("body").append($(tagPop));
+        $(".dim").show().data("lock", "tags");
+    });
+}
+function addTagToPost(tagElement, postid) {
+    tagElement.toggleClass("active-tag");
+    var tagid = tagElement.data("tagid");
+    console.log("adding tag " + tagElement.data("tagid") + " to post " + postid);
+    $.post("#", {
+        action: actionAddTagToPost,
+        tagid: tagid,
+        postid: postid
+    }, function(_data){
+        console.log(_data);
+    });
+}
+function removeTagFromPost(tagElement, postid) {
+    tagElement.toggleClass("active-tag");
+    var tagid = tagElement.data("tagid");
+    console.log("removing tag " + tagElement.data("tagid") + " from post " + postid);
+    $.post("#", {
+        action: actionRemoveTagFromPost,
+        tagid: tagid,
+        postid: postid
+    }, function(_data){
+        console.log(_data);
     });
 }
 function saveTag(){

@@ -21,8 +21,8 @@ if (isset($_GET["postid"])) {
     //must save this new draft
     include_once (SRC_DIR . "actionHandler.php");
     $postid = saveNewDraft();
-    $_POST["postid"] = $postid;
-    $_POST["action"] = ACTION_TAGS_BY_POSTID;
-    handle($_POST["action"]);
+//    $_POST["postid"] = $postid;
+//    $_POST["action"] = ACTION_TAGS_BY_POSTID;
+//    handle($_POST["action"]);
 }
 include (SRC_DIR . 'html/dashboard/editor.html');

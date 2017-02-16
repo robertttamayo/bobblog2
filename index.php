@@ -20,6 +20,8 @@ $bb->addHeadScript(array("script" =>
                          "var actionSavePost = \"" . ACTION_SAVE_POST . "\";" .
                          "var actionSaveTag = \"" . ACTION_SAVE_TAG . "\";" .
                          "var actionSaveCat = \"" . ACTION_SAVE_CAT . "\";" .
+                         "var actionAddTagToPost = \"" . ACTION_ADD_TAG_TO_POST . "\";" .
+                         "var actionRemoveTagFromPost = \"" . ACTION_REMOVE_TAG_FROM_POST . "\";" .
                          
                          "var homeUrl = \"" . ROOT . "\";" .
                          "var dashboardTemplateDir = \"" . ROOT . SRC_DIR . "html/dashboard/\";" . 

@@ -6,10 +6,14 @@ $gray: #aeaeae;
 $shadow-gray: rgba(174, 174, 174, .5);
 $light-gray: #dedede;
 //$blue: #0fc0fc;
-$blue: #0fd4fc;
+//$blue: #0fd4fc;
+//$blue: #003367;
+$blue: #003367;
+$olive: #274d00;
 //$white: #fff;
 //$blue: #4dff6a;
 $white: #fff;
+$off-white: #f5f5f5;
 
 $red: #fc0f5e;
 $green: #0ffcae;
@@ -24,7 +28,7 @@ $color-c: #029dbc;
 //$white: #fff;
 
 $border-bold: 4px solid $dark-gray;
-$box-shadow-bold-dark-gray: 4px 4px 0px 0px $dark-gray;
+$box-shadow-bold-dark-gray: 2px 2px 0px 0px $dark-gray;
 // FONTS
 
 $sans: 'Droid Sans', sans-serif;
@@ -77,20 +81,21 @@ button:not(.btn-ii), .btn {
     -webkit-appearance: none;
     display: block;
     padding: $padding-medium;
-    background: $dark-gray;
-    color: $white;
+    background: $blue;
+    color: $off-white;
     border: none;
-    box-shadow: 4px 4px 0px 0px $gray;
+    box-shadow: 2px 2px 0px 0px $gray;
     font-size: $font-size-medium;
     transition: all .2s;
+    border-radius: 4px;
     &.inline {
         display: inline-block;
     }
     &:hover {
-        background: $light-gray;
-        color: $dark-gray;
+        background: $blue;
+        color: $off-white;
         transform: scale(1.1);
-        box-shadow: 4px 4px 0px -2px $dark-gray;
+        box-shadow: 2px 2px 0px 0px $gray;
     }
     &:nth-of-type(odd) {
 //        color: $color-a;
@@ -132,3 +137,26 @@ button.btn-ii, .btn-ii {
     left: 50%;
     transform: translate(-50%, -50%);
 }
+
+// ANIMATIONS
+@-webkit-keyframes bounce {
+    50% {
+        -webkit-transform: scale(1.05);
+        transform: scale(1.05);
+    }
+    100% {
+        -webkit-transform: scale(1);
+        transform: scale(1);
+    }
+}
+@keyframes bounce {
+    50% {
+        -webkit-transform: scale(1.05);
+        transform: scale(1.05);
+    }
+    100% {
+        -webkit-transform: scale(1);
+        transform: scale(1);
+    }
+}
+    

@@ -17,7 +17,7 @@ class BobBlog {
 
     public function __construct(){
         //$this->db_con = new PDO("mysql:host={DB_SERVER};dbname={DB_NAME}", BD_USERNAME, DB_PASSWORD);
-        $this->getTags(null);
+        //$this->getTags(null);
     }
     
     public function headScripts(){
@@ -109,15 +109,16 @@ class BobBlog {
         if ($result->num_rows > 0) {
             // output data of each row
             while($row = $result->fetch_assoc()) {
-                $this->all_tags[] = ["name" => $row["tagname"], "id" => $row["tagid"]];
+                $this->all_tags[] = ["name" => $row["tagname"], "id" => $row["tagid"], "active" => false];
             }
         } else {
-            echo "0 results";
+            // 0 results
         }
         $conn->close();
         return $this->all_tags;
     }
     public function getTags($postid){
+        echo "getting tags by postid";
         if ($postid == null) {
             
         }
@@ -127,32 +128,24 @@ class BobBlog {
             die("Connection failed: " . $conn->connect_error);
         }
         
-        $sql = "SELECT * FROM tagbase";
+        $sql = "SELECT tagname FROM tagblogview WHERE postid = $postid";
         $result = $conn->query($sql);
         
-        if ($result->num_rows > 0) {
-            // output data of each row
-            while($row = $result->fetch_assoc()) {
-                $this->tags[] = ["name" => $row["tagname"], "id" => $row["tagid"]];
+        if ($result != false) {
+            if ($result->num_rows > 0) {
+                // output data of each row
+                while($row = $result->fetch_assoc()) {
+                    $this->tags[] = ["name" => $row["tagname"], "id" => $row["tagid"]];
+                }
+            } else {
+                // 0 results
             }
         } else {
-            echo "0 results";
+            
         }
         
-//        $sql = "SELECT postid FROM tabblogbase"
-//        $result = $conn->query($sql);
-//        
-//        if ($result->num_rows > 0) {
-//            // output data of each row
-//            while($row = $result->fetch_assoc()) {
-//                $this->tags[] = $row["tagname"];
-//                
-//            }
-//        } else {
-//            echo "0 results";
-//        }
-        
         $conn->close();
+        return $this->tags;
     }
     public function initPosts(){
         $conn = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
