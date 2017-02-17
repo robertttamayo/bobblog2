@@ -25,6 +25,19 @@ $(document).ready(function(){
     });
     
 });
+function catPopCallbacks(){
+    $(".create-cat").on("click", function(){
+        saveCat();
+    });
+    $(".cat-name").on("click", function(){
+        addCatToPost($(this), $("#postid-hidden"));
+    });
+    $(".dim, #close-tag-pop").on("click", function(){
+        $(".cat-pop-wrap").fadeOut("medium", function(){
+            $(this).remove();
+        });
+    });
+}
 function tagPopCallbacks(){
     $(".create-tag").on("click", function(){
         saveTag();
@@ -63,11 +76,28 @@ function editContainerCallbacks(){
                 .focus();
     });
     $(".manage-tags").on("click", function(){
+        var postid = $("#postid-hidden").text();
         var tagPop = document.createElement("div");
+        var url = homeUrl + "src/tags.php?postid=" + postid;
+        console.log(url);
         tagPop = $(tagPop);
-        $(tagPop).load(homeUrl + "src/tags.php", function(){
+        $(tagPop).load(url, function(){
             tagPopCallbacks();
         });
+        
+        $("body").append($(tagPop));
+        $(".dim").show().data("lock", "tags");
+    });
+    $(".manage-cats").on("click", function(){
+        var postid = $("#postid-hidden").text();
+        var catPop = document.createElement("div");
+        var url = homeUrl + "src/categories.php?postid=" + postid;
+        console.log(url);
+        tagPop = $(tagPop);
+        $(tagPop).load(url, function(){
+            tagPopCallbacks();
+        });
+        
         $("body").append($(tagPop));
         $(".dim").show().data("lock", "tags");
     });

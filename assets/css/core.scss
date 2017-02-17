@@ -208,7 +208,7 @@ body {
         }
     }
 }
-.tags-pop-wrap {
+.tags-pop-wrap, .cat-pop-wrap {
     @include centerize(fixed);
     width: 660px;
     padding: 30px;

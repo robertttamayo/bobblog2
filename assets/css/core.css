@@ -681,7 +681,7 @@ body {
   transform: translate(-50%, -50%);
 }
 
-.tags-pop-wrap {
+.tags-pop-wrap, .cat-pop-wrap {
   position: fixed;
   top: 50%;
   left: 50%;

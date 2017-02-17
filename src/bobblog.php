@@ -118,9 +118,9 @@ class BobBlog {
         return $this->all_tags;
     }
     public function getTags($postid){
-        echo "getting tags by postid";
+        
         if ($postid == null) {
-            
+            echo "postid is null";
         }
         $conn = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
         
@@ -128,14 +128,14 @@ class BobBlog {
             die("Connection failed: " . $conn->connect_error);
         }
         
-        $sql = "SELECT tagname FROM tagblogview WHERE postid = $postid";
+        $sql = "SELECT tagid FROM tagblogview WHERE postid = $postid";
         $result = $conn->query($sql);
         
         if ($result != false) {
             if ($result->num_rows > 0) {
                 // output data of each row
                 while($row = $result->fetch_assoc()) {
-                    $this->tags[] = ["name" => $row["tagname"], "id" => $row["tagid"]];
+                    $this->tags[] = ["id" => $row["tagid"]];
                 }
             } else {
                 // 0 results
