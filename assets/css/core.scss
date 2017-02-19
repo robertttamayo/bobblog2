@@ -89,10 +89,17 @@ body {
     justify-content: center;
 }
 #frame {
-    padding: 12px;
     border: 2px solid #333;
     width: 80%;
+    
+    #content {
+        padding: 12px;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+    }
 }
+
 .post-submit-options {
     justify-content: space-between;
     width: 80%;
@@ -264,4 +271,18 @@ body {
  
 .scrollbar::-webkit-scrollbar-thumb {
   background-color: $blue;
+}
+.login-form-wrapper {
+    width: 100%;
+    height: 100vh;
+    background-image: url(../img/pup.jpg);
+    background-size: cover;
+    
+    .login-form {
+        width: 600px;
+        padding: 60px;
+        @include centerize(fixed);
+        background: rgba(255, 255, 255, .7);
+        border-radius: 4px;
+    }
 }

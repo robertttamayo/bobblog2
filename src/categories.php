@@ -10,13 +10,17 @@ if (isset($_GET["postid"])) {
 
 $bb = new BobBlog();
 
-$categories = $bb->getAllCategories();
+$categories = $bb->getAllCats();
+$cat = $bb->getCat($postid);
+echo "<pre>";
+print_r($categories);
+print_r($cat);
+echo "</pre>";
 
-for ($i = 0; $i < sizeof($all_tags); $i++) {
-    for ($j = 0; $j < sizeof($tags); $j++) {
-        if ($tags[$j]["id"] == $all_tags[$i]["id"]) {
-            $all_tags[$i]["active"] = true;
-        }
+for ($i = 0; $i < sizeof($categories); $i++) {
+    if ($categories[$i]["catid"] == $cat["catid"]) {
+        $categories[$i]["active"] = true;
+        break;
     }
 }
 

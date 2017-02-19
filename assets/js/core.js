@@ -26,14 +26,19 @@ $(document).ready(function(){
     
 });
 function catPopCallbacks(){
-    $(".create-cat").on("click", function(){
+    $(".create-tag").on("click", function(){
+        console.log("event listener fired");
         saveCat();
     });
-    $(".cat-name").on("click", function(){
-        addCatToPost($(this), $("#postid-hidden"));
+    $(".tag-name").on("click", function(){
+        if ($(this).hasClass("active-tag")) {
+            removeCatFromPost($(this), $("#postid-hidden").text());
+        } else {
+            addCatToPost($(this), $("#postid-hidden").text());
+        }
     });
     $(".dim, #close-tag-pop").on("click", function(){
-        $(".cat-pop-wrap").fadeOut("medium", function(){
+        $(".tag-pop-wrap").fadeOut("medium", function(){
             $(this).remove();
         });
     });
@@ -82,24 +87,22 @@ function editContainerCallbacks(){
         console.log(url);
         tagPop = $(tagPop);
         $(tagPop).load(url, function(){
+            $("body").append($(tagPop));
+            $(".dim").show().data("lock", "tags");
             tagPopCallbacks();
         });
-        
-        $("body").append($(tagPop));
-        $(".dim").show().data("lock", "tags");
     });
     $(".manage-cats").on("click", function(){
         var postid = $("#postid-hidden").text();
         var catPop = document.createElement("div");
         var url = homeUrl + "src/categories.php?postid=" + postid;
         console.log(url);
-        tagPop = $(tagPop);
-        $(tagPop).load(url, function(){
-            tagPopCallbacks();
+        catPop = $(catPop);
+        $(catPop).load(url, function(){
+            $("body").append($(catPop));
+            $(".dim").show().data("lock", "tags");
+            catPopCallbacks();
         });
-        
-        $("body").append($(tagPop));
-        $(".dim").show().data("lock", "tags");
     });
 }
 function addTagToPost(tagElement, postid) {
@@ -126,18 +129,64 @@ function removeTagFromPost(tagElement, postid) {
         console.log(_data);
     });
 }
+function addCatToPost(catElement, postid) {
+    $(".tag-name").removeClass("active-tag");
+    catElement.addClass("active-tag");
+    var catid = catElement.data("catid");
+    console.log("adding tag " + catElement.data("catid") + " to post " + postid);
+    $.post("#", {
+        action: actionAddCatToPost,
+        catid: catid,
+        postid: postid
+    }, function(_data){
+        console.log(_data);
+    });
+}
+function removeCatFromPost(catElement, postid) {
+    $(".tag-name").removeClass("active-tag");
+    var catid = catElement.data("catid");
+    console.log("removing tag " + catElement.data("catid") + " from post " + postid);
+    $.post("#", {
+        action: actionRemoveCatFromPost,
+        catid: catid,
+        postid: postid
+    }, function(_data){
+        console.log(_data);
+    });
+}
 function saveTag(){
     var tagName = $("#tag-create-input").val();
+    var postid = $("#postid-hidden").text();
     console.log(tagName);
     $.post("#", {
         action: actionSaveTag,
-        name: tagName
+        name: tagName,
+        postid: postid
     }, function(_data){
-        console.log(_data);
+        console.log("callback");
         _data = JSON.parse(_data);
         console.log(_data);
         var event = new CustomEvent("tag_saved", {"detail": _data });
         document.dispatchEvent(event);
+        console.log("after dispatching event");
+    });
+}
+function saveCat(){
+    console.log("event function fired");
+    var catName = $("#tag-create-input").val();
+    var postid = $("#postid-hidden").text();
+    console.log(catName);
+    $.post("#", {
+        action: actionSaveCat,
+        name: catName,
+        postid: postid
+    }, function(_data){
+        console.log("callback");
+        _data = JSON.parse(_data);
+        console.log(_data);
+        var event = new CustomEvent("cat_saved", {"detail": _data });
+        document.dispatchEvent(event);
+        console.log("after dispatching event");
     });
 }
 function savePost(){
@@ -180,6 +229,7 @@ function validatePost(){
 document.addEventListener("post_saved", function (event){ 
     createMessage("Your post is safe!");
 }, false);
+
 document.addEventListener("tag_saved", function(event){
     console.log(event.detail);
     var data = event.detail;
@@ -191,8 +241,36 @@ document.addEventListener("tag_saved", function(event){
     tagName = $(tagName);
     tagId = $(tagId);
     
-    tagName.addClass("tag-name").text(data.tag_name).appendTo("#tag-name-wrapper");
-    tagId.addClass("tag-id").text(data.tag_id).appendTo(tagName);
+    tagName.addClass("tag-name")
+            .addClass("active-tag")
+            .data("tagid", data.tag_id)
+            .text(data.tag_name)
+            .appendTo("#active-tags");
+    tagId.addClass("tag-id")
+            .text(data.tag_id)
+            .appendTo(tagName);
+    
+}, false);
+
+document.addEventListener("cat_saved", function(event){
+    console.log(event.detail);
+    var data = event.detail;
+    createMessage("New category \"" + data.cat_name + "\" created!");
+    // create div and append it to end of tag list with the tag id and tag name
+    var tagName = document.createElement("div");
+    var tagId = document.createElement("div");
+    
+    tagName = $(tagName);
+    tagId = $(tagId);
+    
+    tagName.addClass("tag-name")
+            .addClass("active-tag")
+            .data("catid", data.cat_id)
+            .text(data.cat_name)
+            .appendTo("#active-tags");
+    tagId.addClass("tag-id")
+            .text(data.cat_id)
+            .appendTo(tagName);
     
 }, false);
 

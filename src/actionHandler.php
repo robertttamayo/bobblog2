@@ -44,6 +44,7 @@ function handle(){
             break;
         case ACTION_SAVE_TAG:
             $tag_name = $_POST["name"];
+            $post_id = $_POST["postid"];
                         
             $conn = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
         
@@ -51,26 +52,27 @@ function handle(){
                 die("Connection failed: " . $conn->connect_error);
             }
             
-            if (!isset($_POST["change_name"])) {
-                $sql = "INSERT INTO tagbase (tagname)
-                    VALUES (\"$tag_name\")";
-            } else {
-//                $sql = "UPDATE tagbase SET content='$post_file'
-//                , posttitle='$post_name'
-//                , draft='$post_draft' WHERE id=$post_id";
-            }
+            $sql = "INSERT INTO tagbase (tagname) VALUES (\"$tag_name\")";
             
             $result = $conn->query($sql);
-
+            
             if ($result === TRUE) {
                 $data = [];
                 $data["tag_name"] = $tag_name;
                 $data["tag_id"] = $conn->insert_id;
-                echo json_encode($data);
+                
+                // update the tagblogmap
+                $sql = "INSERT INTO tagblogmap (postid, tagid) VALUES ($post_id, $conn->insert_id)";
+                $result = $conn->query($sql);
+                if ($result === TRUE) {
+                    echo json_encode($data);
+                } else {
+                    // failed
+                }
             } else {
                 echo "Error: " . $sql . "<br>" . $conn->error;
             }
-
+            
             $conn->close();
             exit;
             break;
@@ -122,41 +124,86 @@ function handle(){
             break;
         case ACTION_SAVE_CAT:
             $cat_name = $_POST["name"];
-            
-            $post_file = htmlentities($post_file, ENT_QUOTES);
-            
-//            $post_draft = $post_draft ? 1 : 0;
-            
+            $post_id = $_POST["postid"];
+                        
             $conn = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
         
             if ($conn->connect_error) {
                 die("Connection failed: " . $conn->connect_error);
             }
             
-            if ($post_id == "") {
-                $sql = "INSERT INTO blogbase (content, posttitle, draft)
-                    VALUES (\"$post_file\", \"$post_name\", $post_draft)";
-            } else {
-                $sql = "UPDATE blogbase SET content='$post_file'
-                , posttitle='$post_name'
-                , draft='$post_draft' WHERE id=$post_id";
-//                $sql = "INSERT INTO blogbase (id, content, posttitle, draft)
-//                    VALUES ($post_id, $post_file, $post_name, $post_draft)";
-            }
+            $sql = "INSERT INTO catbase (catname) VALUES (\"$cat_name\")";
             
             $result = $conn->query($sql);
-
+            
             if ($result === TRUE) {
                 $data = [];
-                $data["postid"] = $post_id == "" ? $conn->insert_id : $post_id;
-                echo json_encode($data);
+                $data["cat_name"] = $cat_name;
+                $data["cat_id"] = $conn->insert_id;
+                
+                // update the tagblogmap
+                $sql = "UPDATE blogbase SET category = $conn->insert_id WHERE id = $post_id";
+                $result = $conn->query($sql);
+                if ($result === TRUE) {
+                    echo json_encode($data);
+                } else {
+                    // failed
+                }
             } else {
                 echo "Error: " . $sql . "<br>" . $conn->error;
             }
-
+            
             $conn->close();
+            exit;
+            break;
+        case ACTION_ADD_CAT_TO_POST:
+            $catid = $_POST["catid"];
+            $postid = $_POST["postid"];
+                        
+            $conn = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
+        
+            if ($conn->connect_error) {
+                die("Connection failed: " . $conn->connect_error);
+            }
+            // to do: add binding here
+            $sql = "UPDATE blogbase SET category = $catid WHERE id = $postid";
+            
+            $result = $conn->query($sql);
+            
+            if ($result === TRUE) {
+                echo ("Success");
+            } else {
+                echo "Error: " . $sql . "<br>" . $conn->error;
+            }
+            
+            exit;
             break;
             exit;
+            break;
+        case ACTION_REMOVE_CAT_FROM_POST:
+            $catid = $_POST["catid"];
+            $postid = $_POST["postid"];
+                        
+            $conn = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
+        
+            if ($conn->connect_error) {
+                die("Connection failed: " . $conn->connect_error);
+            }
+            // to do: add binding here
+            $sql = "UPDATE blogbase SET category = NULL WHERE id = $postid";
+            
+            $result = $conn->query($sql);
+            
+            if ($result === TRUE) {
+                echo ("Success");
+            } else {
+                echo "Error: " . $sql . "<br>" . $conn->error;
+            }
+            
+            exit;
+            break;
+            exit;
+            break;
         case ACTION_TAGS_BY_POSTID:
             $conn = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
         

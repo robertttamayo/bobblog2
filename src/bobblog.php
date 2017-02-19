@@ -147,6 +147,62 @@ class BobBlog {
         $conn->close();
         return $this->tags;
     }
+    public function getAllCats(){
+    
+        $this->all_cats = array();
+        
+        $conn = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
+        
+        if ($conn->connect_error) {
+            die("Connection failed: " . $conn->connect_error);
+        }
+        
+        $sql = "SELECT * FROM catbase";
+        $result = $conn->query($sql);
+        
+        if ($result->num_rows > 0) {
+            // output data of each row
+            while($row = $result->fetch_assoc()) {
+                $this->all_cats[] = ["catname" => $row["catname"], "catid" => $row["catid"], "active" => false];
+            }
+        } else {
+            // 0 results
+        }
+        $conn->close();
+        return $this->all_cats;
+    }
+    public function getCat($postid){
+        $this->cat = array();
+        
+        if ($postid == null) {
+            echo "postid is null";
+        }
+        $conn = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
+        
+        if ($conn->connect_error) {
+            die("Connection failed: " . $conn->connect_error);
+        }
+        
+        $sql = "SELECT catid, catname FROM catblogview WHERE postid = $postid";
+        
+        $result = $conn->query($sql);
+        
+        if ($result != false) {
+            if ($result->num_rows > 0) {
+                // output data of each row
+                while($row = $result->fetch_assoc()) {
+                    $this->cat[] = ["catid" => $row["catid"], "catname" => $row["catname"]];
+                }
+            } else {
+                // 0 results
+            }
+        } else {
+            
+        }
+        
+        $conn->close();
+        return $this->cat;
+    }
     public function initPosts(){
         $conn = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
         

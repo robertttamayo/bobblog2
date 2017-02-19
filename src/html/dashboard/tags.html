@@ -3,10 +3,10 @@
         <div class="create-tag-wrap flex flex-hor">
             <div class="">Create a new tag:</div>
             <input id="tag-create-input" class="tag-create-input" type="text" placeholder="Tag name">
-            <div class="btn inline create-tag" id="create-tag">Create tag</div>
+            <div class="btn inline create-tag" id="create-tag">Create</div>
         </div>
         <div id="tag-name-wrapper" class="tag-name-wrapper flex flex-hor">
-            <div class="active-tags">
+            <div id="active-tags" class="active-tags">
                 <?php for($i = 0; $i < sizeof($all_tags); $i++) { ?>
                 <div class="tag-name 
                     <?php if ($all_tags[$i]["active"]){
