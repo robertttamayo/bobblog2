@@ -36,47 +36,54 @@ ol, ul {
 }
 
 .color-a {
-  color: #0fd4fc;
+  color: #b73949;
 }
 
 .color-b {
-  color: #5be2fd;
+  color: #b73949;
 }
 
 .color-c {
-  color: #029dbc;
+  color: #b73949;
+}
+
+.container {
+  padding: 12px;
+  border-radius: 500px;
+  box-shadow: 0 0 4px 0 #aaa;
+  background: #efefef;
 }
 
 button:not(.btn-ii), .btn {
   -webkit-appearance: none;
   display: block;
   padding: 12px;
-  background: #003367;
-  color: #f5f5f5;
+  background: #92d4dd;
+  color: #b73949;
   border: none;
-  box-shadow: 2px 2px 0px 0px #aeaeae;
+  box-shadow: inset 0px 0px 4px 0px #888;
   font-size: 24px;
   transition: all .2s;
-  border-radius: 4px;
+  border-radius: 500px;
 }
 button:not(.btn-ii).inline, .btn.inline {
   display: inline-block;
 }
 button:not(.btn-ii):hover, .btn:hover {
-  background: #003367;
-  color: #f5f5f5;
+  background: #92d4dd;
+  color: #b73949;
   transform: scale(1.1);
-  box-shadow: 2px 2px 0px 0px #aeaeae;
 }
 
 button.btn-ii, .btn-ii {
   display: block;
   padding: 4px;
-  background: transparent;
-  color: #333;
+  background: #92d4dd;
+  color: #b73949;
   border: none;
   font-size: 16px;
-  box-shadow: none;
+  box-shadow: inset 0 0 4px 0 #888;
+  border-radius: 500px;
 }
 
 .flex {
@@ -111,32 +118,19 @@ button.btn-ii, .btn-ii {
     transform: scale(1);
   }
 }
-#frame {
-  width: 90%;
-  height: 800px;
-  display: block;
-  margin: auto;
-}
-
-#content:focus {
-  outline: 0;
-}
-
-#content *:focus {
-  outline: 0;
-}
-
-.blog-compose {
-  font-weight: 300;
-}
-
-.top-container > div {
-  display: block;
-}
-
 .edit-container {
-  color: #003367;
+  color: #92d4dd;
   width: 100%;
+  position: relative;
+  padding: 0;
+  margin-bottom: 24px;
+}
+.edit-container .edit-container-bottom {
+  position: absolute;
+  bottom: -5px;
+  width: 100%;
+  height: 8px;
+  background: transparent;
 }
 
 .edit-item {
@@ -154,13 +148,11 @@ button.btn-ii, .btn-ii {
 }
 .edit-item.i button {
   background: #fff;
-  color: #333;
-  border: 2px solid #333;
+  color: #b73949;
 }
 .edit-item.ii button {
   background: #fff;
-  color: #333;
-  border: 2px solid #333;
+  color: #b73949;
 }
 
 .dialog-container {
@@ -454,7 +446,7 @@ button.btn-ii, .btn-ii {
   padding: 12px 0;
 }
 .your-posts .post-info-wrapper .title {
-  color: #003367;
+  color: #92d4dd;
   font-size: 24px;
 }
 .your-posts .post-info-wrapper .id {
@@ -478,10 +470,26 @@ body {
   width: 84px;
 }
 
+.editor-wrap {
+  width: 80%;
+  margin: auto;
+}
+
+.post-title-wrap {
+  width: 100%;
+  margin-bottom: 24px;
+  justify-content: space-between;
+}
+
 .top-wrap {
   justify-content: space-between;
   padding: 12px;
-  border-top: 4px solid #333;
+  background: #efefef;
+  box-shadow: 0 0px 4px 0 #aaa;
+  margin: 12px;
+  border-radius: 0;
+  margin: 0;
+  margin-bottom: 24px;
 }
 
 .site-name {
@@ -524,15 +532,21 @@ body {
   width: 100%;
 }
 
-.main-container-wrap {
-  margin-top: 12px;
+.left-rail-wrap {
+  width: 76px;
 }
 
+.left-rail {
+  position: fixed;
+}
 .left-rail .btn {
   margin-bottom: 12px;
   width: 52px;
   height: 52px;
   text-align: center;
+}
+.left-rail .btn:last-child {
+  margin-bottom: 0;
 }
 
 .left-rail-divider {
@@ -548,7 +562,6 @@ body {
 
 .option-wrap .fa {
   float: right;
-  /*    color: #999;*/
 }
 
 .edit-container {
@@ -556,14 +569,24 @@ body {
 }
 
 #frame {
-  border: 2px solid #333;
-  width: 80%;
+  border: 1px solid #333;
+  width: 90%;
+  background: #f5f5f5;
+  border: none;
+  padding: 3%;
+  box-shadow: 0 0 4px 0 #aaa;
+  border-radius: 42px;
+  margin: auto;
+  height: 80vh;
 }
 #frame #content {
   padding: 12px;
   width: 100%;
   height: 100%;
   overflow: auto;
+  background: white;
+  border: 1px solid #92d4dd;
+  border-radius: 24px;
 }
 
 .post-submit-options {
@@ -584,22 +607,24 @@ body {
 
 .post-title {
   width: 80%;
-  height: 40px;
-  border: 1px solid #003367;
-  line-height: 36px;
+  height: 52px;
+  line-height: 50px;
   vertical-align: middle;
-  box-shadow: 2px 2px 0px 0px #aeaeae;
-  margin: auto;
-  margin-bottom: 12px;
-  border-radius: 4px;
+  border-radius: 500px;
+  background: #fff;
 }
 .post-title .label {
   width: 40%;
   height: 100%;
-  background: #003367;
-  color: #fff;
+  background: #92d4dd;
+  color: #b73949;
   text-align: center;
   display: inline-block;
+  border-top-right-radius: inherit;
+  border-bottom-right-radius: inherit;
+  box-shadow: inset 0 0 4px 0 #888;
+  border-top: none;
+  border: none;
 }
 .post-title input {
   -webkit-appearance: none;
@@ -608,7 +633,11 @@ body {
   width: 60%;
   color: #333;
   text-indent: 12px;
-  border-radius: inherit;
+  border-top-left-radius: inherit;
+  border-bottom-left-radius: inherit;
+  border-top: 1px solid #92d4dd;
+  border-left: 1px solid #92d4dd;
+  border-bottom: 1px solid #92d4dd;
 }
 
 .dim {
@@ -630,7 +659,7 @@ body {
   transform: translate(-50%, -50%);
   width: 500px;
   padding: 50px;
-  background: #003367;
+  background: #92d4dd;
   border: 2px solid #333;
   box-shadow: 4px 4px 0px 0px rgba(51, 51, 51, 0.5);
   color: #fff;
@@ -641,7 +670,7 @@ body {
   background: #fff;
 }
 .message-box.alert {
-  background: #003367;
+  background: #92d4dd;
 }
 .message-box .close-x {
   display: block;
@@ -655,7 +684,7 @@ body {
 
 .loading {
   display: none;
-  color: #003367;
+  color: #92d4dd;
   z-index: 100;
   position: absolute;
   top: 50%;
@@ -694,7 +723,7 @@ body {
   width: 660px;
   padding: 30px;
   background: white;
-  border: 2px solid #003367;
+  border: 2px solid #92d4dd;
   box-shadow: 4px 4px 0px 0px rgba(51, 51, 51, 0.5);
   border-radius: 4px;
 }
@@ -711,15 +740,15 @@ body {
   margin-bottom: 8px;
   border-radius: 4px;
   padding: 12px;
-  color: #003367;
-  border: 1px solid #003367;
+  color: #92d4dd;
+  border: 1px solid #92d4dd;
   background: #fff;
   transition: all .2s;
 }
 .tag-name-wrapper .tag-name.active-tag {
   color: #f5f5f5;
-  border: 1px solid #003367;
-  background: #003367;
+  border: 1px solid #92d4dd;
+  background: #92d4dd;
 }
 .tag-name-wrapper .tag-name .tag-id {
   display: none;
@@ -734,7 +763,7 @@ body {
 }
 
 .scrollbar::-webkit-scrollbar-thumb {
-  background-color: #003367;
+  background-color: #92d4dd;
 }
 
 .login-form-wrapper {

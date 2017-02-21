@@ -3,24 +3,45 @@
         <div class="quick-actions">
             <div></div>
         </div>
-        <?php
-        $posts = $bb->getPosts();
-        ?>
+        <div class="welcome-posts-wrapper">
         <?php for ($i = 0; $i < sizeof($posts); $i++) { ?>            
-            <div class="post-info-wrapper">
-        
-                <div class="title"><?= $posts[$i]->title ?></div>
-                <div class="id"><?= $posts[$i]->id ?></div>
-                <div class="content"><?= $posts[$i]->content ;?></div>
-                <div class="category"><?= $posts[$i]->category ;?></div>
-                <div class="draft"><?= $posts[$i]->draft;?></div>
-                <div class="lastedited"><?= $posts[$i]->lastedited ;?></div>
-                <div class="author"><?= $posts[$i]->author;?></div>
-                <div class="publishdate"><?= $posts[$i]->publishdate;?></div>
+            <div class="post-info-wrapper flex flex-hor">
+                
+                <div class="post-info" data-postid="<?= $posts[$i]->id ?>">
+                    <div class="title"><?= $posts[$i]->title ?></div>
+                    <div class="author"><?= $posts[$i]->author;?></div>
+                    <div class="shortpreview"><?= $posts[$i]->shortpreview ;?></div>
+                </div>
+                
+                <div class="post-info-buttons flex flex-hor">
+                    <div class="btn post-edit" data-postid="<?= $posts[$i]->id ?>">
+                        <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                    </div>
+                    
+                    <?php if ($posts[$i]->draft) { ?>
+                        <div class="btn post-stats" data-postid="<?= $posts[$i]->id ?>">
+                            <i class="fa fa-bar-chart" aria-hidden="true"></i>
+                        </div>
+                    <?php } else { ?>
+                        <div class="btn post-stats" data-postid="<?= $posts[$i]->id ?>">
+                            <i class="fa fa-bar-chart" aria-hidden="true"></i>
+                        </div>
+                    <?php } ?>
+                    
+                    <div class="btn post-delete" data-postid="<?= $posts[$i]->id ?>">
+                        <i class="fa fa-trash" aria-hidden="true"></i>
+                    </div>
+                    
+                </div>
+                <?php if ($posts[$i]->draft) { ?>
+                    <div class="draft"><i class="fa fa-wrench" aria-hidden="true"></i> Draft</div>
+                <?php } else { ?>
+                    <div class="publishdate"><?= $posts[$i]->publishdate;?></div>
+<!--                    <div class="lastedited"><?= $posts[$i]->lastedited ;?></div>-->
+                <?php } ?>
                 
             </div>
-        
         <?php } ?>
-        
+        </div>
     </div>
 </div>

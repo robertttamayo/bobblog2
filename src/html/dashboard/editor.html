@@ -1,71 +1,74 @@
-<div class="post-title flex flex-hor">
-    <div class="label">What's the name of your post?</div>
-    <input name="post-title" type="text" id="post-title" placeholder="Post Title">
-</div>
-<div class="post-meta">
-    <div class="post-meta-wrapper flex flex-hor">
-        <div class="btn inline manage-cats">
-            Categories
+<div class="editor-wrap">
+    <div class="post-title-wrap container flex flex-hor">
+        <div class="post-title flex flex-hor">
+            <input name="post-title" type="text" id="post-title" placeholder="Post Title" value="<?php if ($posttitle != "") {echo $posttitle;} ?>">
+            <div class="label"><i class="fa fa-thumbs-up" aria-hidden="true"></i> Save</div>
         </div>
-        <div class="btn inline manage-tags">
-            Tags
+        <div class="btn post-preview"><i class="fa fa-binoculars" aria-hidden="true"></i> Preview</div>
+    </div>
+    <div class="post-meta">
+        <div class="post-meta-wrapper flex flex-hor">
+            <div class="btn inline manage-cats">
+                <i class="fa fa-tag" aria-hidden="true"></i>
+                Categories
+            </div>
+            <div class="btn inline manage-tags">
+                <i class="fa fa-tags" aria-hidden="true"></i>
+                Tags
+            </div>
         </div>
     </div>
-<!--
-    <div class="categories"><ul><li></li><li id="add-new-category" class="btn inline manage-categories">Categories</li></ul></div>
-    <div class="tags"><ul id="active-tags"><li id="add-new-tag" class="btn inline manage-tags">Add tag</li></ul></div>
--->
+    <div class="post-submit-options flex flex-hor">
+        <button class="save-post"><i class="fa fa-thumbs-up" aria-hidden="true"></i> Save &amp; Publish</button>
+        <button class="draft-post"><i class="fa fa-wrench" aria-hidden="true"></i> Save as Draft</button>
+        <button class="copy-post"><i class="fa fa-files-o" aria-hidden="true"></i> Save as Copy</button>
+        <button class="unpublish-post"><i class="fa fa-user-secret" aria-hidden="true"></i> Unpublish</button>
+        <button class="schedule-post"><i class="fa fa-calendar" aria-hidden="true"></i> Schedule Publish</button>
+    </div>
+    <div class="edit-container container flex flex-hor">
+        <div class="edit-container-bottom"></div>
+        <div class="edit-item i flex flex-hor">
+            <a style="display: none" id="writer-type">Normal</a>
+            <button class="drop-button btn-ii" id="header" onclick="changeWriter(&#34;header&#34;);"><i class="fa fa-header" aria-hidden="true"></i></button>
+            <button class="drop-button btn-ii" id="normal" onclick="changeWriter(&#34;normal&#34;);"><i class="fa fa-font" aria-hidden="true"></i></button>
+        </div>
+        <div class="edit-item ii flex flex-hor">
+            <button id="undo" class="btn-ii" type="button" onclick="myUndo();" style="font-size: large;"><i class="fa fa-undo" aria-hidden="true"></i></button>
+            <button id="redo" class="btn-ii" type="button" onclick="myRedo()"style="font-size: large"><i class="fa fa-repeat" aria-hidden="true"></i></button>
+        </div>
+        <div class="edit-item i flex flex-hor">
+            <button id="italic" class="btn-ii" type="button" onclick="modifyWith(&#34;I&#34;);"><i class="fa fa-italic" aria-hidden="true"></i></button>
+            <button id="bold" class="btn-ii" type="button" onclick="modifyWith(&#34;B&#34;);"><i class="fa fa-bold" aria-hidden="true"></i></button>
+            <button id="underline" class="btn-ii" type="button" onclick="modifyWith(&#34;U&#34;);"><i class="fa fa-underline" aria-hidden="true"></i></button>
+            <button id="strike" class="btn-ii" type="button" onclick="modifyWith(&#34;STRIKE&#34;);"><i class="fa fa-strikethrough" aria-hidden="true"></i></button>
+        </div>
+        <div class="edit-item ii flex flex-hor">
+            <button class="btn-ii drop-button" id="left" onclick="changeTextAlign(&#34;left&#34;);"><i class="fa fa-align-left" aria-hidden="true"></i></button>
+            <button class="btn-ii drop-button" id="center" onclick="changeTextAlign(&#34;center&#34;);"><i class="fa fa-align-center" aria-hidden="true"></i></button>
+            <button class="btn-ii drop-button" id="right" onclick="changeTextAlign(&#34;right&#34;);"><i class="fa fa-align-right" aria-hidden="true"></i></button>
+            <button class="btn-ii drop-button" id="justify" onclick="changeTextAlign(&#34;justify&#34;);"><i class="fa fa-align-justify" aria-hidden="true"></i></button>
+        </div>
+
+        <!--<div class="edit-item">
+            <button id="ol" type="button" onclick="addList(true);">OL</button>
+            <button id="ul" type="button" onclick="addList(false);">UL</button>
+            <button id="block" type="button" onclick="addBlockquote();"><b>&#34;  &#34;</b></button>
+        </div>-->
+
+        <div class="edit-item i">
+            <!--<button id="image" type="button" onclick="showLinkDialog();">Link</button>-->
+            <button class="btn-ii" id="image" type="button" onclick="showDialog();"><i class="fa fa-picture-o" aria-hidden="true"></i></button>
+            <!--<button id="image" type="button" onclick="showVideoDialog();">Video</button>-->
+        </div>
+    </div> <!--end edit container-->
+
+    <div class="flex flex-hor">
+        <button class="btn-ii" type="button" id="conduit-undo" onclick="addUndoState()" style="position: absolute; top: -100em;"></button>
+        <button class="btn-ii" type="button" id="conduit-init" onclick="initCurrentState()" style="position: absolute; top: -105em;"></button>
+    </div>
     
-</div>
-<div class="post-submit-options flex flex-hor">
-    <button class="save-post">Save &amp; Publish</button>
-    <button class="draft-post">Save as Draft</button>
-    <button class="copy-post">Save as Copy</button>
-    <button class="unpublish-post">Unpublish</button>
-    <button class="schedule-post">Schedule Publish</button>
-</div>
-<div class="edit-container flex flex-hor">
-    <div class="edit-item i flex flex-hor">
-        <a style="display: none" id="writer-type">Normal</a>
-        <button class="drop-button btn-ii" id="header" onclick="changeWriter(&#34;header&#34;);"><i class="fa fa-header" aria-hidden="true"></i></button>
-        <button class="drop-button btn-ii" id="normal" onclick="changeWriter(&#34;normal&#34;);"><i class="fa fa-font" aria-hidden="true"></i></button>
-    </div>
-    <div class="edit-item ii flex flex-hor">
-        <button id="undo" class="btn-ii" type="button" onclick="myUndo();" style="font-size: large;"><i class="fa fa-undo" aria-hidden="true"></i></button>
-        <button id="redo" class="btn-ii" type="button" onclick="myRedo()"style="font-size: large"><i class="fa fa-repeat" aria-hidden="true"></i></button>
-    </div>
-    <div class="edit-item i flex flex-hor">
-        <button id="italic" class="btn-ii" type="button" onclick="modifyWith(&#34;I&#34;);"><i class="fa fa-italic" aria-hidden="true"></i></button>
-        <button id="bold" class="btn-ii" type="button" onclick="modifyWith(&#34;B&#34;);"><i class="fa fa-bold" aria-hidden="true"></i></button>
-        <button id="underline" class="btn-ii" type="button" onclick="modifyWith(&#34;U&#34;);"><i class="fa fa-underline" aria-hidden="true"></i></button>
-        <button id="strike" class="btn-ii" type="button" onclick="modifyWith(&#34;STRIKE&#34;);"><i class="fa fa-strikethrough" aria-hidden="true"></i></button>
-    </div>
-    <div class="edit-item ii flex flex-hor">
-        <button class="btn-ii drop-button" id="left" onclick="changeTextAlign(&#34;left&#34;);"><i class="fa fa-align-left" aria-hidden="true"></i></button>
-        <button class="btn-ii drop-button" id="center" onclick="changeTextAlign(&#34;center&#34;);"><i class="fa fa-align-center" aria-hidden="true"></i></button>
-        <button class="btn-ii drop-button" id="right" onclick="changeTextAlign(&#34;right&#34;);"><i class="fa fa-align-right" aria-hidden="true"></i></button>
-        <button class="btn-ii drop-button" id="justify" onclick="changeTextAlign(&#34;justify&#34;);"><i class="fa fa-align-justify" aria-hidden="true"></i></button>
-    </div>
+</div> <!-- end editor wrap -->
 
-    <!--<div class="edit-item">
-        <button id="ol" type="button" onclick="addList(true);">OL</button>
-        <button id="ul" type="button" onclick="addList(false);">UL</button>
-        <button id="block" type="button" onclick="addBlockquote();"><b>&#34;  &#34;</b></button>
-    </div>-->
-
-    <div class="edit-item i">
-        <!--<button id="image" type="button" onclick="showLinkDialog();">Link</button>-->
-        <button class="btn-ii" id="image" type="button" onclick="showDialog();"><i class="fa fa-picture-o" aria-hidden="true"></i></button>
-        <!--<button id="image" type="button" onclick="showVideoDialog();">Video</button>-->
-    </div>
-</div> <!--end edit container-->
-
-<div class="flex flex-hor">
-
-<button class="btn-ii" type="button" id="conduit-undo" onclick="addUndoState()" style="position: absolute; top: -100em;"></button>
-<button class="btn-ii" type="button" id="conduit-init" onclick="initCurrentState()" style="position: absolute; top: -105em;"></button>
-
-</div>
 <span id="postid-hidden" style="position: absolute; top: -110em; display: none;"><?= $postid ?></span>
 <dialog id="img-dialog">
     <div class="dialog-container">

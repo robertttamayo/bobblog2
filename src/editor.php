@@ -14,8 +14,8 @@ $hasContent = false;
 if (isset($_GET["postid"])) {
     $postid = $_GET["postid"];
     $post = $bb->getPost($postid);
-    $postcontent = $post->postcontent;
-    $posttitle = $post->posttitle;
+    $postcontent = $post->content;
+    $posttitle = $post->title;
     $hasContent = true;
 } else {
     //must save this new draft

@@ -11,6 +11,7 @@ class BobBlog {
     private $db_con;
     private $userProfile;
     private $post = array();
+    private $activePost;
     private $tags = array();
     private $all_tags = array();
     private $posts = array();
@@ -80,15 +81,24 @@ class BobBlog {
         if ($result->num_rows > 0) {
             // output data of each row
             while($row = $result->fetch_assoc()) {
-                $this->post["postid"] = $row["id"];
-                $this->post["content"] = $row["content"];
+                $this->activePost = new Post();
+                
+                $this->activePost->id = $row["id"];
+                $this->activePost->content = $row["content"];
+                $this->activePost->category = $row["category"];
+                $this->activePost->author = $row["author"];
+                $this->activePost->publishdate = $row["publishdate"];
+                $this->activePost->draft = $row["draft"];
+                $this->activePost->lastedited = $row["lastedited"];
+                $this->activePost->title = $row["posttitle"];
+                
             }
         } else {
             echo "0 results";
         }
         
         $conn->close();
-        return $this->post;
+        return $this->activePost;
     }
     public function getPosts(){
         return $this->posts;
@@ -221,6 +231,8 @@ class BobBlog {
                 $post->title = $row["posttitle"];
                 $post->id = $row["id"];
                 $post->content = $row["content"];
+                $post->shortpreview = $row["shortpreview"];
+                $post->preview = $row["preview"];
                 $post->category = $row["category"];
                 $post->draft = $row["draft"];
                 $post->lastedited = $row["lastedited"];

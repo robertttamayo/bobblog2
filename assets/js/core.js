@@ -15,7 +15,7 @@ $(document).ready(function(){
             editContainerCallbacks();
         });
     });
-    $(".load-edit-post").on("click", function(){
+    $(".post-edit").on("click", function(){
         var postid = $(this).data("postid");
         load("start");
         $("#main-container").html("").load(homeUrl + "src/editor.php?postid=" + postid, function(){
@@ -65,7 +65,14 @@ function mainContainerCallbacks(){
         $(".dim:not([data*=tags])").hide();
         $("#message").fadeOut();
     });
-    
+    $(".post-edit").on("click", function(){
+        var postid = $(this).data("postid");
+        load("start");
+        $("#main-container").html("").load(homeUrl + "src/editor.php?postid=" + postid, function(){
+            editContainerCallbacks();
+            load("stop");
+        });
+    });
 }
 function editContainerCallbacks(){
     $(".save-post").on("click", function(){

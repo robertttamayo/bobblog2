@@ -10,6 +10,8 @@ class Post {
     public $draft;
     public $lastedited;
     public $posttitle;
+    public $shortpreview;
+    public $preview;
     
     public function getTitle(){
         
