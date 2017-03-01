@@ -118,6 +118,11 @@ button.btn-ii, .btn-ii {
     transform: scale(1);
   }
 }
+.fabric {
+  background-color: #92d4dd;
+  background-image: url(../img/fabric-1-light.png);
+}
+
 .edit-container {
   color: #92d4dd;
   width: 100%;
@@ -438,7 +443,6 @@ button.btn-ii, .btn-ii {
 
 .draft {
   color: #02bc31;
-  width: 120px;
   text-align: right;
 }
 
@@ -451,6 +455,46 @@ button.btn-ii, .btn-ii {
 }
 .your-posts .post-info-wrapper .id {
   display: none;
+}
+
+.your-posts .post-info-wrapper {
+  justify-content: space-between;
+  align-items: center;
+  width: 644px;
+  margin: auto;
+  margin-bottom: 24px;
+  padding: 24px;
+  border-radius: 24px;
+  box-shadow: 0 0 4px 0 #aaa;
+  min-height: 74px;
+  transition: all .2s;
+}
+.your-posts .post-info-wrapper .post-info {
+  border-right: 1px solid #efefef;
+  padding: 12px 12px 12px 0px;
+  width: 340px;
+}
+.your-posts .post-info-wrapper .post-info-buttons {
+  width: 200px;
+  text-align: center;
+  justify-content: space-between;
+  background: transparent;
+  box-shadow: none;
+  transition: all .2s;
+  opacity: 100;
+}
+.your-posts .post-info-wrapper .post-info-buttons .btn {
+  width: 50px;
+  height: 50px;
+}
+.your-posts .post-info-wrapper:hover {
+  background: #efefef;
+}
+.your-posts .post-info-wrapper:hover .post-info {
+  border-right: 1px solid #aeaeae;
+}
+.your-posts .post-info-wrapper:hover .post-info-buttons {
+  opacity: 100;
 }
 
 body {
@@ -781,6 +825,18 @@ body {
   transform: translate(-50%, -50%);
   background: rgba(255, 255, 255, 0.7);
   border-radius: 4px;
+}
+
+.color-choose {
+  width: 30%;
+  height: 50px;
+}
+
+.color-chooser-shades-drop {
+  width: 30%;
+}
+.color-chooser-shades-drop .color-choose {
+  width: 100%;
 }
 
 /*# sourceMappingURL=core.css.map */

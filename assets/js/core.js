@@ -82,11 +82,6 @@ function editContainerCallbacks(){
         }
         savePost();
     });
-    $("#content").on("click focus", function(){
-        $(this).html("")
-            .find("div")
-                .focus();
-    });
     $(".manage-tags").on("click", function(){
         var postid = $("#postid-hidden").text();
         var tagPop = document.createElement("div");
@@ -111,6 +106,7 @@ function editContainerCallbacks(){
             catPopCallbacks();
         });
     });
+    initEditor();
 }
 function addTagToPost(tagElement, postid) {
     tagElement.toggleClass("active-tag");
@@ -293,3 +289,56 @@ function load(mode){
             break;
     }
 }
+
+/** EDITOR FUNCTIONS */
+function initEditor(){
+    // bold italic underline strike
+    $("#italic").on("click", function(){
+        var selection = document.getSelection();
+        document.execCommand("italic");
+    });
+    $("#bold").on("click", function(){
+        var selection = document.getSelection();
+        document.execCommand("bold");
+    });
+    $("#underline").on("click", function(){
+        var selection = document.getSelection();
+        document.execCommand("underline");
+    });
+    $("#strike").on("click", function(){
+        var selection = document.getSelection();
+        document.execCommand("strikeThrough");
+    });
+    // justify block
+    $("#left").on("click", function(){
+        var selection = document.getSelection();
+        document.execCommand("justifyLeft");
+    });
+    $("#center").on("click", function(){
+        var selection = document.getSelection();
+        document.execCommand("justifyCenter");
+    });
+    $("#right").on("click", function(){
+        var selection = document.getSelection();
+        document.execCommand("justifyRight");
+    });
+    $("#justify").on("click", function(){
+        var selection = document.getSelection();
+        document.execCommand("justifyFull");
+    });
+    // undo redo
+    $("#undo").on("click", function(){
+        var selection = document.getSelection();
+        document.execCommand("undo");
+    });
+    $("#redo").on("click", function(){
+        var selection = document.getSelection();
+        document.execCommand("redo");
+    });
+    // font types
+    $("#header").on("click", function(){
+        var selection = document.getSelection();
+        document.execCommand("formatBlock", false, "H2");
+    });
+}
+

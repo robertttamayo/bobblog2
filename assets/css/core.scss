@@ -3,6 +3,7 @@
 @import "sass/helpers";
 @import "sass/editor";
 @import "sass/post";
+@import "sass/welcome";
 
 body {
     font-family: $sans;
@@ -316,5 +317,15 @@ body {
         @include centerize(fixed);
         background: rgba(255, 255, 255, .7);
         border-radius: 4px;
+    }
+}
+.color-choose {
+    width: 30%;
+    height: 50px;
+}
+.color-chooser-shades-drop {
+    width: 30%;
+    .color-choose {
+        width: 100%;
     }
 }
