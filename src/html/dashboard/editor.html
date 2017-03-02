@@ -112,87 +112,51 @@
         <div class="color-choose" data-r="255" data-g="255" data-b="255" style="background: rgb(255, 255, 255)"></div>
     </div>
     <div class="color-chooser-primaries flex flex-hor">
-        <div class="color-choose" style="background: rgb(255, 0, 0)"></div>
-        <div class="color-choose" style="background: rgb(255, 128, 0)"></div>
-        <div class="color-choose" style="background: rgb(255, 255, 0)"></div>
-        <div class="color-choose" style="background: rgb(0, 255, 0)"></div>
-        <div class="color-choose" style="background: rgb(0, 255, 255)"></div>
-        <div class="color-choose" style="background: rgb(0, 0, 255)"></div>
-        <div class="color-choose" style="background: rgb(128, 0, 255)"></div>
-        <div class="color-choose" style="background: rgb(255, 0, 255)"></div>
+        <?php writeColorChooseSingle(255, 0, 0, 0); ?>
+        <?php writeColorChooseSingle(255, 165, 0, 0); ?>
+        <?php writeColorChooseSingle(255, 255, 0, 0); ?>
+        <?php writeColorChooseSingle(0, 255, 0, 0); ?>
+        <?php writeColorChooseSingle(0, 255, 255, 0); ?>
+        <?php writeColorChooseSingle(0, 0, 255, 0); ?>
+        <?php writeColorChooseSingle(128, 0, 128, 0); ?>
+        <?php writeColorChooseSingle(255, 0, 255, 0); ?>
     </div>
     <div class="color-chooser-shades flex flex-hor">
 <!--        RED-->
         <div class="color-chooser-shades-drop flex flex-vert">
-            <?php for ($r = 102; $r < 255; $r += 51) { ?>
-            <div class="color-choose" style="background: rgb(<?= $r ?>, 0, 0);"></div>
-            <?php } ?>
-            <?php for ($g = 102; $g < 206; $g += 51) { ?>
-            <div class="color-choose" style="background: rgb(255, <?= $g ?>, <?= $g ?>);"></div>
-            <?php } ?>
+            <?php writeColorChooseDrop(255, 0, 0, $grayFactor); ?>
         </div>
 <!--        ORANGE-->
         <div class="color-chooser-shades-drop flex flex-vert">
-            <?php for ($r = 102; $r < 255; $r += 51) { ?>
-            <div class="color-choose" style="background: rgb(<?= $r ?>, <?= (int)($r/2) ?>, 0);"></div>
-            <?php } ?>
-            <?php for ($g = 51; $g < 155; $g += 51) { ?>
-            <div class="color-choose" style="background: rgb(255, <?= ($g + 128) ?>, <?= $g ?>);"></div>
-            <?php } ?>
+            <?php writeColorChooseDrop(255, 165, 0, $grayFactor); ?>
         </div>
 <!--        YELLOW-->
         <div class="color-chooser-shades-drop flex flex-vert">
-            <?php for ($r = 102; $r < 255; $r += 51) { ?>
-            <div class="color-choose" style="background: rgb(<?= $r ?>, 0, 0);"></div>
-            <?php } ?>
-            <?php for ($g = 102; $g < 206; $g += 51) { ?>
-            <div class="color-choose" style="background: rgb(255, <?= $g ?>, <?= $g ?>);"></div>
-            <?php } ?>
+            <?php writeColorChooseDrop(255, 255, 0, $grayFactor); ?>
         </div>
 <!--        GREEN-->
         <div class="color-chooser-shades-drop flex flex-vert">
-            <?php for ($g = 102; $g < 255; $g += 51) { ?>
-            <div class="color-choose" style="background: rgb(0, <?= $g ?>, 0);"></div>
-            <?php } ?>
-            <?php for ($g = 102; $g < 206; $g += 51) { ?>
-            <div class="color-choose" style="background: rgb(255, <?= $g ?>, <?= $g ?>);"></div>
-            <?php } ?>
+            <?php writeColorChooseDrop(0, 255, 0, $grayFactor); ?>
         </div>
 <!--        CYAN-->
         <div class="color-chooser-shades-drop flex flex-vert">
-            <?php for ($r = 102; $r < 255; $r += 51) { ?>
-            <div class="color-choose" style="background: rgb(<?= $r ?>, 0, 0);"></div>
-            <?php } ?>
-            <?php for ($g = 102; $g < 206; $g += 51) { ?>
-            <div class="color-choose" style="background: rgb(<?= $g ?>, 255, <?= $g ?>);"></div>
-            <?php } ?>
+            <?php writeColorChooseDrop(0, 255, 255, $grayFactor); ?>
         </div>
 <!--        BLUE-->
         <div class="color-chooser-shades-drop flex flex-vert">
-            <?php for ($b = 102; $b < 255; $b += 51) { ?>
-            <div class="color-choose" style="background: rgb(0, 0, <?= $b ?>);"></div>
-            <?php } ?>
-            <?php for ($g = 102; $g < 206; $g += 51) { ?>
-            <div class="color-choose" style="background: rgb(<?= $g ?>, <?= $g ?>, 255);"></div>
-            <?php } ?>
+            <?php writeColorChooseDrop(0, 0, 255, $grayFactor); ?>
+        </div>
+<!--        PURPLE-->
+        <div class="color-chooser-shades-drop flex flex-vert">
+            <?php writeColorChooseDrop(128, 0, 128, $grayFactor); ?>
+        </div>
+<!--        MAGENTA-->
+        <div class="color-chooser-shades-drop flex flex-vert">
+            <?php writeColorChooseDrop(255, 0, 255, $grayFactor); ?>
         </div>
         <div class="color-chooser-shades-drop flex flex-vert">
-            <?php for ($r = 102; $r < 255; $r += 51) { ?>
-            <div class="color-choose" style="background: rgb(<?= $r ?>, 0, 0);"></div>
-            <?php } ?>
-            <?php for ($g = 102; $g < 206; $g += 51) { ?>
-            <div class="color-choose" style="background: rgb(255, <?= $g ?>, <?= $g ?>);"></div>
-            <?php } ?>
+            <?php writeColorChooseDrop(128, 128, 128, $grayFactor); ?>
         </div>
-        <div class="color-chooser-shades-drop flex flex-vert">
-            <?php for ($r = 102; $r < 255; $r += 51) { ?>
-            <div class="color-choose" style="background: rgb(<?= $r ?>, 0, 0);"></div>
-            <?php } ?>
-            <?php for ($g = 102; $g < 206; $g += 51) { ?>
-            <div class="color-choose" style="background: rgb(255, <?= $g ?>, <?= $g ?>);"></div>
-            <?php } ?>
-        </div>
-        
     </div>
 
     

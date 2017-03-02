@@ -340,5 +340,16 @@ function initEditor(){
         var selection = document.getSelection();
         document.execCommand("formatBlock", false, "H2");
     });
+    //colors
+    $(".color-choose").on("click", function(){
+        console.log("stuff is happen");
+        var selection = document.getSelection();
+        console.log("selection" + selection);
+        var r = $(this).data("r");
+        var g = $(this).data("g");
+        var b = $(this).data("b");
+        var color = "rgb(" + r + ", " + g + ", " + b + ")";
+        document.execCommand("foreColor", false, color);
+    });
 }
 
