@@ -1,0 +1,30 @@
+.img-editor-wrap {
+    position: relative;
+    width: 60%;
+    img {
+        width: 100%;
+    }
+}
+.img-editor-bar {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    width: 600px;
+    transform: translate(-50%, 0);
+    
+    .btn {
+        width: 52px;
+        height: 52px;
+        
+        &.img-small {
+            i {
+                transform: scale(.65);
+            }
+        }
+        &.img-large {
+            i {
+                transform: scale(1.35);
+            }
+        }
+    }
+}

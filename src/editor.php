@@ -25,7 +25,7 @@ if (isset($_GET["postid"])) {
 //    $_POST["action"] = ACTION_TAGS_BY_POSTID;
 //    handle($_POST["action"]);
 }
-$grayFactor = .25;
+$grayFactor = .15;
 function writeColorChooseSingle($_r, $_g, $_b, $grayFactor){
     $r = (int)($_r + ((128 - $_r) * $grayFactor));
     $g = (int)($_g + ((128 - $_g) * $grayFactor));

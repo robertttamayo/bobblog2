@@ -73,6 +73,9 @@ $margin-large: 20px;
 $margin-x-large: 40px;
 
 // CONTAINERS
+div.inline {
+    display: inline-block;
+}
 
 .container {
     padding: 12px;

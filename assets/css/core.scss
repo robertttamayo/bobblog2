@@ -4,6 +4,7 @@
 @import "sass/editor";
 @import "sass/post";
 @import "sass/welcome";
+@import "sass/images";
 
 body {
     font-family: $sans;
@@ -319,13 +320,21 @@ body {
         border-radius: 4px;
     }
 }
+.colors-modal {
+    background: $white;
+    box-shadow: 0 0 4px 0 $outset-gray;
+    display: none;
+    padding: 12px;
+    border-radius: 24px;
+    @include centerize(fixed);
+    top: 20%;
+}
+.colorpicker {
+}
 .color-choose {
-    width: 30%;
-    height: 50px;
+    width: 20px;
+    height: 20px;
+    margin: 2px;
 }
 .color-chooser-shades-drop {
-    width: 30%;
-    .color-choose {
-        width: 100%;
-    }
 }

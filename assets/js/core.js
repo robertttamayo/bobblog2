@@ -341,6 +341,9 @@ function initEditor(){
         document.execCommand("formatBlock", false, "H2");
     });
     //colors
+    $("#show-colors-modal").on("click", function(){
+       $("#colors-modal").css("display", "inline-block");
+    });
     $(".color-choose").on("click", function(){
         console.log("stuff is happen");
         var selection = document.getSelection();
@@ -351,5 +354,90 @@ function initEditor(){
         var color = "rgb(" + r + ", " + g + ", " + b + ")";
         document.execCommand("foreColor", false, color);
     });
+    // links 
+    $("#link").on("click", function(){
+        var selection = document.getSelection();
+        if (selection == "") {
+            return;
+        } 
+        var value = "";
+        if (selection.anchorNode.parentNode){
+            if (selection.anchorNode.parentNode.href){
+                value = selection.anchorNode.parentNode.href;
+            }
+        }
+        var href = prompt("Enter the link address", value);
+        
+        if (href != null) {
+            if (!href.includes("http://") && !href.includes("https://")) {
+                href = "http://" + href;
+            }
+            document.execCommand("createLink", false, href);
+        }
+    });
+    $("#unlink").on("click", function(){
+        document.execCommand("unlink");
+    });
+    // lists
+    $("#ol").on("click", function(){
+        document.execCommand("insertOrderedList");
+    });
+    $("#ul").on("click", function(){
+        document.execCommand("insertUnorderedList");
+    });
+    // images
+    $("#image").on("click", function(){
+        if (document.execCommand("insertImage", false, "http://placebear.com/300/200")) {
+           $("#content").find("img").each(function(){
+               if (!$(this).hasClass("edit-img")){
+                   var suffix = new Date().getTime();
+                   var className = "edit-img" + suffix;
+                   wrapImage($(this), suffix);
+                   attachImageEditor($(this), suffix);
+                   $(this).addClass("edit-img").addClass(className).on("click", function(){
+                       
+                   });
+                   imgEditorCallbacks();
+               }
+           }); 
+        } 
+    });
 }
 
+function wrapImage(imgElem, suffix){
+    imgElem.wrap("<div class=\"inline img-editor-wrap img-editor-wrap" + suffix + "\"></div>");
+}
+
+function attachImageEditor(imgElem, suffix){
+    imgElem.after(
+        "<div class='img-editor-bar flex flex-hor container'>" +
+            "<div data-imgwrap='.img-editor-wrap" + suffix + "' data-imgtarget='.edit-img" + suffix + "' class='img-editor-group flex flex-hor'>" +
+                "<button type='button' class='btn img-small'><i class='fa fa-picture-o' aria-hidden='true'></i></button>" +
+                "<button type='button' class='btn img-medium'><i class='fa fa-picture-o' aria-hidden='true'></i></button>" +
+                "<button type='button' class='btn img-large'><i class='fa fa-picture-o' aria-hidden='true'></i></button>" +
+                "<button type='button' class='btn img-full'><i class='fa fa-arrows-h' aria-hidden='true'></i></button>" +
+            "</div>" +
+            "<div class='img-editor-group'>" +
+                "<div class='btn'></div>" +
+                "<div class='btn'></div>" +
+                "<div class='btn'></div>" +
+            "</div>" +
+        "</div>"
+    );
+}
+function imgEditorCallbacks(){
+    console.log("img editor callbacks");
+    $(".img-small").on("click", function(){
+        console.log($(this).parent().data("imgtarget"));
+        $($(this).parent().data("imgwrap")).css("width", "40%");
+    });
+    $(".img-medium").on("click", function(){
+        $($(this).parent().data("imgwrap")).css("width", "60%");
+    });
+    $(".img-large").on("click", function(){
+        $($(this).parent().data("imgwrap")).css("width", "80%");
+    });
+    $(".img-full").on("click", function(){
+        $($(this).parent().data("imgwrap")).css("width", "100%");
+    });
+}

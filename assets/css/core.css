@@ -12,7 +12,7 @@ button {
 }
 
 ol, ul {
-  list-style-type: none;
+  list-style-position: inside;
 }
 
 .font-size-x-large {
@@ -45,6 +45,10 @@ ol, ul {
 
 .color-c {
   color: #b73949;
+}
+
+div.inline {
+  display: inline-block;
 }
 
 .container {
@@ -497,6 +501,32 @@ button.btn-ii, .btn-ii {
   opacity: 100;
 }
 
+.img-editor-wrap {
+  position: relative;
+  width: 60%;
+}
+.img-editor-wrap img {
+  width: 100%;
+}
+
+.img-editor-bar {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  width: 600px;
+  transform: translate(-50%, 0);
+}
+.img-editor-bar .btn {
+  width: 52px;
+  height: 52px;
+}
+.img-editor-bar .btn.img-small i {
+  transform: scale(0.65);
+}
+.img-editor-bar .btn.img-large i {
+  transform: scale(1.35);
+}
+
 body {
   font-family: "Droid Sans", sans-serif;
   color: #333;
@@ -827,16 +857,23 @@ body {
   border-radius: 4px;
 }
 
-.color-choose {
-  width: 30%;
-  height: 50px;
+.colors-modal {
+  background: #fff;
+  box-shadow: 0 0 4px 0 #aaa;
+  display: none;
+  padding: 12px;
+  border-radius: 24px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  top: 20%;
 }
 
-.color-chooser-shades-drop {
-  width: 30%;
-}
-.color-chooser-shades-drop .color-choose {
-  width: 100%;
+.color-choose {
+  width: 20px;
+  height: 20px;
+  margin: 2px;
 }
 
 /*# sourceMappingURL=core.css.map */
