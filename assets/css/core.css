@@ -515,6 +515,7 @@ button.btn-ii, .btn-ii {
   left: 50%;
   width: 600px;
   transform: translate(-50%, 0);
+  display: none;
 }
 .img-editor-bar .btn {
   width: 52px;

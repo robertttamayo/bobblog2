@@ -3,6 +3,12 @@ var EDITOR = 2;
 
 var postid;
 
+var iconLeftJustify = "<i class=\"fa fa-align-left\" aria-hidden=\"true\"></i>";
+var iconCenterJustify = "<i class=\"fa fa-align-center\" aria-hidden=\"true\"></i>";
+var iconRightJustify = "<i class=\"fa fa-align-right\" aria-hidden=\"true\"></i>";
+var iconRemove = "<i class=\"fa fa-trash\" aria-hidden=\"true\"></i>";
+var iconClose = "<i class=\"fa fa-window-close-o\" aria-hidden=\"true\"></i>";
+
 $(document).ready(function(){
     $("#main-container").html("").load("src/welcome.php", function(){
         mainContainerCallbacks();
@@ -405,7 +411,14 @@ function initEditor(){
 }
 
 function wrapImage(imgElem, suffix){
-    imgElem.wrap("<div class=\"inline img-editor-wrap img-editor-wrap" + suffix + "\"></div>");
+    imgElem
+        .wrap("<div class=\"inline img-editor-wrap img-editor-wrap" + suffix + "\"></div>")
+        .on("click", function(){
+        $(this)
+            .parent()
+            .find(".img-editor-bar")
+                .show();
+    });
 }
 
 function attachImageEditor(imgElem, suffix){
@@ -417,18 +430,21 @@ function attachImageEditor(imgElem, suffix){
                 "<button type='button' class='btn img-large'><i class='fa fa-picture-o' aria-hidden='true'></i></button>" +
                 "<button type='button' class='btn img-full'><i class='fa fa-arrows-h' aria-hidden='true'></i></button>" +
             "</div>" +
-            "<div class='img-editor-group'>" +
-                "<div class='btn'></div>" +
-                "<div class='btn'></div>" +
-                "<div class='btn'></div>" +
+            "<div data-imgwrap='.img-editor-wrap" + suffix + "' data-imgtarget='.edit-img" + suffix + "' class='img-editor-group flex flex-hor'>" +
+                "<button class='btn img-left'>" + iconLeftJustify + "</button>" +
+                "<button class='btn img-center'>" + iconCenterJustify + "</button>" +
+                "<button class='btn img-right'>" + iconRightJustify + "</button>" +
+            "</div>" +
+            "<div data-imgwrap='.img-editor-wrap" + suffix + "' data-imgtarget='.edit-img" + suffix + "' class='img-editor-group flex flex-hor'>" +
+                "<button class='btn img-remove'>" + iconRemove + "</button>" +
+                "<button class='btn img-close'>" + iconClose + "</button>" +
             "</div>" +
         "</div>"
     );
 }
 function imgEditorCallbacks(){
-    console.log("img editor callbacks");
+    // size
     $(".img-small").on("click", function(){
-        console.log($(this).parent().data("imgtarget"));
         $($(this).parent().data("imgwrap")).css("width", "40%");
     });
     $(".img-medium").on("click", function(){
@@ -440,4 +456,45 @@ function imgEditorCallbacks(){
     $(".img-full").on("click", function(){
         $($(this).parent().data("imgwrap")).css("width", "100%");
     });
+    
+    // alignment
+    $(".img-left").on("click", function(){
+        $($(this).parent().data("imgwrap")).css({
+            "float": "left",
+            "display": "inline-block"
+        });
+    });
+    $(".img-center").on("click", function(){
+        $($(this).parent().data("imgwrap"))
+            .css({
+            "float": "none",
+            "margin": "auto",
+            "display": "block"
+        });
+    });
+    $(".img-right").on("click", function(){
+        getImgWrap($(this)).css({
+            "float": "right",
+            "display": "inline-block"
+        });
+    });
+    
+    // remove
+    $(".img-remove").on("click", function(){
+        if (confirm("Are you sure you want to remove this image?")) {
+            getImgWrap($(this)).remove();
+        }
+    });
+    
+    // close
+    $(".img-close").on("click", function(){
+        getImgEditorBar($(this)).fadeOut();
+    });
+    
+    function getImgWrap(elem){
+        return $(elem.parent().data("imgwrap"));
+    }
+    function getImgEditorBar(elem){
+        return (elem.parent().parent());
+    }
 }
