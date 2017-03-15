@@ -5,7 +5,7 @@ session_start();
 define("DOMAIN_NAME", "http://localhost/");
 define("ROOT_DIR", "bobblog2/");
 define("ROOT", DOMAIN_NAME . ROOT_DIR);
-define("LOGIN_URL", "http://localhost/bobblog2/login.php");
+define("LOGIN_URL", ROOT . "login.php");
 
 if (!isset($_SESSION["userID"]) && $_SERVER["REQUEST_URI"] != "/" . ROOT_DIR . "login.php") {
     header("Location: " . LOGIN_URL);
