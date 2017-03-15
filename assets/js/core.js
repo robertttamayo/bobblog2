@@ -220,6 +220,37 @@ function savePost(){
         document.dispatchEvent(event);
     });
 }
+function uploadImage(imgData){
+    console.log("Uploading image");
+    var data = {
+            "action": actionUploadImage, 
+            "imgdata": imgData
+        };
+    console.log(data);
+    $.ajax({
+        url: "#",
+        type: "POST",
+        processData: false,
+        contentType: false,
+        data: imgData
+    }).done(function(_data){
+        console.log("done uploading image");
+        console.log(_data);
+        var event = new Event("image_uploaded");
+        document.dispatchEvent(event);
+    });
+//    $.post("#", {
+//        action: actionUploadImage,
+//        processData: false,
+//        contentType: false,
+//        imgdata: imgData
+//    }, function(_data){
+//        console.log("done uploading image");
+//        console.log(_data);
+//        var event = new Event("image_uploaded");
+//        document.dispatchEvent(event);
+//    });
+}
 var data;
 function createMessage(message){
     $("#message-message").html(message);
@@ -235,6 +266,9 @@ function validatePost(){
     return true;
 }
 // Event listeners
+document.addEventListener("image_uploaded", function(event){
+    createMessage("The image was uploaded");
+});
 document.addEventListener("post_saved", function (event){ 
     createMessage("Your post is safe!");
 }, false);
@@ -300,50 +334,39 @@ function load(mode){
 function initEditor(){
     // bold italic underline strike
     $("#italic").on("click", function(){
-        var selection = document.getSelection();
         document.execCommand("italic");
     });
     $("#bold").on("click", function(){
-        var selection = document.getSelection();
         document.execCommand("bold");
     });
     $("#underline").on("click", function(){
-        var selection = document.getSelection();
         document.execCommand("underline");
     });
     $("#strike").on("click", function(){
-        var selection = document.getSelection();
         document.execCommand("strikeThrough");
     });
     // justify block
     $("#left").on("click", function(){
-        var selection = document.getSelection();
         document.execCommand("justifyLeft");
     });
     $("#center").on("click", function(){
-        var selection = document.getSelection();
         document.execCommand("justifyCenter");
     });
     $("#right").on("click", function(){
-        var selection = document.getSelection();
         document.execCommand("justifyRight");
     });
     $("#justify").on("click", function(){
-        var selection = document.getSelection();
         document.execCommand("justifyFull");
     });
     // undo redo
     $("#undo").on("click", function(){
-        var selection = document.getSelection();
         document.execCommand("undo");
     });
     $("#redo").on("click", function(){
-        var selection = document.getSelection();
         document.execCommand("redo");
     });
     // font types
     $("#header").on("click", function(){
-        var selection = document.getSelection();
         document.execCommand("formatBlock", false, "H2");
     });
     //colors
@@ -393,21 +416,32 @@ function initEditor(){
     });
     // images
     $("#image").on("click", function(){
-        if (document.execCommand("insertImage", false, "http://placebear.com/300/200")) {
-           $("#content").find("img").each(function(){
-               if (!$(this).hasClass("edit-img")){
-                   var suffix = new Date().getTime();
-                   var className = "edit-img" + suffix;
-                   wrapImage($(this), suffix);
-                   attachImageEditor($(this), suffix);
-                   $(this).addClass("edit-img").addClass(className).on("click", function(){
-                       
-                   });
-                   imgEditorCallbacks();
-               }
-           }); 
-        } 
+        document.getElementById("img-dialog").showModal();
     });
+        
+    $("#image-form").on("submit", function(event){
+        console.log("image form submitted");
+        event.preventDefault();
+
+        var imgData = new FormData(document.getElementById("image-form"));
+        imgData.append("action", actionUploadImage);
+        uploadImage(imgData);
+    });
+//        if (document.execCommand("insertImage", false, "http://placebear.com/300/200")) {
+//           $("#content").find("img").each(function(){
+//               if (!$(this).hasClass("edit-img")){
+//                   var suffix = new Date().getTime();
+//                   var className = "edit-img" + suffix;
+//                   wrapImage($(this), suffix);
+//                   attachImageEditor($(this), suffix);
+//                   $(this).addClass("edit-img").addClass(className).on("click", function(){
+//                       
+//                   });
+//                   imgEditorCallbacks();
+//               }
+//           }); 
+//        } 
+//    });
 }
 
 function wrapImage(imgElem, suffix){

@@ -24,6 +24,7 @@ $bb->addHeadScript(array("script" =>
                          "var actionRemoveTagFromPost = \"" . ACTION_REMOVE_TAG_FROM_POST . "\";" .
                          "var actionAddCatToPost = \"" . ACTION_ADD_CAT_TO_POST . "\";" .
                          "var actionRemoveCatFromPost = \"" . ACTION_REMOVE_CAT_FROM_POST . "\";" .
+                         "var actionUploadImage = \"" . ACTION_UPLOAD_IMAGE . "\";" .
                          
                          "var homeUrl = \"" . ROOT . "\";" .
                          "var dashboardTemplateDir = \"" . ROOT . SRC_DIR . "html/dashboard/\";" . 

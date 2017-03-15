@@ -35,6 +35,7 @@ define("ACTION_ADD_TAG_TO_POST", "add_tag_to_post");
 define("ACTION_REMOVE_TAG_FROM_POST", "remove_tag_from_post");
 define("ACTION_ADD_CAT_TO_POST", "add_cat_to_post");
 define("ACTION_REMOVE_CAT_FROM_POST", "remove_cat_from_post");
+define("ACTION_UPLOAD_IMAGE", "upload_image");
 
 // database definitions
 $blogbase = "blogbase";

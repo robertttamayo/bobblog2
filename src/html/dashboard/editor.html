@@ -70,7 +70,9 @@
 </div> <!-- end editor wrap -->
 
 <span id="postid-hidden" style="position: absolute; top: -110em; display: none;"><?= $postid ?></span>
-<dialog id="img-dialog">
+
+<!-- img modal -->
+<dialog id="img-dialog" class="img-dialog">
     <div class="dialog-container">
         <p style="text-align: center;">Please choose an image to upload</p>
         <div style="width: 120px; height: 120px; display: block; border: 1px dotted black; position: relative; padding: 1px;
@@ -78,15 +80,15 @@
             <img id="upload-preview" src="" alt="image preview" style="max-height: 100%; max-width: 100%; object-fit: contain;
                 position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
         </div>
-        <div>
-            <form method="post" id="image-form" name="image-form" onsubmit="return closeDialog()">
+        <div class="img-form-wrapper">
+            <form method="post" id="image-form" name="image-form" >
                 <input type="file" accept="image/*" name="imgfile[]" id="upload-image-holder">
-        </div>
-        <div>
-            <button class="exit-dialog" type="submit">Done</button>
-            <button class="exit-dialog" type="button">Cancel</button>
-        </div>
+                <div>
+                    <button id="img-dialog-upload" class="img-dialog-upload" class="exit-dialog" type="submit">Done</button>
+                    <button id="img-dialog-close" class="img-dialog-upload" class="exit-dialog" type="button">Cancel</button>
+                </div>
             </form>
+        </div>
     </div>
 </dialog>
 

@@ -233,6 +233,38 @@ function handle(){
             $conn->close();
             break;
             exit;
+        case ACTION_UPLOAD_IMAGE:
+            $imgDir = MEDIA_DIR;
+            $data = array();
+            
+            foreach ($_FILES["imgfile"]["error"] as $key => $error) {
+                if ($error == UPLOAD_ERR_OK) {
+                    $tmp_name = $_FILES["imgfile"]["tmp_name"][$key];
+                    $name = $_FILES["imgfile"]["name"][$key];
+                    $name = $imgDir . $name; //change name
+                    move_uploaded_file($tmp_name, "$name");
+                    $data[] = ["saved_as_name" => $name, "original_name" => $tmp_name];
+                } else {
+                    echo "One or more images did not upload successfully.";
+                }
+            }
+            
+            // Success message
+            if (sizeof($data == 1)) {
+                 echo "Success! " . $data[0]["original_name"] . " was uploaded successfully.";
+            } else {
+                echo "Success! The following images were uploaded succesfully: ";
+                for ($i = 0; $i < sizeof($data); $i++){
+                    echo $data[0]["original_name"];
+                    if (($i + 1) == sizeof($data)){
+                        echo ".";
+                    } else {
+                        echo ", ";
+                    }
+                }
+            }
+            exit;
+            break;
         default:
             exit;
             ;
