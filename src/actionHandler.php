@@ -234,16 +234,66 @@ function handle(){
             break;
             exit;
         case ACTION_UPLOAD_IMAGE:
-            $imgDir = MEDIA_DIR;
+            $dateSuffix = date("Y/m/");
+            $imgDir = MEDIA_DIR . $dateSuffix;
+            if (!file_exists($imgDir)) {
+                mkdir($imgDir, 0777, true);
+            }
+            
             $data = array();
             
             foreach ($_FILES["imgfile"]["error"] as $key => $error) {
                 if ($error == UPLOAD_ERR_OK) {
                     $tmp_name = $_FILES["imgfile"]["tmp_name"][$key];
                     $name = $_FILES["imgfile"]["name"][$key];
-                    $name = $imgDir . $name; //change name
+                    $original_name = $name;
+                    $name = $imgDir . $name;
+                    
+                    if (file_exists($name)) {
+                        echo "name before: " . $name;
+                        $regex = "/\(([0-9])\)/";
+                        $nameparts = explode(".", $name);
+                        
+                        $shortname = "";
+                        $extension = "";
+                        if (sizeof($nameparts) > 1) {
+                            $shortname = $nameparts[0];
+                            for ($i = 1; $i < sizeof($nameparts); $i++) {
+                                $extension = $extension . "." . $nameparts[$i];
+                            }
+                        } else {
+                            $shortname = $name;
+                        }
+                        
+                        $testname = $shortname . " (1)";
+                        if (file_exists($testname . $extension)) {
+                            $shortname = $testname;
+                            
+                            $count = 2;
+                            $badname = true;
+                            while($badname) {
+                                $shortname = substr($shortname, 0, -3);
+                                $shortname = $shortname . "($count)";
+                                $testname = $shortname . $extension;
+                                if (!file_exists($testname)){
+                                    $badname = false;
+                                } else {
+                                    $count++;
+                                }
+                            }
+                            $name = $shortname . $extension;
+                            
+                        } else { // file name with " (1)" does not exist
+                            $name = $testname . $extension;
+                        }
+                        
+                        $suffix = substr($shortname, -3);
+                        
+                        
+                        echo "name after: " . $name;
+                    }
                     move_uploaded_file($tmp_name, "$name");
-                    $data[] = ["saved_as_name" => $name, "original_name" => $tmp_name];
+                    $data[] = ["saved_as_name" => $name, "original_name" => $original_name];
                 } else {
                     echo "One or more images did not upload successfully.";
                 }
@@ -268,7 +318,8 @@ function handle(){
         default:
             exit;
             ;
-        }
+    }   // end of switch statement
+    exit; // last line of handle()
 }
 /** Functions called manually by model files */
 function saveNewDraft() {

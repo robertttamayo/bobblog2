@@ -239,17 +239,6 @@ function uploadImage(imgData){
         var event = new Event("image_uploaded");
         document.dispatchEvent(event);
     });
-//    $.post("#", {
-//        action: actionUploadImage,
-//        processData: false,
-//        contentType: false,
-//        imgdata: imgData
-//    }, function(_data){
-//        console.log("done uploading image");
-//        console.log(_data);
-//        var event = new Event("image_uploaded");
-//        document.dispatchEvent(event);
-//    });
 }
 var data;
 function createMessage(message){
@@ -267,7 +256,7 @@ function validatePost(){
 }
 // Event listeners
 document.addEventListener("image_uploaded", function(event){
-    createMessage("The image was uploaded");
+    console.log("modify img elements here");
 });
 document.addEventListener("post_saved", function (event){ 
     createMessage("Your post is safe!");
@@ -427,23 +416,24 @@ function initEditor(){
         imgData.append("action", actionUploadImage);
         uploadImage(imgData);
     });
-//        if (document.execCommand("insertImage", false, "http://placebear.com/300/200")) {
-//           $("#content").find("img").each(function(){
-//               if (!$(this).hasClass("edit-img")){
-//                   var suffix = new Date().getTime();
-//                   var className = "edit-img" + suffix;
-//                   wrapImage($(this), suffix);
-//                   attachImageEditor($(this), suffix);
-//                   $(this).addClass("edit-img").addClass(className).on("click", function(){
-//                       
-//                   });
-//                   imgEditorCallbacks();
-//               }
-//           }); 
-//        } 
-//    });
 }
+// image functions
+function insertImage(){
+    if (document.execCommand("insertImage", false, "http://placebear.com/300/200")) {
+       $("#content").find("img").each(function(){
+           if (!$(this).hasClass("edit-img")){
+               var suffix = new Date().getTime();
+               var className = "edit-img" + suffix;
+               wrapImage($(this), suffix);
+               attachImageEditor($(this), suffix);
+               $(this).addClass("edit-img").addClass(className).on("click", function(){
 
+               });
+               imgEditorCallbacks();
+           }
+       }); 
+    } 
+}
 function wrapImage(imgElem, suffix){
     imgElem
         .wrap("<div class=\"inline img-editor-wrap img-editor-wrap" + suffix + "\"></div>")
