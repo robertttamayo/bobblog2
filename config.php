@@ -14,6 +14,7 @@ if (!isset($_SESSION["userID"]) && $_SERVER["REQUEST_URI"] != "/" . ROOT_DIR . "
 
 define("SRC_DIR", __DIR__ . '/src/');
 define("MEDIA_DIR", __DIR__ . '/media/');
+define("MEDIA_URL", ROOT . 'media/');
 define("TEMPLATE_DIR", 'src/html/template/');
 define("ASSETS_DIR", 'assets/');
 

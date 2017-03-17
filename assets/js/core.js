@@ -113,6 +113,8 @@ function editContainerCallbacks(){
         });
     });
     initEditor();
+    initImages();
+    imgEditorCallbacks();
 }
 function addTagToPost(tagElement, postid) {
     tagElement.toggleClass("active-tag");
@@ -221,12 +223,10 @@ function savePost(){
     });
 }
 function uploadImage(imgData){
-    console.log("Uploading image");
     var data = {
             "action": actionUploadImage, 
             "imgdata": imgData
         };
-    console.log(data);
     $.ajax({
         url: "#",
         type: "POST",
@@ -234,10 +234,14 @@ function uploadImage(imgData){
         contentType: false,
         data: imgData
     }).done(function(_data){
-        console.log("done uploading image");
-        console.log(_data);
-        var event = new Event("image_uploaded");
-        document.dispatchEvent(event);
+        var data = JSON.parse(_data);
+        console.log(data);
+        if (data.success){
+            var event = new CustomEvent("image_uploaded", {detail: data});
+            document.dispatchEvent(event);
+        } else {
+            alert(data.message);
+        }
     });
 }
 var data;
@@ -256,7 +260,11 @@ function validatePost(){
 }
 // Event listeners
 document.addEventListener("image_uploaded", function(event){
-    console.log("modify img elements here");
+    console.log(event.detail);
+    var data = event.detail;
+//    $("#upload-preview").src(data.img_url);
+    document.getElementById("img-dialog").close();
+    insertImage(data.img_url);
 });
 document.addEventListener("post_saved", function (event){ 
     createMessage("Your post is safe!");
@@ -418,8 +426,8 @@ function initEditor(){
     });
 }
 // image functions
-function insertImage(){
-    if (document.execCommand("insertImage", false, "http://placebear.com/300/200")) {
+function insertImage(imgUrl){
+    if (document.execCommand("insertImage", false, imgUrl)) {
        $("#content").find("img").each(function(){
            if (!$(this).hasClass("edit-img")){
                var suffix = new Date().getTime();
@@ -434,6 +442,15 @@ function insertImage(){
        }); 
     } 
 }
+function initImages(){
+    console.log("init images");
+    $(".edit-img").on("click", function(){
+        $(this)
+            .parent()
+                .find(".img-editor-bar")
+                    .css("display", "flex");
+    });
+}
 function wrapImage(imgElem, suffix){
     imgElem
         .wrap("<div class=\"inline img-editor-wrap img-editor-wrap" + suffix + "\"></div>")
@@ -441,7 +458,7 @@ function wrapImage(imgElem, suffix){
         $(this)
             .parent()
             .find(".img-editor-bar")
-                .show();
+                .css("display", "flex");
     });
 }
 

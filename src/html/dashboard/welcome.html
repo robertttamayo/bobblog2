@@ -10,7 +10,7 @@
                 <div class="post-info" data-postid="<?= $posts[$i]->id ?>">
                     <div class="title"><?= $posts[$i]->title ?></div>
                     <div class="author"><?= $posts[$i]->author;?></div>
-                    <div class="shortpreview"><?= $posts[$i]->content ;?></div>
+                    <div class="shortpreview"><?= strip_tags($posts[$i]->shortpreview) ;?></div>
                 </div>
                 
                 <div class="post-info-buttons container flex flex-hor">

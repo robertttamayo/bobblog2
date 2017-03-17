@@ -8,7 +8,8 @@ function handle(){
             $post_draft = $_POST["draft"];
             $post_id = $_POST["postid"];
             
-            $post_file = htmlentities($post_file, ENT_QUOTES);
+            $post_file = mysql_real_escape_string($post_file);
+            $post_short_preview = strip_tags(substr($post_file, 0, 30));
             
 //            $post_draft = $post_draft ? 1 : 0;
             
@@ -19,12 +20,14 @@ function handle(){
             }
             
             if ($post_id == "") {
-                $sql = "INSERT INTO blogbase (content, posttitle, draft)
-                    VALUES (\"$post_file\", \"$post_name\", $post_draft)";
+                $sql = "INSERT INTO blogbase (content, posttitle, draft, shortpreview)
+                    VALUES ('" . $post_file . "', \"$post_name\", $post_draft, \"$post_short_preview\")";
             } else {
                 $sql = "UPDATE blogbase SET content='$post_file'
                 , posttitle='$post_name'
-                , draft='$post_draft' WHERE id=$post_id";
+                , draft='$post_draft'
+                , shortpreview='$post_short_preview'
+                WHERE id=$post_id";
 //                $sql = "INSERT INTO blogbase (id, content, posttitle, draft)
 //                    VALUES ($post_id, $post_file, $post_name, $post_draft)";
             }
@@ -240,9 +243,10 @@ function handle(){
                 mkdir($imgDir, 0777, true);
             }
             
-            $data = array();
+            $data = [];
             
             foreach ($_FILES["imgfile"]["error"] as $key => $error) {
+                
                 if ($error == UPLOAD_ERR_OK) {
                     $tmp_name = $_FILES["imgfile"]["tmp_name"][$key];
                     $name = $_FILES["imgfile"]["name"][$key];
@@ -250,7 +254,6 @@ function handle(){
                     $name = $imgDir . $name;
                     
                     if (file_exists($name)) {
-                        echo "name before: " . $name;
                         $regex = "/\(([0-9])\)/";
                         $nameparts = explode(".", $name);
                         
@@ -287,30 +290,23 @@ function handle(){
                             $name = $testname . $extension;
                         }
                         
-                        $suffix = substr($shortname, -3);
+                        $parts = explode("/", $name);
+                        $imgFileName = $parts[sizeof($parts) - 1];
+                        $img_url = MEDIA_URL . $dateSuffix . $imgFileName; 
                         
+                        $data["original_name"] = $original_name;
+                        $data["saved_as_name"] = $name;
+                        $data["success"] = true;
+                        $data["img_url"] = $img_url;
+                        $data["message"] = "Success!";
                         
-                        echo "name after: " . $name;
+                        echo json_encode($data);
                     }
                     move_uploaded_file($tmp_name, "$name");
-                    $data[] = ["saved_as_name" => $name, "original_name" => $original_name];
                 } else {
-                    echo "One or more images did not upload successfully.";
-                }
-            }
-            
-            // Success message
-            if (sizeof($data == 1)) {
-                 echo "Success! " . $data[0]["original_name"] . " was uploaded successfully.";
-            } else {
-                echo "Success! The following images were uploaded succesfully: ";
-                for ($i = 0; $i < sizeof($data); $i++){
-                    echo $data[0]["original_name"];
-                    if (($i + 1) == sizeof($data)){
-                        echo ".";
-                    } else {
-                        echo ", ";
-                    }
+                    $data["success"] = false;
+                    $data["message"] = "One or more images did not upload successfully.";
+                    echo json_encode($data);
                 }
             }
             exit;
