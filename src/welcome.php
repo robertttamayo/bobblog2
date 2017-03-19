@@ -7,4 +7,11 @@ $bb = new BobBlog();
 $bb->initPosts();
 $posts = $bb->getPosts();
 
+function formatDateForWelcome($date){
+    $dateObj = new DateTime($date);
+    $formattedDate = $dateObj->format('m/d/Y');
+    
+    return $formattedDate;
+}
+
 include (SRC_DIR . 'html/dashboard/welcome.html');

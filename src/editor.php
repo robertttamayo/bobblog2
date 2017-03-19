@@ -7,15 +7,20 @@ $bb = new BobBlog();
 $bb->initUser();
 
 $postid = "";
+
 $postcontent = "";
 $posttitle = "";
 $hasContent = false;
+$isDraft = false;
 
 if (isset($_GET["postid"])) {
     $postid = $_GET["postid"];
+    
     $post = $bb->getPost($postid);
     $postcontent = $post->content;
     $posttitle = $post->title;
+    $isDraft = $post->draft;
+    
     $hasContent = true;
 } else {
     //must save this new draft

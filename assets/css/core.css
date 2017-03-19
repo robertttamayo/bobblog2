@@ -446,7 +446,12 @@ button.btn-ii, .btn-ii {
 }
 
 .draft {
-  color: #02bc31;
+  color: #39b748;
+  text-align: right;
+}
+
+.public {
+  color: #335ea4;
   text-align: right;
 }
 
@@ -476,7 +481,7 @@ button.btn-ii, .btn-ii {
 .your-posts .post-info-wrapper .post-info {
   border-right: 1px solid #efefef;
   padding: 12px 12px 12px 0px;
-  width: 340px;
+  width: 260px;
 }
 .your-posts .post-info-wrapper .post-info-buttons {
   width: 200px;
@@ -512,14 +517,22 @@ button.btn-ii, .btn-ii {
 .img-editor-bar {
   position: absolute;
   top: 100%;
-  left: 50%;
-  width: 600px;
-  transform: translate(-50%, 0);
+  left: 0%;
   display: none;
+  padding: 8px;
+}
+.img-editor-bar .img-editor-group {
+  margin-right: 16px;
+}
+.img-editor-bar .img-editor-group:last-child {
+  margin-right: 0px;
 }
 .img-editor-bar .btn {
-  width: 52px;
-  height: 52px;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  margin: 0 2px;
+  font-size: 16px;
 }
 .img-editor-bar .btn.img-small i {
   transform: scale(0.65);

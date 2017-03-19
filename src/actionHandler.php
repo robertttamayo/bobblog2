@@ -7,6 +7,17 @@ function handle(){
             $post_file = $_POST["file"];
             $post_draft = $_POST["draft"];
             $post_id = $_POST["postid"];
+            $post_wasdraft = $_POST["wasdraft"];
+            
+            // dates
+            $date = date("Y-m-d");
+            
+            $post_publishdate = "";
+            $post_lastedited = "";
+            if ($post_wasdraft && !$post_draft) {
+                $post_publishdate = date("Y-m-d");
+                $post_lastedited = $post_publishdate;
+            }
             
             $post_file = mysql_real_escape_string($post_file);
             $post_short_preview = strip_tags(substr($post_file, 0, 30));
@@ -19,17 +30,42 @@ function handle(){
                 die("Connection failed: " . $conn->connect_error);
             }
             
-            if ($post_id == "") {
-                $sql = "INSERT INTO blogbase (content, posttitle, draft, shortpreview)
-                    VALUES ('" . $post_file . "', \"$post_name\", $post_draft, \"$post_short_preview\")";
+            if ($post_id == "") { // this is a brand new post (doesn't happen, now posts are saved as new drafts manually)
+                $sql = "INSERT INTO blogbase (
+                content, 
+                posttitle, 
+                draft, 
+                shortpreview, 
+                publishdate, 
+                lastedited)
+                    VALUES (
+                    '" . $post_file . "',
+                    \"$post_name\", 
+                    $post_draft, 
+                    \"$post_short_preview\",
+                    \"$date\",
+                    \"$date\")";
             } else {
-                $sql = "UPDATE blogbase SET content='$post_file'
-                , posttitle='$post_name'
-                , draft='$post_draft'
-                , shortpreview='$post_short_preview'
-                WHERE id=$post_id";
-//                $sql = "INSERT INTO blogbase (id, content, posttitle, draft)
-//                    VALUES ($post_id, $post_file, $post_name, $post_draft)";
+                // find out if this post is already published
+                if ($post_wasdraft && !$post_draft){ // a draft is being published, set publishdate
+                    $sql = "UPDATE blogbase SET content='$post_file'
+                    , posttitle='$post_name'
+                    , draft='$post_draft'
+                    , shortpreview='$post_short_preview'
+                    , publishdate='$post_publishdate'
+                    , lastedited='$post_lastedited'
+                    WHERE id=$post_id";
+                    
+                } else { // a draft or post is being updated, don't change publishdate
+                    $sql = "UPDATE blogbase SET content='$post_file'
+                    , posttitle='$post_name'
+                    , draft='$post_draft'
+                    , shortpreview='$post_short_preview'
+                    , lastedited='$date'
+                    WHERE id=$post_id";
+                }
+                
+                
             }
             
             $result = $conn->query($sql);
@@ -44,6 +80,29 @@ function handle(){
 
             $conn->close();
             exit;
+            break;
+        case ACTION_POST_DRAFT_STATUS:
+            $post_id = $_POST["postid"];
+            $draft = $_POST["draft"];
+            
+            $sql = "UPDATE blogbase 
+                SET draft=$draft
+                WHERE id=$post_id";
+            
+            $conn = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
+            $result = $conn->query($sql);
+            
+            if ($result === TRUE) {
+                $data = [];
+                $data["query"] = $sql;
+                $data["postid"] = $post_id;
+                $data["draft"] = $draft;
+                echo json_encode($data);
+            } else {
+                echo "Error: " . $sql . "<br>" . $conn->error;
+            }
+            
+            $conn->close();
             break;
         case ACTION_SAVE_TAG:
             $tag_name = $_POST["name"];

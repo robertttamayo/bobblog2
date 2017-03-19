@@ -36,7 +36,11 @@
                 <?php if ($posts[$i]->draft) { ?>
                     <div class="draft"><i class="fa fa-wrench" aria-hidden="true"></i> Draft</div>
                 <?php } else { ?>
-                    <div class="publishdate"><?= $posts[$i]->publishdate;?></div>
+                    <div class="public">
+                        <i class="fa fa-globe" aria-hidden="true"></i> Published
+                        <span class="publishdate"><?= formatDateForWelcome($posts[$i]->publishdate); ?></span>
+                    </div>
+<!--                    <div class="publishdate"><?= $posts[$i]->publishdate;?></div>-->
 <!--                    <div class="lastedited"><?= $posts[$i]->lastedited ;?></div>-->
                 <?php } ?>
                 

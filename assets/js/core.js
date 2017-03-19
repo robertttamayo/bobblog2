@@ -13,7 +13,11 @@ $(document).ready(function(){
     $("#main-container").html("").load("src/welcome.php", function(){
         mainContainerCallbacks();
     });
-    
+    $(".home-button").on("click", function(){
+        $("#main-container").html("").load(homeUrl + "src/welcome.php", function(){
+            mainContainerCallbacks();
+        });
+    });
     $(".new-post").on("click", function(){
         load("start");
         $("#main-container").html("").load(homeUrl + "src/editor.php", function(){
@@ -86,8 +90,34 @@ function editContainerCallbacks(){
         if (!validatePost()){
             return;
         }
-        savePost();
+        // save and publish
+        data = {
+            draft: false
+        };
+        savePost(data);
     });
+    $(".save-draft").on("click", function(){
+        console.log("Attempting to save post as draft");
+        if (!validatePost()){
+            return;
+        }
+        // save and publish
+        data = {
+            draft: true
+        };
+        savePost(data);
+    });
+    $(".unpublish-post").on("click", function(){
+        console.log("Attempting to unpublish post");
+        var postid = getPostId();
+        // save and publish
+        data = {
+            draft: true,
+            postid: postid
+        };
+        updateDraftStatus(data);
+    });
+    
     $(".manage-tags").on("click", function(){
         var postid = $("#postid-hidden").text();
         var tagPop = document.createElement("div");
@@ -200,11 +230,12 @@ function saveCat(){
         console.log("after dispatching event");
     });
 }
-function savePost(){
+function savePost(data){
     var raw = $("#content").html();
     var title = $("#post-title").val();
-    var draft = false;
+    var draft = data.draft;
     var postid = $("#postid-hidden").text();
+    var wasDraft = $("#is-draft-hidden").text();
     console.log(postid);
     
     $.post("#", {    
@@ -212,6 +243,7 @@ function savePost(){
         name: title,
         file: raw,
         draft: draft,
+        wasdraft: wasDraft,
         postid: postid
     },
     function(_data){ //callback for debugging
@@ -219,6 +251,22 @@ function savePost(){
         _data = JSON.parse(_data);
         $("#postid-hidden").text(_data.postid);
         var event = new Event("post_saved");
+        document.dispatchEvent(event);
+    });
+}
+function updateDraftStatus(data){
+    var draft = data.draft;
+    console.log(data.draft);
+    var postid = data.postid;
+    $.post("#", {    
+        action: actionPostDraftStatus,
+        draft: draft,
+        postid: postid
+        },
+    function(_data){
+        console.log(_data);
+        _data = JSON.parse(_data);
+        var event = new CustomEvent("draft_status_changed", {detail: _data});
         document.dispatchEvent(event);
     });
 }
@@ -269,6 +317,15 @@ document.addEventListener("image_uploaded", function(event){
 document.addEventListener("post_saved", function (event){ 
     createMessage("Your post is safe!");
 }, false);
+document.addEventListener("draft_status_changed", function (event){ 
+    var message;
+    var data = event.detail;
+    if (data.draft){
+        createMessage("This post is now a draft and not visible to the public.");
+    } else {
+        createMessage("Your post is published and visible to the public!");
+    }
+}, false);
 
 document.addEventListener("tag_saved", function(event){
     console.log(event.detail);
@@ -314,6 +371,7 @@ document.addEventListener("cat_saved", function(event){
     
 }, false);
 
+// helpers/tools
 function load(mode){
     switch(mode){
         case "start":
@@ -325,6 +383,9 @@ function load(mode){
             $(".loading").hide();
             break;
     }
+}
+function getPostId(){
+    return $("#postid-hidden").text();
 }
 
 /** EDITOR FUNCTIONS */

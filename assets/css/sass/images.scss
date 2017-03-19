@@ -8,14 +8,23 @@
 .img-editor-bar {
     position: absolute;
     top: 100%;
-    left: 50%;
-    width: 600px;
-    transform: translate(-50%, 0);
+    left: 0%;
     display: none;
+    padding: 8px;
+    
+    .img-editor-group {
+        margin-right: 16px;
+        &:last-child {
+            margin-right: 0px;
+        }
+    }
     
     .btn {
-        width: 52px;
-        height: 52px;
+        width: 32px;
+        height: 32px;
+        padding: 0;
+        margin: 0 2px;
+        font-size: 16px;
         
         &.img-small {
             i {

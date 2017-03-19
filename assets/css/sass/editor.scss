@@ -330,7 +330,11 @@
     text-align: right;
 }
 .draft {
-    color: rgb(2,188,49);
+    color: $notice-green;
+    text-align: right;
+}
+.public {
+    color: $notice-blue;
     text-align: right;
 }
 
