@@ -1,0 +1,15 @@
+<div class="blog-posts-wrap flex flex-vert">
+
+    <?php for ($i = 0; $i < sizeof($sorted_posts); $i++) { ?>
+    <?php 
+        if ($posts[$i]->draft) {
+            continue;
+        }
+    ?>
+    <div class="public-post-wrap">
+        <div class="public-post-title">
+            <?= $sorted_posts[$i]->title ?>
+        </div>
+    </div>
+    <?php } ?>
+</div>

@@ -7,21 +7,12 @@ define("ROOT_DIR", "bobblog2/");
 define("ROOT", DOMAIN_NAME . ROOT_DIR);
 define("LOGIN_URL", ROOT . "login.php");
 
-/**
-move this block into admin.php
-we only want to verify logins if trying to access the 
-admin dashboard
-*/
-if (!isset($_SESSION["userID"]) && $_SERVER["REQUEST_URI"] != "/" . ROOT_DIR . "login.php") {
-    header("Location: " . LOGIN_URL);
-    die;
-}
-
 define("SRC_DIR", __DIR__ . '/src/');
 define("MEDIA_DIR", __DIR__ . '/media/');
 define("MEDIA_URL", ROOT . 'media/');
 define("TEMPLATE_DIR", 'src/html/template/');
 define("ASSETS_DIR", 'assets/');
+define("MAIN_SITE_TEMPLATE_URL", ROOT. "mainSiteHTML.html");
 
 define("DB_SERVER", "localhost");
 define("DB_NAME", "bobblog_db");
@@ -51,6 +42,11 @@ $content = "content";
 $postid = "id";
 
 if (isset($_POST["action"])) {
+    // don't allow post requests unless admin user is signed in
+    if (!isset($_SESSION["userID"])) {
+        exit;
+        return;
+    }
     include(SRC_DIR . "actionHandler.php");
     handle($_POST["action"]);
 }

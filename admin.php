@@ -1,8 +1,16 @@
 <?php 
 
-// DEVELOPING DASHBOARD
-
 require_once("config.php");
+/**
+move this block into admin.php
+we only want to verify logins if trying to access the 
+admin dashboard
+*/
+if (!isset($_SESSION["userID"]) && $_SERVER["REQUEST_URI"] != "/" . ROOT_DIR . "login.php") {
+    header("Location: " . LOGIN_URL);
+    die;
+}
+
 require_once(SRC_DIR . "bobblog.php");
 
 $bb = new BobBlog();

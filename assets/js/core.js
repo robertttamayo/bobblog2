@@ -235,8 +235,9 @@ function savePost(data){
     var title = $("#post-title").val();
     var draft = data.draft;
     var postid = $("#postid-hidden").text();
-    var wasDraft = $("#is-draft-hidden").text();
+    var wasDraft = $("#is-draft-hidden").text() === "1" ? true : false;
     console.log(postid);
+    console.log(wasDraft);
     
     $.post("#", {    
         action: actionSavePost,
@@ -247,9 +248,12 @@ function savePost(data){
         postid: postid
     },
     function(_data){ //callback for debugging
-        console.log(_data);
+//        console.log(_data);
         _data = JSON.parse(_data);
+        console.log(_data);
+        var draft = _data.draft == "true" ? 1 : 0;
         $("#postid-hidden").text(_data.postid);
+        $("#is-draft-hidden").text(draft);
         var event = new Event("post_saved");
         document.dispatchEvent(event);
     });
@@ -266,6 +270,9 @@ function updateDraftStatus(data){
     function(_data){
         console.log(_data);
         _data = JSON.parse(_data);
+        var draft = _data.draft == "true" ? 1 : 0;
+        $("#postid-hidden").text(_data.postid);
+        $("#is-draft-hidden").text(draft);
         var event = new CustomEvent("draft_status_changed", {detail: _data});
         document.dispatchEvent(event);
     });

@@ -3,18 +3,27 @@
 function handle(){
     switch ($_POST["action"]) {
         case ACTION_SAVE_POST:
+            $data = []; // return data
+            
             $post_name = $_POST["name"];
             $post_file = $_POST["file"];
             $post_draft = $_POST["draft"];
             $post_id = $_POST["postid"];
             $post_wasdraft = $_POST["wasdraft"];
             
+            $data["wasdraft"] = $post_wasdraft;
+            $data["post_draft"] = $post_draft;
+            $data["conditional"] = ($post_wasdraft === "true" && $post_draft === "false");
+            
             // dates
             $date = date("Y-m-d");
             
             $post_publishdate = "";
             $post_lastedited = "";
-            if ($post_wasdraft && !$post_draft) {
+            
+            $setPublishDate = ($post_wasdraft === "true" && $post_draft === "false");
+            
+            if ($setPublishDate) {
                 $post_publishdate = date("Y-m-d");
                 $post_lastedited = $post_publishdate;
             }
@@ -47,7 +56,7 @@ function handle(){
                     \"$date\")";
             } else {
                 // find out if this post is already published
-                if ($post_wasdraft && !$post_draft){ // a draft is being published, set publishdate
+                if ($setPublishDate){ // a draft is being published, set publishdate
                     $sql = "UPDATE blogbase SET content='$post_file'
                     , posttitle='$post_name'
                     , draft='$post_draft'
@@ -55,6 +64,7 @@ function handle(){
                     , publishdate='$post_publishdate'
                     , lastedited='$post_lastedited'
                     WHERE id=$post_id";
+                    $data["route"] = "post was a draft and is set to become published";
                     
                 } else { // a draft or post is being updated, don't change publishdate
                     $sql = "UPDATE blogbase SET content='$post_file'
@@ -63,6 +73,7 @@ function handle(){
                     , shortpreview='$post_short_preview'
                     , lastedited='$date'
                     WHERE id=$post_id";
+                    $data["route"] = "post was a not a draft and is set to be updated";
                 }
                 
                 
@@ -71,8 +82,8 @@ function handle(){
             $result = $conn->query($sql);
 
             if ($result === TRUE) {
-                $data = [];
                 $data["postid"] = $post_id == "" ? $conn->insert_id : $post_id;
+                $data["draft"] = $post_draft;
                 echo json_encode($data);
             } else {
                 echo "Error: " . $sql . "<br>" . $conn->error;
@@ -378,6 +389,10 @@ function handle(){
 }
 /** Functions called manually by model files */
 function saveNewDraft() {
+    if (!isset($_SESSION["userID"])) {
+        exit;
+        return;
+    }
     $conn = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
         
     if ($conn->connect_error) {
