@@ -24,5 +24,45 @@ $bb->addHeadStyle(array("href" => "https://fonts.googleapis.com/css?family=Droid
 $bb->addHeadStyle(array("href" => ASSETS_DIR . "css/font-awesome.min.css"));
 $bb->addHeadStyle(array("href" => ASSETS_DIR . "css/core.css"));
 
+
+// determine landing page
+
+$uri = $_SERVER['REQUEST_URI'];
+$uri = str_replace(BLOG_INSTALL_DIR, "", $uri);
+$uri = trim($uri, "/");
+$uri = explode("?", $uri)[0];
+
+$main_content = "";
+$category_uri = "";
+
+if ($uri === "") {
+    ob_start();
+    include (SRC_DIR . "blogHomePage.php");
+    $main_content = ob_get_clean();
+} else {
+    ob_start();
+    $parts = explode("/", $uri);
+    if (sizeof($parts) == 1) {
+        // post pages have only one part
+        $permalink = $uri;
+        include (SRC_DIR . "blogPage.php");
+        $main_content = ob_get_clean();
+    } else {
+        $category_uri = $parts[0];
+        $permalink = $parts[1];
+        if ($category_uri != CATEGORY_URI){
+            // error 404 time
+            echo "error 404: invalid category uri";
+            ob_get_clean();
+        } else {
+            $categoryMode = true;
+            include (SRC_DIR . "blogHomePage.php");
+            $main_content = ob_get_clean();
+        }
+    }
+    
+}
+
 // prepare all variables, then load the template
 include('mainSiteHTML.html');
+

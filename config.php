@@ -6,12 +6,13 @@ define("DOMAIN_NAME", "http://localhost/");
 define("ROOT_DIR", "bobblog2/");
 define("ROOT", DOMAIN_NAME . ROOT_DIR);
 define("LOGIN_URL", ROOT . "login.php");
+define("BLOG_INSTALL_DIR", "bobblog2/");
 
 define("SRC_DIR", __DIR__ . '/src/');
 define("MEDIA_DIR", __DIR__ . '/media/');
 define("MEDIA_URL", ROOT . 'media/');
 define("TEMPLATE_DIR", 'src/html/template/');
-define("ASSETS_DIR", 'assets/');
+define("ASSETS_DIR", ROOT . 'assets/');
 define("MAIN_SITE_TEMPLATE_URL", ROOT. "mainSiteHTML.html");
 
 define("DB_SERVER", "localhost");
@@ -34,6 +35,12 @@ define("ACTION_ADD_CAT_TO_POST", "add_cat_to_post");
 define("ACTION_REMOVE_CAT_FROM_POST", "remove_cat_from_post");
 define("ACTION_UPLOAD_IMAGE", "upload_image");
 define("ACTION_POST_DRAFT_STATUS", "post_draft_status");
+
+define("PERMALINK_STRUCTURE_CATEGORY", "category");
+define("CATEGORY_URI", "category");
+
+$blog_settings = array();
+$blog_settings["permalink_structure"] = PERMALINK_STRUCTURE_CATEGORY;
 
 // database definitions
 $blogbase = "blogbase";

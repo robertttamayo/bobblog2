@@ -91,6 +91,63 @@ class BobBlog {
                 $this->activePost->draft = $row["draft"];
                 $this->activePost->lastedited = $row["lastedited"];
                 $this->activePost->title = $row["posttitle"];
+                $this->activePost->permalink = $row["permalink"];
+                
+            }
+        } else {
+            echo "0 results";
+        }
+        
+        $conn->close();
+        return $this->activePost;
+    }
+    public function getCatByPermalink($permalink){
+        $conn = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
+        
+        if ($conn->connect_error) {
+            die("Connection failed: " . $conn->connect_error);
+        }
+        
+        $sql = "SELECT * FROM catbase WHERE permalink = \"$permalink\"";
+        $result = $conn->query($sql);
+        
+        if ($result->num_rows > 0) {
+            // output data of each row
+            while($row = $result->fetch_assoc()) {
+                $catid = $row["catid"];
+            }
+        } else {
+            echo "0 results for: ";
+            echo $permalink;
+        }
+        
+        $conn->close();
+        return $catid;
+    }
+    public function getPostFromPermalink($permalink){
+        $conn = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
+        
+        if ($conn->connect_error) {
+            die("Connection failed: " . $conn->connect_error);
+        }
+        
+        $sql = "SELECT * FROM blogbase WHERE permalink = \"$permalink\"";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+            // output data of each row
+            while($row = $result->fetch_assoc()) {
+                $this->activePost = new Post();
+                
+                $this->activePost->id = $row["id"];
+                $this->activePost->content = $row["content"];
+                $this->activePost->category = $row["category"];
+                $this->activePost->author = $row["author"];
+                $this->activePost->publishdate = $row["publishdate"];
+                $this->activePost->draft = $row["draft"];
+                $this->activePost->lastedited = $row["lastedited"];
+                $this->activePost->title = $row["posttitle"];
+                $this->activePost->permalink = $row["permalink"];
                 
             }
         } else {
@@ -238,6 +295,7 @@ class BobBlog {
                 $post->lastedited = $row["lastedited"];
                 $post->author = $row["author"];
                 $post->publishdate = $row["publishdate"];
+                $post->permalink = $row["permalink"];
                 
                 $this->posts[] = $post;
             }
@@ -245,6 +303,41 @@ class BobBlog {
             echo "0 results";
         }
         $conn->close();
+    }
+    public function getPostsByCat($catid){
+        $conn = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
+        
+        if ($conn->connect_error) {
+            die("Connection failed: " . $conn->connect_error);
+        }
+        
+        $sql = "SELECT * FROM blogbase WHERE category = $catid";
+        $result = $conn->query($sql);
+        
+        if ($result->num_rows > 0) {
+            // output data of each row
+            while($row = $result->fetch_assoc()) {
+                $post = new Post();
+                
+                $post->title = $row["posttitle"];
+                $post->id = $row["id"];
+                $post->content = $row["content"];
+                $post->shortpreview = $row["shortpreview"];
+                $post->preview = $row["preview"];
+                $post->category = $row["category"];
+                $post->draft = $row["draft"];
+                $post->lastedited = $row["lastedited"];
+                $post->author = $row["author"];
+                $post->publishdate = $row["publishdate"];
+                $post->permalink = $row["permalink"];
+                
+                $this->posts[] = $post;
+            }
+        } else {
+            echo "0 results";
+        }
+        $conn->close();
+        return $this->posts;
     }
     public function initMorePosts(){
         

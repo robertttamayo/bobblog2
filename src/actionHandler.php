@@ -251,8 +251,6 @@ function handle(){
             
             exit;
             break;
-            exit;
-            break;
         case ACTION_REMOVE_CAT_FROM_POST:
             $catid = $_POST["catid"];
             $postid = $_POST["postid"];
@@ -381,6 +379,7 @@ function handle(){
             }
             exit;
             break;
+        
         default:
             exit;
             ;

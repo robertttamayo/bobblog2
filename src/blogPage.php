@@ -1,25 +1,27 @@
 <?php
 
-$bb = new BobBlog();
-$bb->initPosts();
-$posts = $bb->getPosts();
-$sorted_posts = sortPosts($posts);
+if (!($bb)) {
+    $bb = new BobBlog();
+} 
 
-function sortPosts($posts){
 
-    foreach($posts as $post){
-        if ($post->draft) {
-            continue;
-        }
-        $sorted[] = $post;
-        $dates[] = $post->publishdate;
+if (($category_uri)){
+    // load all posts of a category
+    echo "this is a category page. load all posts of a category";
+    $category = $bb->getCategoryFromPermalink($permalink);
+    if ($category == null) {
+        // error!
+        echo "there has been an error. category does not exist.";
+    } else {
+        include (SRC_DIR . 'html/template/category_page.html');
     }
-
-    // Sort the data with volume descending, edition ascending
-    // Add $data as the last parameter, to sort by the common key
-    array_multisort($dates, $sorted);
-
-    return $sorted;
+} else {
+    // load up the post
+    $post = $bb->getPostFromPermalink($permalink);
+    if ($post == null){
+        echo "there has been an error. post not found.";
+    } else {
+        include (SRC_DIR . 'html/template/blog_page.html');
+    }
 }
 
-include (SRC_DIR . 'html/template/blog_page.html');
