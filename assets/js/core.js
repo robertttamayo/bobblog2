@@ -10,7 +10,7 @@ var iconRemove = "<i class=\"fa fa-trash\" aria-hidden=\"true\"></i>";
 var iconClose = "<i class=\"fa fa-window-close-o\" aria-hidden=\"true\"></i>";
 
 $(document).ready(function(){
-    $("#main-container").html("").load("src/welcome.php", function(){
+    $("#main-container").html("").load(homeUrl + "src/welcome.php", function(){
         mainContainerCallbacks();
     });
     $(".home-button").on("click", function(){
@@ -150,10 +150,12 @@ function addTagToPost(tagElement, postid) {
     tagElement.toggleClass("active-tag");
     var tagid = tagElement.data("tagid");
     console.log("adding tag " + tagElement.data("tagid") + " to post " + postid);
-    $.post("#", {
+    $.post(window.location.href, {
+        async: true,
         action: actionAddTagToPost,
         tagid: tagid,
-        postid: postid
+        postid: postid,
+        async: true
     }, function(_data){
         console.log(_data);
     });
@@ -162,7 +164,8 @@ function removeTagFromPost(tagElement, postid) {
     tagElement.toggleClass("active-tag");
     var tagid = tagElement.data("tagid");
     console.log("removing tag " + tagElement.data("tagid") + " from post " + postid);
-    $.post("#", {
+    $.post(window.location.href, {
+        async: true,
         action: actionRemoveTagFromPost,
         tagid: tagid,
         postid: postid
@@ -175,7 +178,8 @@ function addCatToPost(catElement, postid) {
     catElement.addClass("active-tag");
     var catid = catElement.data("catid");
     console.log("adding tag " + catElement.data("catid") + " to post " + postid);
-    $.post("#", {
+    $.post(window.location.href, {
+        async: true,
         action: actionAddCatToPost,
         catid: catid,
         postid: postid
@@ -187,7 +191,8 @@ function removeCatFromPost(catElement, postid) {
     $(".tag-name").removeClass("active-tag");
     var catid = catElement.data("catid");
     console.log("removing tag " + catElement.data("catid") + " from post " + postid);
-    $.post("#", {
+    $.post(window.location.href, {
+        async: true,
         action: actionRemoveCatFromPost,
         catid: catid,
         postid: postid
@@ -199,7 +204,8 @@ function saveTag(){
     var tagName = $("#tag-create-input").val();
     var postid = $("#postid-hidden").text();
     console.log(tagName);
-    $.post("#", {
+    $.post(window.location.href, {
+        async: true,
         action: actionSaveTag,
         name: tagName,
         postid: postid
@@ -217,7 +223,8 @@ function saveCat(){
     var catName = $("#tag-create-input").val();
     var postid = $("#postid-hidden").text();
     console.log(catName);
-    $.post("#", {
+    $.post(window.location.href, {
+        async: true,
         action: actionSaveCat,
         name: catName,
         postid: postid
@@ -239,7 +246,8 @@ function savePost(data){
     console.log(postid);
     console.log(wasDraft);
     
-    $.post("#", {    
+    $.post(window.location.href, {    
+        async: true,
         action: actionSavePost,
         name: title,
         file: raw,
@@ -262,7 +270,8 @@ function updateDraftStatus(data){
     var draft = data.draft;
     console.log(data.draft);
     var postid = data.postid;
-    $.post("#", {    
+    $.post(window.location.href, {   
+        async: true,
         action: actionPostDraftStatus,
         draft: draft,
         postid: postid
@@ -283,7 +292,7 @@ function uploadImage(imgData){
             "imgdata": imgData
         };
     $.ajax({
-        url: "#",
+        url: window.location.href,
         type: "POST",
         processData: false,
         contentType: false,

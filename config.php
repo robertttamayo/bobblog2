@@ -3,16 +3,19 @@
 session_start();
 
 define("DOMAIN_NAME", "http://localhost/");
-define("ROOT_DIR", "bobblog2/");
-define("ROOT", DOMAIN_NAME . ROOT_DIR);
-define("LOGIN_URL", ROOT . "login.php");
+define("ROOT_DIR", __DIR__ . "/bobblog2/");
 define("BLOG_INSTALL_DIR", "bobblog2/");
+
+define("ROOT", DOMAIN_NAME . BLOG_INSTALL_DIR);
+define("LOGIN_URL", ROOT . "admin/login.php");
+define("LOGIN_SUCCESS_URL", ROOT . "admin/");
 
 define("SRC_DIR", __DIR__ . '/src/');
 define("MEDIA_DIR", __DIR__ . '/media/');
 define("MEDIA_URL", ROOT . 'media/');
-define("TEMPLATE_DIR", 'src/html/template/');
+define("TEMPLATE_DIR", __DIR__ . '/src/html/template/');
 define("ASSETS_DIR", ROOT . 'assets/');
+define("ASSETS_URL", ROOT . 'assets/');
 define("MAIN_SITE_TEMPLATE_URL", ROOT. "mainSiteHTML.html");
 
 define("DB_SERVER", "localhost");

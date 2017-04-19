@@ -1,6 +1,6 @@
 <?php
 
-require_once("config.php");
+require_once("../config.php");
 require_once(SRC_DIR . "bobblog.php");
 
 $bb = new BobBlog();
@@ -26,7 +26,7 @@ if (isset($_POST["username"])) {
                 $_SESSION["userEmail"] = $data[0]["email"];
                 $_SESSION["userType"] = $data[0]["type"];
                 $_SESSION["userRole"] = $data[0]["role"];
-                header("Location: admin.php");
+                header("Location: " . LOGIN_SUCCESS_URL);
             } else {
                 echo "<pre>Not an active user.</pre>";
             }

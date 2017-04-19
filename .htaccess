@@ -5,7 +5,11 @@
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteRule . "" [L]
-    #get rid of .php
+    
+    # get rid of .php
     RewriteRule ^index\.php$ "" [R=301,L]
     RewriteRule ^(.*)index\.php$ /bobblog2/$1/ [R=301,L]
+    
+    # admin, other urls
+    RewriteRule ^admin$ admin\.php [L]
 </IfModule>

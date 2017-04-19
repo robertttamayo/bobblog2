@@ -8,8 +8,12 @@
     ?>
     <div class="public-post-wrap">
         <div class="public-post-title">
-            <?= $sorted_posts[$i]->title ?>
+            <a href="<?= ROOT . $sorted_posts[$i]->permalink ?>"><?= $sorted_posts[$i]->title ?></a>
         </div>
+        <div class="public-post-content">
+            <?= $sorted_posts[$i]->content ?>
+        </div>
+        <div class="read-more">Read More</div>
     </div>
     <?php } ?>
 </div>

@@ -14,8 +14,9 @@ $bb->addHeadScript(array("src" => ASSETS_DIR . "js/core.js"));
 
 $bb->addHeadScript(array("script" => 
                          "var homeUrl = \"" . ROOT . "\";" .
-                         "var dashboardTemplateDir = \"" . ROOT . SRC_DIR . "html/dashboard/\";" . 
-                         "var mode = PUBLIC_ALL_POSTS;"));
+                         "var dashboardTemplateDir = \"" . ROOT . SRC_DIR . "html/dashboard/\";" //. 
+//                         "var mode = PUBLIC_ALL_POSTS;"
+                        ));
 
 // CSS
 $bb->addHeadStyle(array("href" => "https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css"));
@@ -34,6 +35,7 @@ $uri = explode("?", $uri)[0];
 
 $main_content = "";
 $category_uri = "";
+$categoryMode = false;
 
 if ($uri === "") {
     ob_start();
@@ -53,7 +55,8 @@ if ($uri === "") {
         if ($category_uri != CATEGORY_URI){
             // error 404 time
             echo "error 404: invalid category uri";
-            ob_get_clean();
+            include(SRC_DIR . "error404.php");
+            $main_content = ob_get_clean();
         } else {
             $categoryMode = true;
             include (SRC_DIR . "blogHomePage.php");
