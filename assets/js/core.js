@@ -142,6 +142,14 @@ function editContainerCallbacks(){
             catPopCallbacks();
         });
     });
+    $("#post-title").on("keyup", function(event){
+        var text = $(this).val();
+        console.log(text);
+        text = text.replace(/ /g, "-");
+        console.log(text);
+        text = text.toLowerCase();
+        $("#post-permalink-input").val(text);
+    });
     initEditor();
     initImages();
     imgEditorCallbacks();

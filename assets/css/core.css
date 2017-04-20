@@ -127,6 +127,14 @@ button.btn-ii, .btn-ii {
   background-image: url(../img/fabric-1-light.png);
 }
 
+.c-red {
+  color: #b73949 !important;
+}
+
+.c-blue {
+  color: #58bdcb !important;
+}
+
 .edit-container {
   color: #92d4dd;
   width: 100%;
@@ -567,6 +575,7 @@ body {
   width: 100%;
   margin-bottom: 24px;
   justify-content: space-between;
+  align-items: center;
 }
 
 .top-wrap {
@@ -679,7 +688,7 @@ body {
 
 .post-submit-options {
   justify-content: space-between;
-  width: 80%;
+  width: 90%;
   margin: auto;
   flex-wrap: wrap;
 }
@@ -693,8 +702,13 @@ body {
   color: #aeaeae;
 }
 
+.post-title-label {
+  width: 10%;
+  text-align: center;
+}
+
 .post-title {
-  width: 80%;
+  width: 90%;
   height: 52px;
   line-height: 50px;
   vertical-align: middle;
@@ -781,7 +795,7 @@ body {
 }
 
 .post-meta-wrapper {
-  width: 80%;
+  width: 90%;
   margin: auto auto 12px auto;
   justify-content: space-between;
 }

@@ -8,6 +8,7 @@ $gray: #aeaeae;
 $shadow-gray: rgba(174, 174, 174, .5);
 $light-gray: #efefef;
 $blue: #92d4dd;
+$font-blue: #58bdcb;
 $red: #b73949;
 $white: #fff;
 $off-white: #f5f5f5;
@@ -176,4 +177,11 @@ button.btn-ii, .btn-ii {
 .fabric {
     background-color: $blue;
     background-image: url(../img/fabric-1-light.png);
+}
+
+.c-red {
+    color: $red !important;
+}
+.c-blue {
+    color: $font-blue !important;
 }

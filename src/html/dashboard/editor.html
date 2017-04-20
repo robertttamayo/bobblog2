@@ -1,15 +1,17 @@
 <div class="editor-wrap">
     <div class="post-title-wrap container flex flex-hor">
+        <div class="post-title-label c-blue">Title</div>
         <div class="post-title flex flex-hor">
             <input name="post-title" type="text" id="post-title" placeholder="Post Title" value="<?php if ($posttitle != "") {echo $posttitle;} ?>">
             <div class="label"><i class="fa fa-thumbs-up" aria-hidden="true"></i> Save</div>
         </div>
-        <div class="btn post-preview"><i class="fa fa-binoculars" aria-hidden="true"></i> Preview</div>
     </div>
     
     <div class="post-title-wrap container flex flex-hor">
+        <div class="post-title-label c-blue">Url</div>
         <div class="post-title post-permalink flex flex-hor">
-            <input name="post-permalink-input" type="text" id="post-permalink-input">
+            <input disabled name="post-permalink-input" type="text" id="post-permalink-input" value="<?= $post->permalink ?>">
+            <div class="label"><i class="fa fa-link" aria-hidden="true"></i> Change url</div>
         </div>
     </div>
     
@@ -31,6 +33,7 @@
         <button class="copy-post"><i class="fa fa-files-o" aria-hidden="true"></i> Save as Copy</button>
         <button class="unpublish-post"><i class="fa fa-user-secret" aria-hidden="true"></i> Unpublish</button>
         <button class="schedule-post"><i class="fa fa-calendar" aria-hidden="true"></i> Schedule Publish</button>
+        <button class="post-preview"><i class="fa fa-binoculars" aria-hidden="true"></i> Preview</button>
     </div>
     <div class="edit-container container flex flex-hor">
         <div class="edit-container-bottom"></div>
@@ -59,13 +62,13 @@
             <button class="btn-ii" id="show-colors-modal" class="show-color-picker"><i class="fa fa-paint-brush" aria-hidden="true"></i></button>
         </div>
 
-        <div class="edit-item">
+        <div class="edit-item ii flex flex-hor">
             <button id="ol" class="btn-ii drop-button" type="button" ><i class="fa fa-list-ol" aria-hidden="true"></i></button>
             <button id="ul" class="btn-ii drop-button" type="button" ><i class="fa fa-list-ul" aria-hidden="true"></i></button>
 <!--            <button id="block" type="button" onclick="addBlockquote();"><b>&#34;  &#34;</b></button>-->
         </div>
 
-        <div class="edit-item i">
+        <div class="edit-item i flex flex-hor">
             <button id="link" class="btn-ii drop-button" type="button"><i class="fa fa-link" aria-hidden="true"></i></button>
             <button id="unlink" class="btn-ii drop-button" type="button"><i class="fa fa-chain-broken" aria-hidden="true"></i></button>
             <button class="btn-ii" class="btn-ii drop-button" id="image" type="button" ><i class="fa fa-picture-o" aria-hidden="true"></i></button>

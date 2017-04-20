@@ -20,6 +20,7 @@ if (isset($_GET["postid"])) {
     $postcontent = $post->content;
     $posttitle = $post->title;
     $isDraft = $post->draft;
+    $permalink = $post->permalink;
     
     $hasContent = true;
 } else {

@@ -18,8 +18,9 @@ $bb->initUser();
 //$bb->getUserProfile()->print_user();
 
 // JS
-$bb->addHeadScript(array("src" => "https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"));
-$bb->addHeadScript(array("src" => "https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"));
+//$bb->addHeadScript(array("src" => "https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"));
+$bb->addHeadScript(array("src" => ASSETS_DIR . "js/jquery-1.11.1.min.js"));
+//$bb->addHeadScript(array("src" => "https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"));
 $bb->addHeadScript(array("src" => ASSETS_DIR . "js/core.js"));
 $bb->addHeadScript(array("src" => ASSETS_DIR . "js/editor.js"));
 $bb->addHeadScript(array("src" => ASSETS_DIR . "js/imgedit.js"));
@@ -40,6 +41,7 @@ $bb->addHeadScript(array("script" =>
                          "var mode = WELCOME;"));
 
 // CSS
+$bb->addHeadStyle(array("href" => "https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css"));
 $bb->addHeadStyle(array("href" => "https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css"));
 $bb->addHeadStyle(array("href" => "https://fonts.googleapis.com/css?family=Lato"));
 $bb->addHeadStyle(array("href" => "https://fonts.googleapis.com/css?family=Droid+Sans|Lato"));

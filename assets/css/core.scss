@@ -28,6 +28,7 @@ body {
     width: 100%;
     margin-bottom: 24px;
     justify-content: space-between;
+    align-items: center;
 }
 .top-wrap {
     justify-content: space-between;
@@ -129,7 +130,7 @@ body {
 
 .post-submit-options {
     justify-content: space-between;
-    width: 80%;
+    width: 90%;
     margin: auto;
     flex-wrap: wrap;
     button {
@@ -141,9 +142,12 @@ body {
 .erase-on-focus {
     color: $gray;
 }
+.post-title-label {
+    width: 10%;
+    text-align: center;
+}
 .post-title {
-   
-    width: 80%;
+    width: 90%;
     height: 52px;
     line-height: 50px;
     vertical-align: middle;
@@ -230,7 +234,7 @@ body {
     @include centerize(absolute);
 }
 .post-meta-wrapper {
-    width: 80%;
+    width: 90%;
     margin: auto auto 12px auto;
     justify-content: space-between;
     .btn {
