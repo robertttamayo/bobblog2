@@ -10,6 +10,7 @@ function handle(){
             $post_draft = $_POST["draft"];
             $post_id = $_POST["postid"];
             $post_wasdraft = $_POST["wasdraft"];
+            $post_permalink = $_POST["permalink"];
             
             $data["wasdraft"] = $post_wasdraft;
             $data["post_draft"] = $post_draft;
@@ -44,6 +45,7 @@ function handle(){
                 content, 
                 posttitle, 
                 draft, 
+                permalink,
                 shortpreview, 
                 publishdate, 
                 lastedited)
@@ -51,6 +53,7 @@ function handle(){
                     '" . $post_file . "',
                     \"$post_name\", 
                     $post_draft, 
+                    \"$post_permalink\",
                     \"$post_short_preview\",
                     \"$date\",
                     \"$date\")";
@@ -62,6 +65,7 @@ function handle(){
                     , draft='$post_draft'
                     , shortpreview='$post_short_preview'
                     , publishdate='$post_publishdate'
+                    , permalink='$post_permalink'
                     , lastedited='$post_lastedited'
                     WHERE id=$post_id";
                     $data["route"] = "post was a draft and is set to become published";
@@ -72,6 +76,7 @@ function handle(){
                     , draft='$post_draft'
                     , shortpreview='$post_short_preview'
                     , lastedited='$date'
+                    , permalink='$post_permalink'
                     WHERE id=$post_id";
                     $data["route"] = "post was a not a draft and is set to be updated";
                 }
@@ -90,6 +95,31 @@ function handle(){
             }
 
             $conn->close();
+            exit;
+            break;
+        case ACTION_POST_PERMALINK:
+            $post_id = $_POST["postid"];
+            $permalink = $_POST["permalink"];
+            
+            $sql = "UPDATE blogbase 
+                SET permalink=\"$permalink\"
+                WHERE id=$post_id";
+            
+            $conn = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
+            $result = $conn->query($sql);
+            
+            if ($result === TRUE) {
+                $data = [];
+                $data["query"] = $sql;
+                $data["postid"] = $post_id;
+                $data["permalink"] = $permalink;
+                echo json_encode($data);
+            } else {
+                echo "Error: " . $sql . "<br>" . $conn->error;
+            }
+            
+            $conn->close();
+            
             exit;
             break;
         case ACTION_POST_DRAFT_STATUS:

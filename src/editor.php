@@ -12,6 +12,7 @@ $postcontent = "";
 $posttitle = "";
 $hasContent = false;
 $isDraft = false;
+$permalink = "";
 
 if (isset($_GET["postid"])) {
     $postid = $_GET["postid"];
@@ -31,6 +32,7 @@ if (isset($_GET["postid"])) {
 //    $_POST["action"] = ACTION_TAGS_BY_POSTID;
 //    handle($_POST["action"]);
 }
+
 $grayFactor = .15;
 function writeColorChooseSingle($_r, $_g, $_b, $grayFactor){
     $r = (int)($_r + ((128 - $_r) * $grayFactor));

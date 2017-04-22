@@ -10,7 +10,7 @@ $bb = new BobBlog();
 // JS
 $bb->addHeadScript(array("src" => "https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"));
 $bb->addHeadScript(array("src" => "https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"));
-$bb->addHeadScript(array("src" => ASSETS_DIR . "js/core.js"));
+$bb->addHeadScript(array("src" => ASSETS_DIR . "js/core.min.js"));
 
 $bb->addHeadScript(array("script" => 
                          "var homeUrl = \"" . ROOT . "\";" .

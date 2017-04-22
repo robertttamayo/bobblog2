@@ -105,9 +105,9 @@ button:not(.btn-ii), .btn {
         display: inline-block;
     }
     &:hover {
-        background: $blue;
+        background: $font-blue;
         color: $red;
-        transform: scale(1.1);
+//        transform: scale(1.1);
 //        box-shadow: 2px 2px 0px 0px $gray;
     }
     &:nth-of-type(odd) {

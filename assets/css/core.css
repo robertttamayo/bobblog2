@@ -74,9 +74,8 @@ button:not(.btn-ii).inline, .btn.inline {
   display: inline-block;
 }
 button:not(.btn-ii):hover, .btn:hover {
-  background: #92d4dd;
+  background: #58bdcb;
   color: #b73949;
-  transform: scale(1.1);
 }
 
 button.btn-ii, .btn-ii {
@@ -727,6 +726,14 @@ body {
   box-shadow: inset 0 0 4px 0 #888;
   border-top: none;
   border: none;
+  cursor: pointer;
+  transition: all .2s;
+}
+.post-title .label .unlock {
+  display: none;
+}
+.post-title .label:hover {
+  background: #58bdcb;
 }
 .post-title input {
   -webkit-appearance: none;
@@ -740,6 +747,21 @@ body {
   border-top: 1px solid #92d4dd;
   border-left: 1px solid #92d4dd;
   border-bottom: 1px solid #92d4dd;
+  transition: all .2s;
+}
+.post-title.disabled input {
+  border-color: #aeaeae;
+  pointer-events: none;
+}
+.post-title.disabled .label {
+  background: #aeaeae;
+  color: #333;
+}
+.post-title.disabled .label .unlock {
+  display: inline-block;
+}
+.post-title.disabled .label .lock {
+  display: none;
 }
 
 .dim {

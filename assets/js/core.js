@@ -142,14 +142,34 @@ function editContainerCallbacks(){
             catPopCallbacks();
         });
     });
+    // post permalink setup
     $("#post-title").on("keyup", function(event){
         var text = $(this).val();
-        console.log(text);
-        text = text.replace(/ /g, "-");
-        console.log(text);
-        text = text.toLowerCase();
+        text = formatPermalink(text);
         $("#post-permalink-input").val(text);
     });
+    $("#post-permalink-input").on("keyup", function(event){
+        var text = $(this).val();
+        text = formatPermalink(text);
+        $(this).val(text);
+    });
+    $(".permalink-change").on("click", function(){
+        $(this).parent().toggleClass("disabled");
+        if ($(this).parent().hasClass("disabled")){
+            console.log("Attempting to update permalink");
+            
+            var permalink = $(this).parent().find("input").val();
+            permalink = formatPermalink(permalink);
+            var postid = getPostId();
+            // update permalink
+            data = {
+                permalink: permalink,
+                postid: postid
+            };
+            updatePermalink(data);
+        }
+    });
+    // end post permalink setup
     initEditor();
     initImages();
     imgEditorCallbacks();
@@ -251,6 +271,7 @@ function savePost(data){
     var draft = data.draft;
     var postid = $("#postid-hidden").text();
     var wasDraft = $("#is-draft-hidden").text() === "1" ? true : false;
+    var permalink = $("#post-permalink-input").val();
     console.log(postid);
     console.log(wasDraft);
     
@@ -261,16 +282,33 @@ function savePost(data){
         file: raw,
         draft: draft,
         wasdraft: wasDraft,
-        postid: postid
+        postid: postid,
+        permalink: permalink
     },
     function(_data){ //callback for debugging
-//        console.log(_data);
+        console.log(_data);
         _data = JSON.parse(_data);
         console.log(_data);
         var draft = _data.draft == "true" ? 1 : 0;
         $("#postid-hidden").text(_data.postid);
         $("#is-draft-hidden").text(draft);
         var event = new Event("post_saved");
+        document.dispatchEvent(event);
+    });
+}
+function updatePermalink(data){
+    var permalink = data.permalink;
+    var postid = data.postid;
+    $.post(window.location.href, {   
+        async: true,
+        action: actionPostPermalink,
+        permalink: permalink,
+        postid: postid
+        },
+    function(_data){
+        console.log(_data);
+        _data = JSON.parse(_data);
+        var event = new CustomEvent("permalink_changed", {detail: _data});
         document.dispatchEvent(event);
     });
 }
@@ -306,6 +344,7 @@ function uploadImage(imgData){
         contentType: false,
         data: imgData
     }).done(function(_data){
+        console.log(_data);
         var data = JSON.parse(_data);
         console.log(data);
         if (data.success){
@@ -393,6 +432,11 @@ document.addEventListener("cat_saved", function(event){
             .text(data.cat_id)
             .appendTo(tagName);
     
+}, false);
+document.addEventListener("permalink_changed", function(event){
+    console.log(event.detail);
+    var data = event.detail;
+    createMessage("This post's url is now \"" + homeUrl + data.permalink + ".");
 }, false);
 
 // helpers/tools
@@ -623,4 +667,11 @@ function imgEditorCallbacks(){
     function getImgEditorBar(elem){
         return (elem.parent().parent());
     }
+}
+// helpers
+function formatPermalink(text){
+    text = text.replace(/ /g, "-");
+    text = text.replace(/[+=\[\]{}|\\/<>;:'"\?!,.&^%\$@\(\)\*\&]/g, "");
+    text = text.toLowerCase();
+    return text;
 }

@@ -19,11 +19,12 @@ $bb->initUser();
 
 // JS
 //$bb->addHeadScript(array("src" => "https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"));
-$bb->addHeadScript(array("src" => ASSETS_DIR . "js/jquery-1.11.1.min.js"));
+$bb->addHeadScript(array("src" => ASSETS_DIR . "js/min/jquery-1.11.1.min.js"));
 //$bb->addHeadScript(array("src" => "https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"));
 $bb->addHeadScript(array("src" => ASSETS_DIR . "js/core.js"));
-$bb->addHeadScript(array("src" => ASSETS_DIR . "js/editor.js"));
-$bb->addHeadScript(array("src" => ASSETS_DIR . "js/imgedit.js"));
+//$bb->addHeadScript(array("src" => ASSETS_DIR . "js/min/core.min.js"));
+//$bb->addHeadScript(array("src" => ASSETS_DIR . "js/editor.js"));
+//$bb->addHeadScript(array("src" => ASSETS_DIR . "js/imgedit.js"));
 
 $bb->addHeadScript(array("script" => 
                          "var actionSavePost = \"" . ACTION_SAVE_POST . "\";" .
@@ -35,6 +36,7 @@ $bb->addHeadScript(array("script" =>
                          "var actionRemoveCatFromPost = \"" . ACTION_REMOVE_CAT_FROM_POST . "\";" .
                          "var actionUploadImage = \"" . ACTION_UPLOAD_IMAGE . "\";" .
                          "var actionPostDraftStatus = \"" . ACTION_POST_DRAFT_STATUS . "\";" .
+                         "var actionPostPermalink = \"" . ACTION_POST_PERMALINK . "\";" .
                          
                          "var homeUrl = \"" . ROOT . "\";" .
                          "var dashboardTemplateDir = \"" . ROOT . SRC_DIR . "html/dashboard/\";" . 

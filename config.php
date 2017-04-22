@@ -38,6 +38,7 @@ define("ACTION_ADD_CAT_TO_POST", "add_cat_to_post");
 define("ACTION_REMOVE_CAT_FROM_POST", "remove_cat_from_post");
 define("ACTION_UPLOAD_IMAGE", "upload_image");
 define("ACTION_POST_DRAFT_STATUS", "post_draft_status");
+define("ACTION_POST_PERMALINK", "post_draft_status");
 
 define("PERMALINK_STRUCTURE_CATEGORY", "category");
 define("CATEGORY_URI", "category");
