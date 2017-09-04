@@ -9,6 +9,72 @@ var iconRightJustify = "<i class=\"fa fa-align-right\" aria-hidden=\"true\"></i>
 var iconRemove = "<i class=\"fa fa-trash\" aria-hidden=\"true\"></i>";
 var iconClose = "<i class=\"fa fa-window-close-o\" aria-hidden=\"true\"></i>";
 
+var ChangeCatcher = function($) {
+
+    var _unsavedChanges = false;
+    var _window = window;
+    var _this = this;
+    
+    $(document).on('focus click', '.change-watch', function(){
+        console.log('focus or click on .change-watch element');
+        _this._unsavedChanges = true;
+        _setWatcher();
+    });
+
+    $(document).on('click', '.change-reset', function(){
+        console.log('click on .change-reset element');
+        _this._unsavedChanges = false;
+        _unsetWatcher();
+    });
+    
+    var _setWatcher = function() {
+        console.log('Unsaved changes');
+        _window.onbeforeunload = function() {
+            return 'There are unsaved changes. Are you sure you want to leave?';
+        }
+    }
+    var _unsetWatcher = function() {
+        console.log('Resetting changes. No unsaved changes');
+        _window.onbeforeunload = null;
+    }
+    
+    return {
+        get unsavedChanges() {
+            return _unsavedChanges;
+        },
+        set unsavedChanges(v) {
+            if (typeof(v) == 'boolean') {
+                _unsavedChanges = v;
+                if (_unsavedChanges == true) {
+                    _setWatcher();
+                } else {
+                    _unsetWatcher();
+                }
+            } else {
+                console.error('invalid parameter passed. boolean expected, received ' + typeof(v));
+            }
+        },
+        reset: function() {
+            _unsavedChanges = false;
+        }
+    }
+}
+var changeCatcher = new ChangeCatcher(jQuery);
+
+var BobBlog = function() {
+    var _State = {
+        home: 0,
+        edit: 1,
+        stats: 2
+    }
+    var _state = 0;
+    return {
+        get state() {
+            return _state;
+        }
+    }
+}
+
 $(document).ready(function(){
     $("#main-container").html("").load(homeUrl + "src/welcome.php", function(){
         mainContainerCallbacks();
@@ -33,7 +99,6 @@ $(document).ready(function(){
             load("stop");
         });
     });
-    
 });
 function catPopCallbacks(){
     $(".create-tag").on("click", function(){
@@ -174,6 +239,7 @@ function editContainerCallbacks(){
     initImages();
     imgEditorCallbacks();
 }
+
 function addTagToPost(tagElement, postid) {
     tagElement.toggleClass("active-tag");
     var tagid = tagElement.data("tagid");
@@ -272,8 +338,8 @@ function savePost(data){
     var postid = $("#postid-hidden").text();
     var wasDraft = $("#is-draft-hidden").text() === "1" ? true : false;
     var permalink = $("#post-permalink-input").val();
-    console.log(postid);
-    console.log(wasDraft);
+    console.log('postid: ' + postid);
+    console.log('wasDraft: ' + wasDraft);
     
     $.post(window.location.href, {    
         async: true,
@@ -377,14 +443,17 @@ document.addEventListener("image_uploaded", function(event){
     document.getElementById("img-dialog").close();
     insertImage(data.img_url);
 });
+
 document.addEventListener("post_saved", function (event){ 
     createMessage("Your post is safe!");
 }, false);
+
 document.addEventListener("draft_status_changed", function (event){ 
     var message;
     var data = event.detail;
     if (data.draft){
         createMessage("This post is now a draft and not visible to the public.");
+        $('body').addClass('')
     } else {
         createMessage("Your post is published and visible to the public!");
     }
@@ -438,6 +507,10 @@ document.addEventListener("permalink_changed", function(event){
     var data = event.detail;
     createMessage("This post's url is now \"" + homeUrl + data.permalink + ".");
 }, false);
+
+document.addEventListener("context_changed", function() {
+    changeCatcher.reset();
+});
 
 // helpers/tools
 function load(mode){

@@ -36,15 +36,15 @@ ol, ul {
 }
 
 .color-a {
-  color: #b73949;
+  color: #444;
 }
 
 .color-b {
-  color: #b73949;
+  color: #444;
 }
 
 .color-c {
-  color: #b73949;
+  color: #444;
 }
 
 div.inline {
@@ -60,10 +60,12 @@ div.inline {
 
 button:not(.btn-ii), .btn {
   -webkit-appearance: none;
+  cursor: pointer;
   display: block;
   padding: 12px;
-  background: #92d4dd;
+  background: #ccc;
   color: #b73949;
+  color: #335ea4;
   border: none;
   box-shadow: inset 0px 0px 4px 0px #888;
   font-size: 24px;
@@ -74,15 +76,14 @@ button:not(.btn-ii).inline, .btn.inline {
   display: inline-block;
 }
 button:not(.btn-ii):hover, .btn:hover {
-  background: #58bdcb;
   color: #b73949;
 }
 
 button.btn-ii, .btn-ii {
   display: block;
   padding: 4px;
-  background: #92d4dd;
   color: #b73949;
+  color: #335ea4;
   border: none;
   font-size: 16px;
   box-shadow: inset 0 0 4px 0 #888;
@@ -122,7 +123,7 @@ button.btn-ii, .btn-ii {
   }
 }
 .fabric {
-  background-color: #92d4dd;
+  background-color: #ccc;
   background-image: url(../img/fabric-1-light.png);
 }
 
@@ -135,7 +136,7 @@ button.btn-ii, .btn-ii {
 }
 
 .edit-container {
-  color: #92d4dd;
+  color: #ccc;
   width: 100%;
   position: relative;
   padding: 0;
@@ -466,7 +467,7 @@ button.btn-ii, .btn-ii {
   padding: 12px 0;
 }
 .your-posts .post-info-wrapper .title {
-  color: #92d4dd;
+  color: #ccc;
   font-size: 24px;
 }
 .your-posts .post-info-wrapper .id {
@@ -697,6 +698,19 @@ body {
   margin-bottom: 12px;
 }
 
+body .draft-option {
+  display: none;
+}
+body .published-option {
+  display: block;
+}
+body.is-draft .published-option {
+  display: none;
+}
+body.is-draft .draft-option {
+  display: block;
+}
+
 .erase-on-focus {
   color: #aeaeae;
 }
@@ -744,9 +758,9 @@ body {
   text-indent: 12px;
   border-top-left-radius: inherit;
   border-bottom-left-radius: inherit;
-  border-top: 1px solid #92d4dd;
-  border-left: 1px solid #92d4dd;
-  border-bottom: 1px solid #92d4dd;
+  border-top: 1px solid #ccc;
+  border-left: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
   transition: all .2s;
 }
 .post-title.disabled input {
@@ -783,7 +797,7 @@ body {
   transform: translate(-50%, -50%);
   width: 500px;
   padding: 50px;
-  background: #92d4dd;
+  background: #ccc;
   border: 2px solid #333;
   box-shadow: 4px 4px 0px 0px rgba(51, 51, 51, 0.5);
   color: #fff;
@@ -794,7 +808,7 @@ body {
   background: #fff;
 }
 .message-box.alert {
-  background: #92d4dd;
+  background: #ccc;
 }
 .message-box .close-x {
   display: block;
@@ -808,7 +822,7 @@ body {
 
 .loading {
   display: none;
-  color: #92d4dd;
+  color: #ccc;
   z-index: 100;
   position: absolute;
   top: 50%;
@@ -847,7 +861,7 @@ body {
   width: 660px;
   padding: 30px;
   background: white;
-  border: 2px solid #92d4dd;
+  border: 2px solid #ccc;
   box-shadow: 4px 4px 0px 0px rgba(51, 51, 51, 0.5);
   border-radius: 4px;
 }
@@ -864,15 +878,15 @@ body {
   margin-bottom: 8px;
   border-radius: 4px;
   padding: 12px;
-  color: #92d4dd;
-  border: 1px solid #92d4dd;
+  color: #ccc;
+  border: 1px solid #ccc;
   background: #fff;
   transition: all .2s;
 }
 .tag-name-wrapper .tag-name.active-tag {
   color: #f5f5f5;
-  border: 1px solid #92d4dd;
-  background: #92d4dd;
+  border: 1px solid #ccc;
+  background: #ccc;
 }
 .tag-name-wrapper .tag-name .tag-id {
   display: none;
@@ -887,7 +901,7 @@ body {
 }
 
 .scrollbar::-webkit-scrollbar-thumb {
-  background-color: #92d4dd;
+  background-color: #ccc;
 }
 
 .login-form-wrapper {

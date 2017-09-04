@@ -139,6 +139,22 @@ body {
         margin-bottom: 12px;
     }
 }
+body {
+    .draft-option {
+        display: none;
+    }
+    .published-option {
+        display: block;
+    }
+    &.is-draft {
+        .published-option {
+            display: none;
+        }
+        .draft-option {
+            display: block;
+        }
+    }
+}
 .erase-on-focus {
     color: $gray;
 }
