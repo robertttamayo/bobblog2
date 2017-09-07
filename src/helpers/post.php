@@ -12,6 +12,7 @@ class Post {
     public $posttitle;
     public $shortpreview;
     public $preview;
+    public $featuredimage;
     
     public function getTitle(){
         

@@ -92,6 +92,7 @@ class BobBlog {
                 $this->activePost->lastedited = $row["lastedited"];
                 $this->activePost->title = $row["posttitle"];
                 $this->activePost->permalink = $row["permalink"];
+                $this->activePost->featuredimage = $row["featuredimage"];
                 
             }
         } else {
@@ -148,6 +149,7 @@ class BobBlog {
                 $this->activePost->lastedited = $row["lastedited"];
                 $this->activePost->title = $row["posttitle"];
                 $this->activePost->permalink = $row["permalink"];
+                $this->activePost->featuredimage = $row["featuredimage"];
                 
             }
         } else {
@@ -183,6 +185,35 @@ class BobBlog {
         }
         $conn->close();
         return $this->all_tags;
+    }
+    public function getFeaturedImage($postid) {
+        if ($postid == null) {
+            echo "postid is null"; 
+        }
+        $conn = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
+        
+        if ($conn->connect_error) {
+            die("Connection failed: " . $conn->connect_error);
+        }
+        
+        $sql = "SELECT featuredimage FROM blogbase WHERE id = $postid";
+        $result = $conn->query($sql);
+        
+        $featured_image = '';
+        
+        if ($result != false) {
+            if ($result->num_rows > 0) {
+                // output data of each row
+                while($row = $result->fetch_assoc()) {
+                    $featured_image = $row["featuredimage"];
+                }
+            } else {
+                // 0 results
+            }
+        } else {
+            // some kind of error
+        }
+        return $featured_image;
     }
     public function getTags($postid){
         

@@ -13,6 +13,7 @@ $posttitle = "";
 $hasContent = false;
 $isDraft = false;
 $permalink = "";
+$featured_image = "";
 
 if (isset($_GET["postid"])) {
     $postid = $_GET["postid"];
@@ -22,6 +23,8 @@ if (isset($_GET["postid"])) {
     $posttitle = $post->title;
     $isDraft = $post->draft;
     $permalink = $post->permalink;
+    $featured_image = $post->featuredimage;
+    $featured_image = 'https://placeimg.com/640/480/animals';
     
     $hasContent = true;
 } else {

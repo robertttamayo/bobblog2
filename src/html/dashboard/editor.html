@@ -15,6 +15,20 @@
         </div>
     </div>
     
+    <div class="feature-image-title">Featured Image</div>
+    
+    <div class="post-title-wrap container flex flex-hor feature-image-tool">
+        <div class="featured-image">
+            <?php if ($featured_image != '') { ?>
+            <img src="<?= $featured_image ?>">
+            <?php } else { ?>
+            <div class="add-featured-image-button">
+                <i class="fa fa-plus" aria-hidden="true"></i> Add a featured image
+            </div>
+            <?php } ?>
+        </div>
+    </div>
+    
     <div class="post-meta">
         <div class="post-meta-wrapper flex flex-hor">
             <div class="btn inline manage-cats change-watch">
@@ -83,8 +97,13 @@
 <span id="is-draft-hidden" style="position: absolute; top: -110em; display: none;"><?= $isDraft ?></span>
 
 <!-- img modal -->
-<dialog id="img-dialog" class="img-dialog">
+<dialog id="img-dialog" class="img-dialog" data-mode="img">
     <div class="dialog-container">
+        <div class="img-dialog-title">
+            <div class="featured">Featured Image</div>
+            <div class="regular">Image</div>
+            <div class="category">Category Image</div>
+        </div>
         <p style="text-align: center;">Please choose an image to upload</p>
         <div style="width: 120px; height: 120px; display: block; border: 1px dotted black; position: relative; padding: 1px;
                     text-align: center;">

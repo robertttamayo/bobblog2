@@ -135,6 +135,22 @@ function tagPopCallbacks(){
         });
     });
 }
+function imagePopCallbacks(){
+    $("#featured-image-form").on("submit", function(event){
+        console.log("featured image form submitted");
+        event.preventDefault();
+
+        var imgData = new FormData(document.getElementById("featured-image-form"));
+        imgData.append("action", actionUploadFeaturedImage);
+        imgData.append("postid", getPostId());
+        uploadFeaturedImage(imgData);
+    });
+    $(".dim, #close-tag-pop").on("click", function(){
+        $(".tags-pop-wrap").fadeOut("medium", function(){
+            $(this).remove();
+        });
+    });
+}
 function mainContainerCallbacks(){
     $(".dim, #message-close").on("click", function(){
         $(".dim:not([data*=tags])").hide();
@@ -233,6 +249,18 @@ function editContainerCallbacks(){
             };
             updatePermalink(data);
         }
+    });
+    $('.feature-image-tool').on('click', function(){
+        var postid = $("#postid-hidden").text();
+        var imagePop = document.createElement("div");
+        var url = homeUrl + "src/featuredimage.php?postid=" + postid;
+        console.log(url);
+        imagePop = $(imagePop);
+        $(imagePop).load(url, function(){
+            $("body").append(imagePop);
+            $(".dim").show().data("lock", "tags");
+            imagePopCallbacks();
+        });
     });
     // end post permalink setup
     initEditor();
@@ -415,6 +443,30 @@ function uploadImage(imgData){
         console.log(data);
         if (data.success){
             var event = new CustomEvent("image_uploaded", {detail: data});
+            document.dispatchEvent(event);
+        } else {
+            alert(data.message);
+        }
+    });
+}
+function uploadFeaturedImage(imgData){
+    var data = {
+        "action": actionUploadFeaturedImage, 
+        "imgdata": imgData
+    };
+    console.log(data);
+    $.ajax({
+        url: window.location.href,
+        type: "POST",
+        processData: false,
+        contentType: false,
+        data: imgData
+    }).done(function(_data){
+        console.log(_data);
+        var data = JSON.parse(_data);
+        console.log(data);
+        if (data.success){
+            var event = new CustomEvent("featured_image_uploaded", {detail: data});
             document.dispatchEvent(event);
         } else {
             alert(data.message);
@@ -615,6 +667,7 @@ function initEditor(){
     });
     // images
     $("#image").on("click", function(){
+        $('#img-dialog').attr('data-mode', 'img');
         document.getElementById("img-dialog").showModal();
     });
         
@@ -625,6 +678,9 @@ function initEditor(){
         var imgData = new FormData(document.getElementById("image-form"));
         imgData.append("action", actionUploadImage);
         uploadImage(imgData);
+    });
+    $('.feature-image-tool').on('click', function(){
+        
     });
 }
 // image functions
@@ -747,4 +803,12 @@ function formatPermalink(text){
     text = text.replace(/[+=\[\]{}|\\/<>;:'"\?!,.&^%\$@\(\)\*\&]/g, "");
     text = text.toLowerCase();
     return text;
+}
+
+function editPage(){
+    $('div').attr('contenteditable', 'true');
+    $('body').on('click', 'a', function(event){
+        event.preventDefault();
+        event.stopPropagation();
+    });
 }
