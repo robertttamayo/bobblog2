@@ -603,6 +603,13 @@ body {
   height: auto;
 }
 
+.featured-image-upload-preview {
+  height: 200px;
+}
+.featured-image-upload-preview img {
+  max-height: 100%;
+}
+
 .add-featured-image-button {
   color: #335ea4;
   text-align: center;
@@ -816,6 +823,10 @@ body.is-draft .draft-option {
   width: 100%;
   height: 100%;
   background: rgba(174, 174, 174, 0.5);
+}
+
+body.dim-active .dim {
+  display: block !important;
 }
 
 .message-box {

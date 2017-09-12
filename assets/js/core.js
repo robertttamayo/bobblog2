@@ -136,6 +136,7 @@ function tagPopCallbacks(){
     });
 }
 function imagePopCallbacks(){
+    $('body').addClass('dim-active');
     $("#featured-image-form").on("submit", function(event){
         console.log("featured image form submitted");
         event.preventDefault();
@@ -145,16 +146,19 @@ function imagePopCallbacks(){
         imgData.append("postid", getPostId());
         uploadFeaturedImage(imgData);
     });
-    $(".dim, #close-tag-pop").on("click", function(){
-        $(".tags-pop-wrap").fadeOut("medium", function(){
+    $(".dim, #featured-img-dialog-close").on("click", function(){
+        console.log("closing featured img dialog, #featured-img-dialog-close clicked");
+        $(".featured-image-pop-wrap").fadeOut("medium", function(){
             $(this).remove();
         });
+        $('body').removeClass('dim-active');
     });
 }
 function mainContainerCallbacks(){
     $(".dim, #message-close").on("click", function(){
         $(".dim:not([data*=tags])").hide();
         $("#message").fadeOut();
+        $('body').removeClass('dim-active');
     });
     $(".post-edit").on("click", function(){
         var postid = $(this).data("postid");
@@ -258,7 +262,8 @@ function editContainerCallbacks(){
         imagePop = $(imagePop);
         $(imagePop).load(url, function(){
             $("body").append(imagePop);
-            $(".dim").show().data("lock", "tags");
+//            $(".dim").show().data("lock", "tags");
+            $('body').addClass('dim-active');
             imagePopCallbacks();
         });
     });
@@ -488,6 +493,17 @@ function validatePost(){
     return true;
 }
 // Event listeners
+document.addEventListener('featured_image_uploaded', function(event){
+    console.log(event.detail);
+    var data = event.detail;
+    $('.featured-image-pop-wrap').remove();
+    createMessage("Your image \"" + data.original_name + "\" is uploaded and saved as this post's featured image!");
+    var _html;
+    var _template = $('#template-featured-image').html();
+    _html = templator.processTemplate(_template, data);
+    $('.feature-image-tool').html(_html);
+});
+
 document.addEventListener("image_uploaded", function(event){
     console.log(event.detail);
     var data = event.detail;
@@ -798,6 +814,27 @@ function imgEditorCallbacks(){
     }
 }
 // helpers
+var Templator = function() {
+    var regex = /{{[\w]+}}/g;
+    this.processTemplate = function(html, data) {
+        console.log("debug html, data: " );
+        console.log(html);
+        console.log(data);
+        var name;
+        var matches = html.match(regex);
+        for (var i = 0; i < matches.length; i++) {
+            name = matches[i].replace("{{", "").replace("}}", "");
+            if (data[name]) {
+                html = html.replace(matches[i], data[name]);
+            } else {
+                html = html.replace(matches[i], "");
+            }
+        }
+        return html;
+    }
+}
+var templator = new Templator();
+// random tools
 function formatPermalink(text){
     text = text.replace(/ /g, "-");
     text = text.replace(/[+=\[\]{}|\\/<>;:'"\?!,.&^%\$@\(\)\*\&]/g, "");

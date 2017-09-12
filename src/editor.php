@@ -24,7 +24,6 @@ if (isset($_GET["postid"])) {
     $isDraft = $post->draft;
     $permalink = $post->permalink;
     $featured_image = $post->featuredimage;
-    $featured_image = 'https://placeimg.com/640/480/animals';
     
     $hasContent = true;
 } else {

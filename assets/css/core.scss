@@ -54,6 +54,12 @@ body {
         height: auto;
     }
 }
+.featured-image-upload-preview {
+    height:200px;
+    img {
+        max-height: 100%;
+    }
+}
 .add-featured-image-button {
     color: $notice-blue;
     text-align: center;
@@ -260,6 +266,13 @@ body {
     width: 100%;
     height: 100%;
     background: $shadow-gray;
+}
+body {
+    &.dim-active {
+        .dim {
+            display: block !important;
+        }
+    }
 }
 .message-box {
     display: none;
