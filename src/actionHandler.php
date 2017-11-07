@@ -303,8 +303,6 @@ function handle(){
             
             exit;
             break;
-            exit;
-            break;
         case ACTION_TAGS_BY_POSTID:
             $conn = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
         

@@ -41,7 +41,7 @@ if ($type == 'post') {
             $sql_catbase_join = ' JOIN catbase '; // needs to match a category
             
             // construct sql
-            $sql = "SELECT blogbase.*, catbase.* 
+            $sql = "SELECT blogbase.*, catbase.*
             FROM blogbase
                 $sql_catbase_join
                 ON blogbase.category = catbase.catid
@@ -49,6 +49,24 @@ if ($type == 'post') {
             ORDER BY $order_by
             ";
         }
+    } else if (isset($_GET['category_permalink'])) {
+        $param_values[] = [
+            'key' => ':category_permalink',
+            'value' => filter_var($_GET['category_permalink'], FILTER_SANITIZE_STRING)
+        ];
+        
+        $category_permalink = filter_var($_GET['category_permalink'], FILTER_SANITIZE_STRING);
+        
+        $sql_catbase_join = ' JOIN catbase '; // needs to match a category
+
+        // construct sql
+        $sql = "SELECT blogbase.*, catbase.*
+        FROM blogbase
+            $sql_catbase_join
+            ON blogbase.category = catbase.catid
+        WHERE catbase.catpermalink = :category_permalink AND blogbase.draft = 0
+        ORDER BY $order_by
+        ";
     } else {
         // set variables
         $sql_catbase_join = ' LEFT JOIN catbase '; // doesn't need to have a category
@@ -101,8 +119,29 @@ if ($type == 'post') {
                 ON blogbase.category = catbase.catid 
             WHERE blogbase.id = $postid AND blogbase.draft = 0 
             LIMIT 1
-            ";   
+            "; 
+
         }
+    }
+    // permalink, overrides cateogry and limit
+    if (isset($_GET['permalink'])) {
+        
+        $param_values[] = [
+            'key' => ':permalink',
+            'value' => filter_var($_GET['permalink'], FILTER_SANITIZE_STRING)
+        ];
+        
+        // set variables
+        $permalink = filter_var($_GET['permalink'], FILTER_SANITIZE_STRING);
+        $sql_catbase_join = ' LEFT JOIN catbase ';
+ 
+        $sql = " SELECT blogbase.*, catbase.*
+        FROM blogbase
+            $sql_catbase_join
+            ON blogbase.category = catbase.catid
+        WHERE blogbase.permalink = :permalink AND blogbase.draft = 0
+        LIMIT 1
+        ";
     }
     $data = executeSQL();
     finish($data);
@@ -188,6 +227,7 @@ function executeSQL(){
 
 function finish($data) {
 //    logData(json_encode($data));
+    
     echo ($data);
     exit;
 }
