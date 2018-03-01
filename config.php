@@ -53,6 +53,8 @@ $userbase = "userbase";
 $content = "content";
 $postid = "id";
 
+include_once('helpers.php');
+
 if (isset($_POST["action"])) {
     // don't allow post requests unless admin user is signed in
     if (!isset($_SESSION["userID"])) {

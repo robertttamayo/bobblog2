@@ -29,7 +29,7 @@ function handle(){
                 $post_lastedited = $post_publishdate;
             }
             
-            $post_file = mysql_real_escape_string($post_file);
+            $post_file = mysql_escape_mimic($post_file);
             $post_short_preview = strip_tags(substr($post_file, 0, 30));
             
 //            $post_draft = $post_draft ? 1 : 0;
