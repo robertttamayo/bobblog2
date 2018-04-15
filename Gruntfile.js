@@ -5,34 +5,6 @@ module.exports = function(grunt) {
 
         pkg: grunt.file.readJSON('package.json'),
 
-        //check javascript
-        jshint: {
-            options: {
-                "bitwise": true,
-                "browser": true,
-                "curly": true,
-                "eqeqeq": true,
-                "eqnull": true,
-                "esnext": true,
-                "immed": true,
-                "jquery": true,
-                "latedef": true,
-                "newcap": true,
-                "noarg": true,
-                "node": true,
-                "strict": false,
-                "trailing": true,
-                "undef": true,
-                "globals": {
-                    "jQuery": true,
-                    "alert": true
-                }
-            },
-            all: [
-                'assets/js/*.js'
-            ]
-        },
-
         //concat js files into 2 files, one for desktop, one for mobile
         concat: {
             options: {
