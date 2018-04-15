@@ -153,6 +153,140 @@ if ($type == 'post') {
     $sql = "SELECT * FROM catbase";
     $data = executeSQL();
     finish($data);
+} else if ($type == 'comment') { // retrieve and post comments
+    debug('type = comment');
+    
+    // fields for both getting and creating comments
+    $postid = $_GET['postid'];
+    settype($postid, 'integer');
+    //
+
+    if (isset($_POST['comment'])) { // post a comment
+        $limit = 10;
+        
+        $param_values[] = [
+            'key' => ':comment',
+            'value' => filter_var($_POST['comment'], FILTER_SANITIZE_STRING)
+        ];
+        
+        $commentguestid = $_GET['guestid'];
+        settype($commentguestid, 'integer');
+        
+        $replyto = isset($_GET['replyto']) ? filter_var($_GET['replyto'], FILTER_SANITIZE_STRING) : 'NULL';
+        
+        $timewritten = date("Y-m-d H:i:s");
+        
+        $sql = "INSERT INTO commentbase (comment, commentblogid, commentguestid, replyto, timewritten)
+        VALUES (:comment, $postid, $commentguestid, $replyto, NOW())";
+        $data = executeSQL();
+        
+        if ($replyto != 'NULL') {
+            $sql = "UPDATE commentbase
+            SET hasreplies = hasreplies + 1
+            WHERE commentblogid = $replyto";
+            $data_update = executeSQL();
+        }
+        
+        $sql = "UPDATE blogbase
+        SET hascomments = hascomments + 1
+        WHERE commentblogid = $postid";
+        executeSQL();
+        
+        finish($data);
+        
+    } else { // get comments
+        // offset
+        $offset = 0;
+        $limit = 100;
+        $limit_and_offset = '';
+        
+        if (isset($_GET['limit'])) {
+            if (filter_var($_GET['limit'], FILTER_VALIDATE_INT)) {
+                $limit = $_GET['limit'];
+                settype($limit, 'integer');
+            }
+        }
+        if (isset($_GET['offset'])) {
+            if (filter_var($_GET['offset'], FILTER_VALIDATE_INT)) {
+                $offset = $_GET['offset'];
+                settype($offset, 'integer');
+            }
+
+            $limit_and_offset = " LIMIT $offset , $limit ";
+        } else {
+            $limit_and_offset = " LIMIT $limit ";
+        }
+        
+        $sql = "SELECT commentbase.*, guestbase.guestname
+        FROM commentbase
+            JOIN guestbase 
+            ON commentbase.commentguestid = guestbase.guestid
+        WHERE commentbase.commentblogid = $postid 
+        AND commentbase.replyto IS NULL 
+        ORDER BY commentbase.timewritten
+        $limit_and_offset";
+
+        $data = executeSQL();
+        finish($data);
+    }
+    
+} else if ($type == 'replies') {
+    debug('type = replies');
+    
+    // fields for both getting and creating comments
+    $commentid = $_GET['commentid'];
+    settype($commentid, 'integer');
+    
+    // offset
+    $offset = 0;
+    $limit = 100;
+    $limit_and_offset = '';
+
+    if (isset($_GET['limit'])) {
+        if (filter_var($_GET['limit'], FILTER_VALIDATE_INT)) {
+            $limit = $_GET['limit'];
+            settype($limit, 'integer');
+        }
+    }
+    if (isset($_GET['offset'])) {
+        if (filter_var($_GET['offset'], FILTER_VALIDATE_INT)) {
+            $offset = $_GET['offset'];
+            settype($offset, 'integer');
+        }
+
+        $limit_and_offset = " LIMIT $offset , $limit ";
+    } else {
+        $limit_and_offset = " LIMIT $limit ";
+    }
+
+    $sql = "SELECT commentbase.*, guestbase.guestname
+    FROM commentbase
+        JOIN guestbase 
+        ON commentbase.commentguestid = guestbase.guestid
+    WHERE commentbase.replyto = $commentid
+    ORDER BY commentbase.timewritten
+    $limit_and_offset";
+
+    $data = executeSQL();
+    finish($data);
+    
+} else if ($type == 'guest') {
+    $guestemail = filter_var($_GET['guestemail'], FILTER_SANITIZE_STRING);
+    $guestname = filter_var($_GET['guestname'], FILTER_SANITIZE_STRING);
+    
+    $param_values[] = [
+        'key' => ':guestemail',
+        'value' => $guestemail
+    ];
+    $param_values[] = [
+        'key' => ':guestname',
+        'value' => $guestname
+    ];
+    
+    $sql = "INSERT INTO guestbase (guestemail, guestname)
+    VALUES (:guestemail, :guestname)";    
+    $data = executeSQL();
+    finish($data);
 }
 
 // tags
@@ -208,20 +342,25 @@ function executeSQL(){
         for ($i = 0; $i < $size; $i++) {
             $key = $param_values[$i]['key'];
             $value = $param_values[$i]['value'];
-            $stmt->bindParam($key, $value);
+            $stmt->bindParam($param_values[$i]['key'], $param_values[$i]['value']);
         }
         $stmt->execute();
 
-        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-        $data = json_encode($rows);
-        $params = json_encode($param_values);
-
+        try {
+            $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $data = json_encode($rows);
+            $params = json_encode($param_values);
+        } catch (Exception $e) {
+//            if ($sql_insert) {
+                $data = json_encode(['lastinsertid' => $last_id = $conn->lastInsertId()]);
+//            }
+            
+        }
+        
     } catch (PDOException $e) {
         echo "Connection failed: " . $e->getMessage();
     }
     $conn = null;
-    
     return $data;
 }
 
