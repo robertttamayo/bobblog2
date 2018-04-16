@@ -172,7 +172,12 @@ if ($type == 'post') {
         $commentguestid = $_GET['guestid'];
         settype($commentguestid, 'integer');
         
-        $replyto = isset($_GET['replyto']) ? filter_var($_GET['replyto'], FILTER_SANITIZE_STRING) : 'NULL';
+        $replyto = 'NULL';
+        if (isset($_GET['replyto'])) {
+            $replyto = $_GET['replyto'];
+            settype($replyto, 'integer');
+        }
+        
         
         $timewritten = date("Y-m-d H:i:s");
         
@@ -183,13 +188,14 @@ if ($type == 'post') {
         if ($replyto != 'NULL') {
             $sql = "UPDATE commentbase
             SET hasreplies = hasreplies + 1
-            WHERE commentblogid = $replyto";
+            WHERE commentid = $replyto";
+            
             $data_update = executeSQL();
         }
         
         $sql = "UPDATE blogbase
         SET hascomments = hascomments + 1
-        WHERE commentblogid = $postid";
+        WHERE id = $postid";
         executeSQL();
         
         finish($data);
